@@ -3,6 +3,9 @@
 }
 body{
     background-image: url('image 2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .login{
     display: flex;
@@ -43,7 +46,7 @@ p{
 header{
     background: #151515;
     position: absolute;
-    width: 1516px;
+    width: 100vw;
     height: 50px;
     left: 0px;
     top: 0px;
