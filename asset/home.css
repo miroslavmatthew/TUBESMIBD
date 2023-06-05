@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+}
+body {
+  background-image: url("https://static.wixstatic.com/media/6ff534_382149a1180c4aa7aab265c9d291fef6~mv2.jpg/v1/fill/w_2142,h_934,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/6ff534_382149a1180c4aa7aab265c9d291fef6~mv2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.header {
+  background: #151515;
+  position: fixed;
+  width: 100vw;
+  height: 50px;
+  left: 0px;
+  top: 0px;
+  color: white;
+}
+#res {
+  border: red solid;
+  grid-area: center;
+}
+
+#home {
+  display: grid;
+  grid-template-areas: "center";
+}
