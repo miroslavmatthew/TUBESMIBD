@@ -50,24 +50,30 @@ body {
   height: 200px;
 }
 #join{
-  border: 1px solid #CB0033;
+  border: 2px solid #CB0033;
   border-radius: 10px;
   background-color: transparent;
   height: 35px;
   width: 100px;
   color: #CB0033;
-  font-size: 20px;
+  font-size: 18px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
-  margin-right: 30px;
+  margin-right: 10px;
+  transition: 0.2s;
 }
 #login{
-  border: 1px solid #444444;
+  border: 2px solid #444444;
   border-radius: 10px;
   background-color: #444444;
   height: 35px;
   width: 100px;
   color: #FFFFFF;
-  font-size: 20px;
+  font-size: 18px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   margin-right: 50px;
+}
+
+#join:hover{
+  background-color: #CB0033;
+  color: white;
 }
