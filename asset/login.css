@@ -6,6 +6,7 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow-x: hidden;
 }
 .login{
     display: flex;
@@ -42,8 +43,9 @@ body{
 p{
     color: #9A9A9A;
 }
-header{
+.header {
     background: #151515;
+    position: fixed;
     width: 100vw;
     height: 50px;
     left: 0px;
