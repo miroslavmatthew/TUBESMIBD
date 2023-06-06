@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="asset/home.css" />
+    <link rel="stylesheet" href="asset/reservation.css" />
     <title>Document</title>
   </head>
   <body>
@@ -19,13 +19,17 @@
       </button>
     </div>
 
-    <div id="home" onclick="window.location.href='reservation.html';">
-      <img id="logo" src="asset/Group 3.png" />
-      <p id="res">RESERVATION</p>
-    </div>
-
-    <div id="foot">
-      <div>© MIBD Tubes 23 Project Managed by <br />Kelompok 4A</div>
+    <div class="reservation">
+      <div class="form">
+        <form>
+          <h2>Log In</h2>
+          <label for="date">Tanggal Bermain</label>
+          <input type="date" id="username" name="date" />
+          <label for="time">Jam Bermain</label>
+          <input type="time" id="password" name="time" />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     </div>
   </body>
 </html>
