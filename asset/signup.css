@@ -63,3 +63,17 @@ p {
 .form h2 {
   margin-bottom: 10px;
 }
+
+
+#login_here{
+  color: #535353;
+  text-decoration-line: underline;
+  /* transition: 0.2s; */
+}
+
+
+#login_here:hover{
+  color: #CB0033;
+  transition: 0.2s;
+}
+

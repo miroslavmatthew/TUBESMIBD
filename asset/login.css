@@ -60,3 +60,9 @@ p {
   text-align: center;
   margin-bottom: 10px;
 }
+
+#forgot:hover{
+  color: #CB0033;
+  text-decoration-line: underline;
+  /* transition: 0.2s; */
+}
