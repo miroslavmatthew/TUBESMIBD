@@ -98,3 +98,9 @@ select {
   background-color: #cb0033;
   color: white;
 }
+
+.judul{
+  display:flex;
+  flex-grow: 1; 
+  justify-content: center;
+}
