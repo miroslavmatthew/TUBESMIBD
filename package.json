@@ -1,0 +1,25 @@
+{
+  "name": "tubesmibd",
+  "version": "1.0.0",
+  "description": "tugas besar mibd pbw",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "memorystore": "^1.6.7",
+    "multer": "^1.4.4",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "type": "module"
+}

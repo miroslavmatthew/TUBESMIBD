@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="asset/confirmation.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="header">
+      <img
+        src="asset/Group 3.png"
+        style="width: 200px"
+        onclick="window.location.href='/';"
+      />
+      <div style="flex-grow: 1"></div>
+      <button onclick="window.location.href='/signup';" id="join">
+        Join now
+      </button>
+      <button onclick="window.location.href='/login';" id="login">
+        Log in
+      </button>
+    </div>
+    <div class="login">
+      <form>
+        <div class="form">
+          <h2>Table #2</h2>
+          <div class="data">
+            <div class="text">
+              <p>Hari, Tanggal</p>
+              <p>Waktu</p>
+              <p>Biaya per Jam</p>
+              <label for="email">Email</label>
+            </div>
+            <div class="val">
+              <p>: Senin, 24 Maret 2023</p>
+              <p>: 19.00 - 20.00</p>
+              <p>: 40.000</p>
+              <input type="text" id="email" name="email" />
+            </div>
+          </div>
+          <hr />
+          <div class="biaya">
+            <p>Total Biaya:</p>
+            <p>40.000</p>
+          </div>
+        </div>
+        <button>Cancel</button>
+        <input type="submit" value="Confirm" />
+      </form>
+    </div>
+  </body>
+</html>
