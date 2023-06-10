@@ -8,18 +8,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karantina&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
     <title>Document</title>
   </head>
   <body>
     <div class="header">
       <img src="asset/Group 3.png" style="width: 200px" />
       <div style="flex-grow: 1"></div>
-      <button onclick="window.location.href='/signup';" id="join">
-        Join now
-      </button>
-      <button onclick="window.location.href='/login';" id="login">
-        Log in
-      </button>
+      <%if(!isLogin){%>
+        <button onclick="window.location.href='/signup';" id="join">
+          Join now
+        </button>
+        <button onclick="window.location.href='/login';" id="login">
+          Log in
+        </button>
+      <% }else{ %>
+        <i class="fa-regular fa-user fa-xl"></i>
+      <% } %>
     </div>
 
     <div id="home">

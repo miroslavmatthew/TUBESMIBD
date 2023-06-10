@@ -51,13 +51,17 @@ const addUser = (conn, fName, lName, ) =>{
 }
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home",
+  {
+    isLogin: req.session.isLogin
+  });
 });
 app.get("/login", (req, res) => {
   res.render("login");
 });
 app.post("/authlogin", (req, res) => {
   console.log("prosesLogin")
+  req.session.isLogin = true;
   res.redirect("/");
 });
 
