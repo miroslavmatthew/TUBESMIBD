@@ -75,3 +75,14 @@ ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-UTrans` FOREIGN KEY (`idU`) REFERENCE
 ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-TikTrans` FOREIGN KEY (`idTiket`) REFERENCES `Tiket`(`idTiket`);
 
 ALTER TABLE MejaB ADD CONSTRAINT UnikNo UNIQUE (posisiM);
+
+INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('1', 'admin', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('2', NULL, NULL, 'andi', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', 'andi', 'Jl. Andir No. 20', NULL, '1');
+
+INSERT INTO `Kota` (`idKota`, `namaKota`) VALUES ('1', 'Bandung'),('2', 'Cimahi'), ('3', 'Sukabumi'), ('4', 'Cirebon'), ('5', 'Bogor');
+INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('1', 'Andir', '1'), ('2', 'Antapani', '1');
+INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('3', 'Cimahi Utara', '2'), ('4', 'Cimahi Selatan', '2');
+INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('5', 'Ciracap', '3'), ('6', 'Cisolok', '3');
+
+
+INSERT INTO `Kelurahan` (`idKelurahan`, `namaKelurahan`, `idKecamatan`) VALUES ('1', 'Ciroyom', '1'), ('2', 'Kebonjeruk', '1');
