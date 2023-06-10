@@ -26,7 +26,11 @@ body {
     padding-left: 20px;
     padding-right: 25px;
 }
-#join{
+.header h1 {
+    flex-grow: 1; 
+    text-align: center;
+}
+#join,#cancel{
     border: 2px solid #CB0033;
     border-radius: 10px;
     background-color: transparent;
@@ -37,6 +41,17 @@ body {
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
     margin-right: 10px;
     transition: 0.2s;
+}
+input[type=submit]{
+    border: 2px solid #CB0033;
+    border-radius: 10px;
+    height: 35px;
+    width: 100px;
+    background-color: #CB0033;
+    color: #EDEDED;
+    font-size: 18px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    margin-right: 10px;
 }
 #login{
     border: 2px solid #444444;
@@ -50,7 +65,7 @@ body {
     margin-right: 50px;
 }
   
-#join:hover{
+#join:hover,#cancel:hover{
     background-color: #CB0033;
     color: white;
 }
@@ -66,24 +81,50 @@ main{
 }
 .data {
     display: grid;
-    grid-template-areas: "text val";
-    gap: 20px;
+    grid-template-columns: 20% 3% auto;
 }
 .form{
     background: #303030;
     padding: 45px;
     border-radius: 45px;
     width: 80vw;
-    height: 60vh;
-}
-.text{
-    grid-area: text;
-}
-.val{
-    grid-area: val;
+    height: 50vh;
+    margin-top: 5%;
 }
 .biaya{
     display: flex;
     gap: 10px;
-    justify-content: flex-end
+    justify-content: flex-end;
+}
+.button{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+p,label,hr{
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.biaya p{
+    margin: 0;
+}
+.form input {
+    background: #d9d9d9;
+    width: 50%;
+    border: 0;
+    height: 5vh;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.inputEmail{
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+.inputEmail p{
+    margin: 0;
+    font-size: 20px;
 }

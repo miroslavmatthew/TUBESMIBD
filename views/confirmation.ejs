@@ -14,7 +14,7 @@
         style="width: 200px"
         onclick="window.location.href='/';"
       />
-      <div style="flex-grow: 1"></div>
+      <h1>ORDER CONFIRMATION FORM</h1>
       <button onclick="window.location.href='/signup';" id="join">
         Join now
       </button>
@@ -25,7 +25,7 @@
     <div class="login">
       <form>
         <div class="form">
-          <h2>Table #2</h2>
+          <h1>Table #2</h1>
           <div class="data">
             <div class="text">
               <p>Hari, Tanggal</p>
@@ -33,21 +33,34 @@
               <p>Biaya per Jam</p>
               <label for="email">Email</label>
             </div>
+            <div class="colon">
+              <p>:</p>
+              <p>:</p>
+              <p>:</p>
+              <p>:</p>
+            </div>
             <div class="val">
-              <p>: Senin, 24 Maret 2023</p>
-              <p>: 19.00 - 20.00</p>
-              <p>: 40.000</p>
-              <input type="text" id="email" name="email" />
+              <p>Senin, 24 Maret 2023</p>
+              <p>19.00 - 20.00</p>
+              <p>40.000</p>
+              <div class="inputEmail">
+                <input type="text" id="email" name="email" required/>
+                <p>*required</p>
+              </div>
+              
             </div>
           </div>
-          <hr />
+          <hr>
           <div class="biaya">
             <p>Total Biaya:</p>
             <p>40.000</p>
           </div>
         </div>
-        <button>Cancel</button>
-        <input type="submit" value="Confirm" />
+        <div class="button">
+            <button id="cancel">Cancel</button>
+            <input type="submit" value="Confirm"/>
+        </div>
+        
       </form>
     </div>
   </body>

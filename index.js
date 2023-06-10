@@ -63,6 +63,9 @@ app.get("/confirmation", (req, res) => {
 app.get("/success", (req, res) => {
   res.render("successOrder");
 });
+app.get("/ticket", (req, res) => {
+  res.render("ticket");
+});
 app.listen(PORT, () => {
   console.log("server ready");
 });
