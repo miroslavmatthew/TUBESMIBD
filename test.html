@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: #444444;
+      }
+
+      .form-container {
+        width: 300px;
+        padding: 20px;
+        background-color: #CB0033;
+        color: #FFFFFF;
+      }
+
+      .form-container label,
+      .form-container input[type="text"],
+      .form-container button {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .form-container button {
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.12);
+        color: #FFFFFF;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Popup Confirmation Styles */
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+      }
+
+      .popup-content {
+        width: 300px;
+        padding: 20px;
+        background-color: #FFFFFF;
+        color: #444444;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <form id="myForm" onsubmit="return confirmSubmit()">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Popup Confirmation -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="hidePopup()">&times;</span>
+        <h3>Confirmation</h3>
+        <p>Are you sure you want to submit the form?</p>
+        <button onclick="submitForm()">Yes</button>
+        <button onclick="hidePopup()">No</button>
+      </div>
+    </div>
+
+    <script>
+      function showPopup() {
+        document.getElementById("popup").style.display = "block";
+      }
+
+      function hidePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function confirmSubmit() {
+        showPopup();
+        return false; // Prevent form submission by default
+      }
+
+      function submitForm() {
+        hidePopup();
+        document.getElementById("myForm").submit();
+      }
+    </script>
+  </body>
+</html>

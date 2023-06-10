@@ -91,6 +91,9 @@ app.get("/success", (req, res) => {
 app.get("/ticket", (req, res) => {
   res.render("ticket");
 });
+app.get("/trans", (req, res) =>{
+  res.render("trans_history")
+})
 app.listen(PORT, () => {
   console.log("server ready");
 });
