@@ -20,24 +20,24 @@ app.use(
     extended: true,
   })
 );
-// const pool = mysql.createPool({
-//   user: "root",
-//   password: "",
-//   database: "IDE",
-//   host: "localhost",
-// });
-// const dbConnect = () => {
-//   return new Promise((resolve, reject) => {
-//     pool.getConnection((err, conn) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(conn);
-//       }
-//     });
-//   });
-// };
-// const conn = await dbConnect();
+const pool = mysql.createPool({
+  user: "root",
+  password: "",
+  database: "Broklyn",
+  host: "localhost",
+});
+const dbConnect = () => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const conn = await dbConnect();
 
 app.get("/", (req, res) => {
   res.render("home");
