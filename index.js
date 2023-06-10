@@ -7,10 +7,13 @@ const PORT = 8080;
 const app = express();
 app.set("view engine", "ejs");
 const staticPath = path.resolve("public");
+
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     resave: false,
     saveUninitialized: true,
+    cookie: { maxAge: oneDay },
     secret: "SID",
   })
 );
@@ -39,12 +42,30 @@ const dbConnect = () => {
 };
 const conn = await dbConnect();
 
+const getUser = conn =>{
+  
+}
+
+const addUser = (conn, fName, lName, ) =>{
+
+}
+
 app.get("/", (req, res) => {
   res.render("home");
 });
 app.get("/login", (req, res) => {
   res.render("login");
 });
+app.post("/authlogin", (req, res) => {
+  console.log("prosesLogin")
+  res.redirect("/");
+});
+
+app.post("/authsignup", (req, res) => {
+  console.log("prosesSignup")
+  res.redirect("/");
+});
+
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
