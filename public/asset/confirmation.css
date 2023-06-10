@@ -73,6 +73,8 @@ main{
     background: #303030;
     padding: 45px;
     border-radius: 45px;
+    width: 80vw;
+    height: 60vh;
 }
 .text{
     grid-area: text;

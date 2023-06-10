@@ -54,6 +54,15 @@ app.get("/reservation", (req, res) => {
 app.get("/forgotpass", (req, res) => {
   res.render("forgot_pass");
 });
+app.get("/table", (req, res) => {
+  res.render("table_page");
+});
+app.get("/confirmation", (req, res) => {
+  res.render("confirmation");
+});
+app.get("/success", (req, res) => {
+  res.render("successOrder");
+});
 app.listen(PORT, () => {
   console.log("server ready");
 });
