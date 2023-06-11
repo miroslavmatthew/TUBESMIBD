@@ -125,8 +125,8 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #CB0033;
-  width: 130px;
-  height: 60px;
+  width: 80%;
+  height: 60%;
   border: 5px solid #7D001F;
   border-radius: 20px;
 }

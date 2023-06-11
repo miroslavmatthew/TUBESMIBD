@@ -83,10 +83,12 @@ body {
 
 #foot{
   display: flex;  
-  align-items: center;
   color: white;
   height: 75px;
   width: 100vw;
+  flex-grow: 1;
+  align-items: end;
+  justify-content: space-between;
 }
 
 .judul{
@@ -102,4 +104,23 @@ body {
 
 .hidden{
   display: none !important;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#foot *{
+  margin: 50px;
+  font-size: 20px;
+}
+
+.invisBox{
+  width: 300px;
+}
+
+#alamat{
+  font-size: 35px;
 }
