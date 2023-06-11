@@ -93,6 +93,9 @@ app.get("/ticket", (req, res) => {
 });
 app.get("/trans", (req, res) =>{
   res.render("trans_history")
+});
+app.get("/update", (req, res) =>{
+  res.render("update_membership")
 })
 app.listen(PORT, () => {
   console.log("server ready");

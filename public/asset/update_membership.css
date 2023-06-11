@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+}
+  
+body {
+    background-color: #202020;
+    height: 100vh;
+}
+  
+.header {
+    background: #151515;
+    display: flex;
+    width: 100vw;
+    height: 75px;
+    left: 0px;
+    top: 0px;
+    color: white;
+    align-items: center;
+}
+  
+#logoJudul{
+    margin-left: 20px;
+}
+  
+.judul{
+    display:flex;
+    flex-grow: 1; 
+    justify-content: center;
+    font-size: x-large;
+}
+.fa-regular{
+    color: white;
+    margin-right: 50px;
+}
+.info{
+    display: grid;
+    grid-template-columns: 20% 2% 60%;
+}
+.label,.colon,.in{
+    display: grid;
+    grid-template-rows: repeat(6,10%);
+    gap: 30px;
+    align-items: center;
+}
+label,p{
+    color: white;
+}
+form{
+    margin: 30px 20px 20px 50px;
+    display: grid;
+}
+input[type=submit]{
+    border-radius: 10px;
+    background-color: #CB0033;
+    height: 6vh;
+    width: 10vw;
+    color: #FFFFFF;
+    font-size: 18px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+}
+form input {
+    background: #d9d9d9;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.button{
+    display: flex;
+    justify-content: center;
+}
