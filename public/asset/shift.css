@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    color: white;
+}
+  
+body {
+    background-color: #202020;
+    height: 100vh;
+}
+  
+.header {
+    background: #151515;
+    display: flex;
+    width: 100vw;
+    height: 75px;
+    left: 0px;
+    top: 0px;
+    color: white;
+    align-items: center;
+}
+  
+#logoJudul{
+    margin-left: 20px;
+}
+  
+.judul{
+    display:flex;
+    flex-grow: 1; 
+    justify-content: center;
+    font-size: x-large;
+    margin-right: 200px;
+}
+.fa-regular{
+    color: white;
+    margin-right: 50px;
+}
+
+#home {
+    display: grid;
+    grid-template-columns: 30% 60%;
+    height: calc(100% - 75px);
+    gap: 100px;
+}
+
+.table{
+    display: flex;
+    color: white;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-bottom: 10px;  
+    align-items: center 
+}
+
+.cen{
+    display: grid;
+    grid-template-columns: 40% 0% 40%;
+    gap: 10px;
+    width: 50vw;
+    justify-content: center;
+}
+.info{
+    display: grid;
+    height: 70vh;
+    overflow: auto;
+    align-content: center;
+    background: #444444;
+    border-radius: 45px;
+    justify-content: center;
+}
+
+.garis{
+    background-color: red;
+    width: 2px;
+    height: 100%;
+}
+.garis2{
+    background-color: white;
+    height: 2px;
+    width: 100%;
+}
+
+.a{
+    display: grid;
+    align-items: center;
+}
+
+p{
+    font-size: 30px;
+    text-align: center;
+}
+
+.edit{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+button{
+    border: 2px solid #CB0033;
+    border-radius: 10px;
+    background-color: #CB0033;
+    height: 35px;
+    width: 150px;
+    color: #FFFFFF;
+    font-size: 18px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+}

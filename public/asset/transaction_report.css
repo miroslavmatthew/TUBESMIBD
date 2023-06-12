@@ -28,6 +28,7 @@ body {
     flex-grow: 1; 
     justify-content: center;
     font-size: x-large;
+    margin-right: 200px;
 }
 .fa-regular{
     color: white;
