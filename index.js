@@ -66,6 +66,18 @@ const getKecamatan = (conn, idKota) => {
     });
   });
 };
+const getKelurahan = (conn, idKecamatan) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Kelurahan where idKecamatan = ? `;
+    conn.query(sql, [idKecamatan], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const getUser = (conn) => {};
 
 const addUser = (conn, fName, lName) => {};
@@ -76,6 +88,10 @@ app.get("/kota", async (req, res) => {
 app.get("/kecamatan", async (req, res) => {
   const kecamatan = await getKecamatan(conn, req.query.idKota);
   res.send({ kecamatan });
+});
+app.get("/kelurahan", async (req, res) => {
+  const kelurahan = await getKelurahan(conn, req.query.idKecamatan);
+  res.send({ kelurahan });
 });
 app.get("/", (req, res) => {
   res.render("home", {
