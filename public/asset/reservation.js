@@ -6,6 +6,6 @@ function n(n) {
 for (let index = 8; index <= 21; index++) {
   let option = document.createElement("option");
   option.text = `${n(index)}.00 - ${n(index + 1)}.00`;
-  option.value = index;
+  option.value = `${n(index)}:00:00`;
   select.add(option);
 }

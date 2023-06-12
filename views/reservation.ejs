@@ -31,12 +31,14 @@
 
     <div class="reservation">
       <div class="form">
-        <form>
+        <form method = "get" action="table">
           <h2>Pesan Tiket Billiar</h2>
           <label for="date">Tanggal Bermain</label>
-          <input type="date" id="username" name="date" />
+          <input type="date" id="username" name="date" required/>
           <label for="time">Jam Bermain</label>
-          <select name="time"></select>
+          <select name="time" required>
+            <option value="" selected disabled hidden>Pilih Waktu</option>
+          </select>
           <input type="submit" value="Submit" />
         </form>
       </div>

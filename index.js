@@ -78,9 +78,31 @@ const getKelurahan = (conn, idKecamatan) => {
     });
   });
 };
-const getUser = (conn) => {};
+const getTikets = (conn, date, time) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM tiket WHERE tanggal = ? AND jam = ?`;
+    conn.query(sql, [date, time], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getTables = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM mejab`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 
-const addUser = (conn, fName, lName) => {};
 app.get("/kota", async (req, res) => {
   const kota = await getKota(conn);
   res.send({ kota });
@@ -123,9 +145,23 @@ app.get("/reservation", (req, res) => {
 app.get("/forgotpass", (req, res) => {
   res.render("forgot_pass");
 });
-app.get("/table", (req, res) => {
+app.get("/table", async (req, res) => {
+  let date = req.query.date;
+  let time = req.query.time;
+
+  const tickets = await getTikets(conn, date, time);
+  const tables = await getTables(conn);
+
+  const booked_tables = [];
+  for(let i = 0; i < tickets.length; i++){
+    booked_tables.push(tickets[i].noMeja);
+  }
+  
+  console.log(booked_tables);
   res.render("table_page", {
     isLogin: req.session.isLogin,
+    booked_tables: booked_tables,
+    tables: tables,
   });
 });
 app.get("/confirmation", (req, res) => {

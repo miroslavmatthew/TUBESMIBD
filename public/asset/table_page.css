@@ -131,6 +131,21 @@ body {
   border-radius: 20px;
 }
 
+.meja:hover{
+  cursor:pointer
+}
+
+.mejaBook{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #8d8d8d;
+  width: 80%;
+  height: 60%;
+  border: 5px solid #606060;
+  border-radius: 20px;
+}
+
 #judulDenah{
   margin-bottom: 15px;
 }
