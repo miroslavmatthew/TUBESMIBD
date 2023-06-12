@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    color: white;
 }
   
 body {
@@ -32,23 +33,34 @@ body {
     color: white;
     margin-right: 50px;
 }
-.info{
-    display: grid;
-    grid-template-columns: 20% 2% 60%;
-}
-.label,.colon,.in{
-    display: grid;
-    grid-template-rows: repeat(6,10%);
-    gap: 30px;
+main{
+    display: flex;
+    justify-content: center;
     align-items: center;
+    height: 80vh;
+    color: #ffffff;
 }
-label,p{
-    color: white;
-    font-size: 18px;
+.date{
+    display: grid;
+    width: 50vw;
+    grid-template-rows: 100% 30%;
 }
 form{
-    margin: 30px 20px 20px 50px;
-    display: grid;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+input[type=date]{
+    background: #d9d9d9;
+    width: 30%;
+    border: 0;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 10px;
+    color: black;
 }
 input[type=submit]{
     border-radius: 10px;
@@ -59,18 +71,6 @@ input[type=submit]{
     font-size: 18px;
     border: 2px solid #CB0033;
 }
-input[type=text] {
-    background: #d9d9d9;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-    border-radius: 5px;
-}
-.button{
-    display: flex;
-    justify-content: center;
+p{
+    font-size: 20px;
 }
