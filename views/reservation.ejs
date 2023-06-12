@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/reservation.css" />
+    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
     <script src="./asset/reservation.js" defer></script>
     <title>Document</title>
   </head>
@@ -16,12 +17,16 @@
         style="width: 200px"
       />
       <div style="flex-grow: 1"></div>
-      <button onclick="window.location.href='/signup';" id="join">
-        Join now
-      </button>
-      <button onclick="window.location.href='/login';" id="login">
-        Log in
-      </button>
+      <%if(!isLogin){%>
+        <button onclick="window.location.href='/signup';" id="join">
+          Join now
+        </button>
+        <button onclick="window.location.href='/login';" id="login">
+          Log in
+        </button>
+      <% }else{ %>
+        <i class="fa-regular fa-user fa-xl"></i>
+      <% } %>
     </div>
 
     <div class="reservation">

@@ -72,3 +72,7 @@ p {
   flex-grow: 1; 
   justify-content: center;
 }
+
+#forgotPassForm h2{
+  text-align: start;
+}

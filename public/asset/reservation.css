@@ -104,3 +104,8 @@ select {
   flex-grow: 1; 
   justify-content: center;
 }
+
+.fa-regular{
+  color: white;
+  margin-right: 50px;
+}
