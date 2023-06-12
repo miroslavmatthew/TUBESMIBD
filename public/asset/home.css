@@ -81,7 +81,7 @@ body {
   color: white;
 }
 
-#foot{
+footer{
   display: flex;  
   color: white;
   height: 75px;
@@ -112,15 +112,15 @@ body {
   min-height: 100vh;
 }
 
-#foot *{
-  margin: 50px;
-  font-size: 20px;
+footer *{
+  margin: 20px;
+  font-size: 15px;
 }
 
 .invisBox{
-  width: 300px;
+  width: 15%;
 }
 
 #alamat{
-  font-size: 35px;
+  font-size: 25px;
 }

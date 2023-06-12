@@ -30,30 +30,40 @@ body {
 }
 
 .greet{
-  font-size: 30px;
-  padding-left: 20%;
-  margin: 50px;
   width: 100%;
+}
+
+.greet *{
+  font-size: 30px;
+  margin: 50px 50px 50px 130px;
 }
 
 #home {
   display: flex;
-flex-direction: column;
-align-items: center;
+  flex-direction: column;
+  align-items: center;
 /* justify-content: center; */
   color: white;
   height: calc(100% - 75px);
+  width: 100vw;
 }
 
 .fa-regular{
   color: white;
-  margin-right: 50px;
+  margin-right: 30px;
 }
 
 
 #ticketList{
   width: 80%;
-  height: 70%;
+  height: 65%;
+  margin-bottom: 5%;
   border-radius: 40px;
   background-color: #EDEDED;
+  color: #151515;
+  font-size: 20px;
+}
+
+footer img{
+  width: 100vw;
 }
