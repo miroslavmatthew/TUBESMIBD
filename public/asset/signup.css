@@ -25,7 +25,8 @@ body {
   align-items: center;
   gap: 30px;
 }
-.form input {
+.form input,
+select {
   background: #d9d9d9;
   width: 100%;
   border: 0;
@@ -64,21 +65,19 @@ p {
   margin-bottom: 10px;
 }
 
-
-#login_here{
+#login_here {
   color: #535353;
   text-decoration-line: underline;
   /* transition: 0.2s; */
 }
 
-
-#login_here:hover{
-  color: #CB0033;
+#login_here:hover {
+  color: #cb0033;
   transition: 0.2s;
 }
 
-.judul{
-  display:flex;
-  flex-grow: 1; 
+.judul {
+  display: flex;
+  flex-grow: 1;
   justify-content: center;
 }

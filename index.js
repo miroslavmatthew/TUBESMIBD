@@ -42,31 +42,57 @@ const dbConnect = () => {
 };
 const conn = await dbConnect();
 
-const getUser = conn =>{
-  
-}
+const getKota = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Kota `;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getKecamatan = (conn, idKota) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Kecamatan where idKota = ? `;
+    conn.query(sql, [idKota], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getUser = (conn) => {};
 
-const addUser = (conn, fName, lName, ) =>{
-
-}
-
+const addUser = (conn, fName, lName) => {};
+app.get("/kota", async (req, res) => {
+  const kota = await getKota(conn);
+  res.send({ kota });
+});
+app.get("/kecamatan", async (req, res) => {
+  const kecamatan = await getKecamatan(conn, req.query.idKota);
+  res.send({ kecamatan });
+});
 app.get("/", (req, res) => {
-  res.render("home",
-  {
-    isLogin: req.session.isLogin
+  res.render("home", {
+    isLogin: req.session.isLogin,
   });
 });
 app.get("/login", (req, res) => {
   res.render("login");
 });
 app.post("/authlogin", (req, res) => {
-  console.log("prosesLogin")
+  console.log("prosesLogin");
   req.session.isLogin = true;
   res.redirect("/");
 });
 
 app.post("/authsignup", (req, res) => {
-  console.log("prosesSignup")
+  console.log("prosesSignup");
   res.redirect("/");
 });
 
@@ -91,12 +117,12 @@ app.get("/success", (req, res) => {
 app.get("/ticket", (req, res) => {
   res.render("ticket");
 });
-app.get("/trans", (req, res) =>{
-  res.render("trans_history")
+app.get("/trans", (req, res) => {
+  res.render("trans_history");
 });
-app.get("/update", (req, res) =>{
-  res.render("update_membership")
-})
+app.get("/update", (req, res) => {
+  res.render("update_membership");
+});
 app.listen(PORT, () => {
   console.log("server ready");
 });

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/signup.css" />
+    <script src="asset/signup.js" defer></script>
     <title>Document</title>
   </head>
   <body>
@@ -25,15 +26,20 @@
           <label for="lastName">Last Name</label>
           <input type="text" id="lastName" name="lastName" />
           <label for="district">District</label>
-          <input type="text" id="district" name="district" />
+          <select name="district">
+            <option value="" selected disabled hidden>Pilih Kota</option>
+          </select>
           <label for="subDistrict">Sub District</label>
-          <input type="text" id="subDistrict" name="subDistrict" />
+          <select name="subDistrict" disabled>
+            <option value="" selected disabled hidden>Pilih Kecamatan</option>
+          </select>
           <label for="urbanVillage">Urban Village</label>
           <input type="text" id="urbanVillage" name="urbanVillage" />
           <label for="username">Username</label>
           <input type="text" id="username" name="username" />
           <label for="password">Password</label>
           <input type="text" id="password" name="password" />
+
           <input type="submit" value="Create Member" />
         </form>
         <div class="here">
