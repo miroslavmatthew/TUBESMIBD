@@ -102,7 +102,7 @@ const getTables = (conn) => {
     });
   });
 };
-
+let data;
 app.get("/kota", async (req, res) => {
   const kota = await getKota(conn);
   res.send({ kota });
@@ -151,12 +151,11 @@ app.get("/table", async (req, res) => {
 
   const tickets = await getTikets(conn, date, time);
   const tables = await getTables(conn);
-
+  data = { hari: date, jam: time, harga: 40000 };
   const booked_tables = [];
-  for(let i = 0; i < tickets.length; i++){
+  for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);
   }
-  
   console.log(booked_tables);
   res.render("table_page", {
     isLogin: req.session.isLogin,
@@ -164,8 +163,13 @@ app.get("/table", async (req, res) => {
     tables: tables,
   });
 });
-app.get("/confirmation", (req, res) => {
-  res.render("confirmation");
+app.post("/confirmation", (req, res) => {
+  let noMej = req.body;
+  console.log(req);
+  res.render("confirmation", {
+    datas: data,
+    noMeja: noMej,
+  });
 });
 app.get("/success", (req, res) => {
   res.render("successOrder");

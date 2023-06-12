@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/d53ca09937.js"
+      crossorigin="anonymous"
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/table_page.css" />
     <title>Document</title>
@@ -18,14 +21,14 @@
       />
       <div class="judul">ORDER CONFIRMATION</div>
       <%if(!isLogin){%>
-        <button onclick="window.location.href='/signup';" id="join">
-          Join now
-        </button>
-        <button onclick="window.location.href='/login';" id="login">
-          Log in
-        </button>
+      <button onclick="window.location.href='/signup';" id="join">
+        Join now
+      </button>
+      <button onclick="window.location.href='/login';" id="login">
+        Log in
+      </button>
       <% }else{ %>
-        <i class="fa-regular fa-user fa-xl" id="memberBtn"></i>
+      <i class="fa-regular fa-user fa-xl" id="memberBtn"></i>
       <% } %>
     </div>
 
@@ -38,27 +41,29 @@
         </div>
         <div>
           <div class="keterangan">
-            <div id="box1"></div>The Table is Available!
+            <div id="box1"></div>
+            The Table is Available!
           </div>
           <div class="keterangan">
-            <div id="box2"></div>The Table is Not Available!
+            <div id="box2"></div>
+            The Table is Not Available!
           </div>
         </div>
       </div>
       <div id="kanan">
         <p id="judulDenah">Table's Location Guide</p>
-        <div id="entrance">Entrance Area
+        <div id="entrance">
+          Entrance Area
           <div id="line"></div>
         </div>
-        <div id="peta">
-          <%for(let i = 0; i < tables.length; i++){%>
-            <% if(booked_tables.includes(i+1)){ %>
-              <div class="mejaBook"><%=(i+1)%></div>
-            <% } else {%>
-              <div class="meja"><%=(i+1)%></div>
-            <%}%>
-          <% } %>
-        </div>
+        <form id="peta" method="post" action="confirmation">
+          <%for(let i = 0; i < tables.length; i++){%> <%
+          if(booked_tables.includes(i+1)){ %>
+          <div class="mejaBook"><%=(i+1)%></div>
+          <% } else {%>
+          <button type="submit" class="meja"><%=(i+1)%></button>
+          <%}%> <% } %>
+        </form>
       </div>
     </div>
   </body>

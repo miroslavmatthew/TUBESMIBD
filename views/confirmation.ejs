@@ -25,7 +25,7 @@
     <div class="info">
       <form>
         <div class="form">
-          <h1>Table #2</h1>
+          <h1>Table #<%= noMeja %></h1>
           <div class="data">
             <div class="text">
               <p>Hari, Tanggal</p>
@@ -40,27 +40,25 @@
               <p>:</p>
             </div>
             <div class="val">
-              <p>Senin, 24 Maret 2023</p>
-              <p>19.00 - 20.00</p>
-              <p>40.000</p>
+              <p><%= datas.hari %></p>
+              <p><%= datas.jam %></p>
+              <p><%= datas.harga %></p>
               <div class="inputEmail">
-                <input type="text" id="email" name="email" required/>
+                <input type="text" id="email" name="email" required />
                 <p>*required</p>
               </div>
-              
             </div>
           </div>
-          <hr>
+          <hr />
           <div class="biaya">
             <p>Total Biaya:</p>
             <p>40.000</p>
           </div>
         </div>
         <div class="button">
-            <button id="cancel">Cancel</button>
-            <input type="submit" value="Confirm"/>
+          <button id="cancel">Cancel</button>
+          <input type="submit" value="Confirm" />
         </div>
-        
       </form>
     </div>
   </body>
