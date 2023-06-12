@@ -116,13 +116,17 @@ app.get("/signup", (req, res) => {
   res.render("signup");
 });
 app.get("/reservation", (req, res) => {
-  res.render("reservation");
+  res.render("reservation", {
+    isLogin: req.session.isLogin,
+  });
 });
 app.get("/forgotpass", (req, res) => {
   res.render("forgot_pass");
 });
 app.get("/table", (req, res) => {
-  res.render("table_page");
+  res.render("table_page", {
+    isLogin: req.session.isLogin,
+  });
 });
 app.get("/confirmation", (req, res) => {
   res.render("confirmation");
