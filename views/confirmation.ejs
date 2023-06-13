@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/confirmation.css" />
+    <script src="asset/confirmation.js" defer></script>
     <title>Document</title>
   </head>
   <body>
@@ -23,9 +24,9 @@
       </button>
     </div>
     <div class="info">
-      <form>
+      <div>
         <div class="form">
-          <h1>Table #<%= noMeja %></h1>
+          <h1 id="noMeja">Table #<%= noMeja %></h1>
           <div class="data">
             <div class="text">
               <p>Hari, Tanggal</p>
@@ -40,9 +41,9 @@
               <p>:</p>
             </div>
             <div class="val">
-              <p><%= datas.hari %></p>
-              <p><%= datas.jam %></p>
-              <p><%= datas.harga %></p>
+              <p id="hari"><%= datas.hari %></p>
+              <p id="jam"><%= datas.jam %></p>
+              <p id="harga"><%= datas.harga %></p>
               <div class="inputEmail">
                 <input type="text" id="email" name="email" required />
                 <p>*required</p>
@@ -52,14 +53,14 @@
           <hr />
           <div class="biaya">
             <p>Total Biaya:</p>
-            <p>40.000</p>
+            <p><%= datas.harga %></p>
           </div>
         </div>
         <div class="button">
           <button id="cancel">Cancel</button>
-          <input type="submit" value="Confirm" />
+          <button id="confirm">Confirm</button>
         </div>
-      </form>
+      </div>
     </div>
   </body>
 </html>

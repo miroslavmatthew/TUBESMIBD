@@ -171,7 +171,8 @@ app.post("/confirmation", (req, res) => {
     noMeja: noMej,
   });
 });
-app.get("/success", (req, res) => {
+app.post("/success", (req, res) => {
+  console.log(req.body);
   res.render("successOrder");
 });
 app.get("/ticket", (req, res) => {

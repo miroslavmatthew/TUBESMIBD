@@ -6,14 +6,18 @@ function orderMeja(event) {
 
 for (let i = 0; i < meja.length; i++) {
   meja[i].addEventListener("click", (event) => {
-    const input = {};
-    input["noMeja"] = i + 1;
-    fetch("confirmation", {
-      method: "post",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(input),
-    });
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = "confirmation";
+
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "noMeja";
+    input.value = event.currentTarget.textContent;
+
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();
   });
 }
