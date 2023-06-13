@@ -40,6 +40,7 @@ select.addEventListener("input", function () {
       defValue.selected = true;
       defValue.disabled = true;
       defValue.hidden = true;
+      defValue.value = "";
       defValue.textContent = "Pilih Kecamatan";
       selectSub.add(defValue);
 
@@ -47,6 +48,7 @@ select.addEventListener("input", function () {
       defValueUrb.selected = true;
       defValueUrb.disabled = true;
       defValueUrb.hidden = true;
+      defValueUrb.value = "";
       defValueUrb.textContent = "Pilih Kelurahan";
       selectUrban.add(defValueUrb);
 
@@ -71,12 +73,43 @@ selectSub.addEventListener("input", function () {
         option.text = `${namakels.namaKelurahan}`;
         option.value = namakels.idKelurahan;
         selectUrban.add(option);
-        let defValue = document.createElement("option");
-        defValue.selected = true;
-        defValue.disabled = true;
-        defValue.hidden = true;
-        defValue.textContent = "Pilih Kelurahan";
-        selectUrban.add(defValue);
       }
+      let defValue = document.createElement("option");
+      defValue.selected = true;
+      defValue.disabled = true;
+      defValue.hidden = true;
+      defValue.value = "";
+      defValue.textContent = "Pilih Kelurahan";
+      selectUrban.add(defValue);
     });
+});
+
+let usernames = document.getElementById("username");
+let username;
+const listusername = [];
+let usernameAdmin = fetch("username")
+  .then(function (response) {
+    return response.text();
+  })
+  .then(function (text) {
+    username = JSON.parse(text).lsusername;
+    for (let index = 0; index < username.length; index++) {
+      if (username[index].Username != null) {
+        listusername.push(username[index].Username);
+      }
+      if (username[index].UsernameAdmin != null) {
+        listusername.push(username[index].UsernameAdmin);
+      }
+    }
+  });
+usernames.addEventListener("input", (event) => {
+  if (
+    event.currentTarget.value.length < 1 ||
+    listusername.includes(event.currentTarget.value) ||
+    event.currentTarget.value.length < 8
+  ) {
+    event.currentTarget.style.backgroundColor = "red";
+  } else {
+    event.currentTarget.style.backgroundColor = "#d9d9d9";
+  }
 });

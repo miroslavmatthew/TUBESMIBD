@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="asset/signup.css" />
     <script src="asset/signup.js" defer></script>
     <title>Sign Up</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="header">
@@ -24,27 +27,27 @@
       <div class="form">
         <form action="authsignup" method="post">
           <h2>Membership Sign Up</h2>
-          <br>
-          <label for="firstName">Firts Name</label>
-          <input type="text" id="firstName" name="firstName" />
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" />
+          <br />
+          <label for="firstName">Full Name</label>
+          <input type="text" id="firstName" name="firstName" required />
           <label for="district">District</label>
-          <select name="district">
+          <select name="district" required>
             <option value="" selected disabled hidden>Pilih Kota</option>
           </select>
           <label for="subDistrict">Sub District</label>
-          <select name="subDistrict" disabled>
+          <select name="subDistrict" disabled required>
             <option value="" selected disabled hidden>Pilih Kecamatan</option>
           </select>
           <label for="urbanVillage">Urban Village</label>
-          <select name="urbanVillage" disabled>
+          <select name="urbanVillage" disabled required>
             <option value="" selected disabled hidden>Pilih Kelurahan</option>
           </select>
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" />
+          <input type="text" id="username" name="username" required />
           <label for="password">Password</label>
-          <input type="text" id="password" name="password" />
+          <input type="password" id="password" name="password" required />
+          <label for="repassword">Re-enter Password</label>
+          <input type="password" id="repassword" name="repassword" required />
 
           <input type="submit" value="Create Member" />
         </form>

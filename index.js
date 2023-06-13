@@ -102,7 +102,47 @@ const getTables = (conn) => {
     });
   });
 };
+const getAdmin = (conn, username, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User where UsernameAdmin = ? and PasswordAdmin = ?`;
+    conn.query(sql, [username, password], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getMember = (conn, username, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User where Username = ? and Password = ?`;
+    conn.query(sql, [username, password], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getUsername = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT UsernameAdmin,Username FROM User `;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 let data;
+app.get("/username", async (req, res) => {
+  const lsusername = await getUsername(conn);
+  res.send({ lsusername });
+});
 app.get("/kota", async (req, res) => {
   const kota = await getKota(conn);
   res.send({ kota });
@@ -123,10 +163,23 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
-app.post("/authlogin", (req, res) => {
-  console.log("prosesLogin");
-  req.session.isLogin = true;
-  res.redirect("/");
+app.post("/authlogin", async (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let hashpass = crypto.createHash("sha256").update(password).digest("base64");
+  let admin = await getAdmin(conn, username, hashpass);
+  let member = await getMember(conn, username, hashpass);
+  if (admin.length != 0) {
+    req.session.isLogin = "admin";
+    res.redirect("/homeAdmin");
+  } else {
+    if (member.length != 0) {
+      req.session.isLogin = "user";
+      res.redirect("/");
+    } else {
+      res.redirect("/");
+    }
+  }
 });
 
 app.post("/authsignup", (req, res) => {
@@ -152,10 +205,10 @@ app.get("/table", async (req, res) => {
   let date = new Date(tanggal);
 
   // Format the date as desired (e.g., "June 13, 2023")
-  let formattedDate = date.toLocaleDateString("en-US", { 
-    year: "numeric", 
-    month: "long", 
-    day: "numeric" 
+  let formattedDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   const tickets = await getTikets(conn, tanggal, time);
