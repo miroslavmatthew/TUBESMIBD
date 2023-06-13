@@ -13,7 +13,7 @@ for (let i = 0; i < meja.length; i++) {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ noMeja: 1 }),
+      body: JSON.stringify(input),
     });
   });
 }

@@ -7,6 +7,7 @@
       src="https://kit.fontawesome.com/d53ca09937.js"
       crossorigin="anonymous"
     ></script>
+    <script src="asset/table_page.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/table_page.css" />
     <title>Document</title>
@@ -56,14 +57,14 @@
           Entrance Area
           <div id="line"></div>
         </div>
-        <form id="peta" method="post" action="confirmation">
+        <div id="peta">
           <%for(let i = 0; i < tables.length; i++){%> <%
           if(booked_tables.includes(i+1)){ %>
           <div class="mejaBook"><%=(i+1)%></div>
           <% } else {%>
-          <button type="submit" class="meja"><%=(i+1)%></button>
+          <div class="meja"><%=(i+1)%></div>
           <%}%> <% } %>
-        </form>
+        </div>
       </div>
     </div>
   </body>

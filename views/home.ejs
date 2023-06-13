@@ -5,10 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/home.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Karantina&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/d53ca09937.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
   </head>
   <body>
@@ -16,28 +22,24 @@
       <img src="asset/Group 3.png" style="width: 200px" />
       <div style="flex-grow: 1"></div>
       <%if(!isLogin){%>
-        <button onclick="window.location.href='/signup';" id="join">
-          Join now
-        </button>
-        <button onclick="window.location.href='/login';" id="login">
-          Log in
-        </button>
+      <button onclick="window.location.href='/signup';" id="join">
+        Join now
+      </button>
+      <button onclick="window.location.href='/login';" id="login">
+        Log in
+      </button>
       <% }else{ %>
-        <i class="fa-regular fa-user fa-xl"></i>
+      <i class="fa-regular fa-user fa-xl"></i>
       <% } %>
     </div>
 
     <div class="container">
       <div id="home">
         <img id="logo" src="asset/Group 3.png" />
-        <p id="res" onclick="window.location.href='/reservation';">RESERVATION</p>
+        <p id="res" onclick="window.location.href='/reservation';">
+          RESERVATION
+        </p>
       </div>
-  
-      <footer>
-        <div>© MIBD Tubes 23 Project Managed by <br />Kelompok 4A</div>
-        <div id="alamat">Jawa Barat - Bandung - Jalan Sunda 28</div>
-        <div class="invisBox">
-      </footer>
     </div>
   </body>
 </html>

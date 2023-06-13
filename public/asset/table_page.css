@@ -21,47 +21,47 @@ body {
 #home {
   display: grid;
   grid-template-columns: 30% auto;
-  height: calc(100% - 75px)
+  height: calc(100% - 75px);
 }
 
-#join{
-  border: 2px solid #CB0033;
+#join {
+  border: 2px solid #cb0033;
   border-radius: 10px;
   background-color: transparent;
   height: 35px;
   width: 100px;
-  color: #CB0033;
+  color: #cb0033;
   font-size: 18px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   margin-right: 10px;
   transition: 0.2s;
 }
 
-#login{
+#login {
   border: 2px solid #444444;
   border-radius: 10px;
   background-color: #444444;
   height: 35px;
   width: 100px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 18px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   margin-right: 30px;
 }
 
-#join:hover{
-  background-color: #CB0033;
+#join:hover {
+  background-color: #cb0033;
   color: white;
 }
 
-.judul{
-  display:flex;
-  flex-grow: 1; 
+.judul {
+  display: flex;
+  flex-grow: 1;
   justify-content: center;
   font-size: x-large;
 }
 
-#peta{
+#peta {
   display: grid;
   align-items: center;
   justify-items: center;
@@ -74,7 +74,7 @@ body {
   height: 100%;
 }
 
-#kiri{
+#kiri {
   display: flex;
   color: white;
   font-size: xx-large;
@@ -85,7 +85,7 @@ body {
   padding-bottom: 10px;
 }
 
-#kanan{
+#kanan {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,47 +95,49 @@ body {
   padding: 100px 50px 100px 00px;
 }
 
-#logoJudul{
+#logoJudul {
   margin-left: 20px;
 }
 
-#box1{
+#box1 {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-  background-color: #CB0033;
+  background-color: #cb0033;
 }
 
-#box2{
+#box2 {
   width: 20px;
   height: 20px;
   margin-right: 10px;
   background-color: rgba(73, 73, 73, 0.93);
 }
 
-.keterangan{
+.keterangan {
   display: flex;
   flex-direction: row;
   font-size: 20px;
   margin: 10px;
 }
 
-.meja{
+.meja {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #CB0033;
+  background-color: #cb0033;
   width: 80%;
   height: 60%;
-  border: 5px solid #7D001F;
+  border: 5px solid #7d001f;
   border-radius: 20px;
+  font-size: 15px;
+  color: white;
 }
 
-.meja:hover{
-  cursor:pointer
+.meja:hover {
+  cursor: pointer;
 }
 
-.mejaBook{
+.mejaBook {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,30 +148,30 @@ body {
   border-radius: 20px;
 }
 
-#judulDenah{
+#judulDenah {
   margin-bottom: 15px;
 }
 
-#entrance{
+#entrance {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: 25px;
-  background-color: rgba(73, 73, 73, 0.93) ;
-  padding: 10px;  
+  background-color: rgba(73, 73, 73, 0.93);
+  padding: 10px;
   width: 100%;
-  border-radius:45px 45px 0px 0px;
+  border-radius: 45px 45px 0px 0px;
 }
 
-#line{
+#line {
   width: 150px;
   height: 4px;
   background-color: white;
 }
 
-.fa-regular{
+.fa-regular {
   color: white;
   margin-right: 50px;
 }

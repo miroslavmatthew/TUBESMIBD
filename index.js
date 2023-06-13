@@ -156,7 +156,7 @@ app.get("/table", async (req, res) => {
   for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);
   }
-  console.log(booked_tables);
+  // console.log(booked_tables);
   res.render("table_page", {
     isLogin: req.session.isLogin,
     booked_tables: booked_tables,
@@ -165,7 +165,7 @@ app.get("/table", async (req, res) => {
 });
 app.post("/confirmation", (req, res) => {
   let noMej = req.body.noMeja;
-  console.log(req);
+  // console.log(req);
   res.render("confirmation", {
     datas: data,
     noMeja: noMej,
