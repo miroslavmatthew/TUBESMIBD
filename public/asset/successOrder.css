@@ -1,3 +1,7 @@
+*{
+    font-family: 'Poppins';
+}
+
 .header {
     background: #151515;
     position: fixed;
@@ -53,7 +57,7 @@ body {
     border-radius: 10px;
     background-color: #444444;
     height: 35px;
-    width: 100px;
+    width: 150px;
     color: #FFFFFF;
     font-size: 16px;
 }

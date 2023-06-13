@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  font-family: 'Poppins';
 }
 
 body {
@@ -26,7 +27,7 @@ body {
   padding-left: 20px;
   padding-right: 25px;
 }
-.header h1 {
+.header h2 {
   flex-grow: 1;
   text-align: center;
 }

@@ -14,7 +14,15 @@ confirm.addEventListener("click", (event) => {
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "hari";
-  input.value = document.getElementById("hari").textContent;
+  var date = new Date(document.getElementById("hari").textContent);
+
+  var year = date.getFullYear();
+  var month = String(date.getMonth() + 1).padStart(2, "0");
+  var day = String(date.getDate()).padStart(2, "0");
+
+  var dateString = year + "-" + month + "-" + day;
+
+  input.value = dateString;
 
   form.appendChild(input);
   var input = document.createElement("input");

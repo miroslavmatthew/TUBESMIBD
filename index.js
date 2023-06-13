@@ -146,12 +146,21 @@ app.get("/forgotpass", (req, res) => {
   res.render("forgot_pass");
 });
 app.get("/table", async (req, res) => {
-  let date = req.query.date;
+  let tanggal = req.query.date;
   let time = req.query.time;
 
-  const tickets = await getTikets(conn, date, time);
+  let date = new Date(tanggal);
+
+  // Format the date as desired (e.g., "June 13, 2023")
+  let formattedDate = date.toLocaleDateString("en-US", { 
+    year: "numeric", 
+    month: "long", 
+    day: "numeric" 
+  });
+
+  const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
-  data = { hari: date, jam: time, harga: 40000 };
+  data = { hari: formattedDate, jam: time, harga: 40000 };
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);
