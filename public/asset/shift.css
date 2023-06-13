@@ -1,6 +1,7 @@
 * {
     margin: 0;
     color: white;
+    font-family: Poppins;
 }
   
 body {
@@ -34,10 +35,13 @@ body {
     color: white;
     margin-right: 50px;
 }
+.fa-pen-to-square{
+    font-size: 18px;
+}
 
 #home {
     display: grid;
-    grid-template-columns: 30% 60%;
+    grid-template-columns: 30% 50%;
     height: calc(100% - 75px);
     gap: 100px;
 }
@@ -48,13 +52,13 @@ body {
     justify-content: center;
     flex-direction: column;
     padding-left: 30px;
-    padding-bottom: 10px;  
+    gap: 10px;  
     align-items: center 
 }
 
-.cen{
+.cen,.title{
     display: grid;
-    grid-template-columns: 40% 0% 40%;
+    grid-template-columns: 5% 40% 0% 40%;
     gap: 10px;
     width: 50vw;
     justify-content: center;
@@ -79,13 +83,17 @@ body {
     height: 2px;
     width: 100%;
 }
-
+.garis3{
+    background-color: #444444;;
+    height: 2px;
+    width: 100%;
+}
 .a{
     display: grid;
     align-items: center;
 }
 
-p{
+p,h3{
     font-size: 30px;
     text-align: center;
 }
@@ -105,4 +113,13 @@ button{
     color: #FFFFFF;
     font-size: 18px;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+}
+
+.fa-trash{
+    font-size: 30px;
+    color: #CB0033;
+}
+.shift,.status,.trash{
+    display: grid;
+    align-items: center;
 }

@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    color: white;
+    font-family: Poppins;
+}
+  
+body {
+    background-color: #202020;
+    height: 100vh;
+}
+  
+.header {
+    background: #151515;
+    display: flex;
+    width: 100vw;
+    height: 75px;
+    left: 0px;
+    top: 0px;
+    color: white;
+    align-items: center;
+}
+  
+#logoJudul{
+    margin-left: 20px;
+}
+
+.fa-regular{
+    color: white;
+    margin-right: 50px;
+}
+
+main{
+    width: 98vw;
+    margin: 20px;
+	height: calc(100% - 75px);
+    display: grid;
+}
+
+.con{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.table {
+	width:90%;
+	border:1px solid black;
+    display: grid;
+    gap: 10px;
+    font-size: 20px;
+}
+
+.table-header {
+	background:#000;
+    height: 8vh;
+}
+
+.table-row,.table-header{
+	display:grid;
+	width:100%;
+    grid-template-columns: repeat(3,33%);
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.table-data, .header__item {
+	display: flex;
+	text-align:center;
+}
+.table-data{
+    color: black;
+}
+.table-content{
+    width:100%;
+    display: grid;
+    gap: 10px;
+}
+.table-row{
+    background-color: #D9D9D9;
+    height: 8vh;
+}
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+select{
+    width: 15vw;
+    height: 5vh;
+    color: black;
+    font-size: 18px;
+    background-color: #EDEDED;
+    border-radius: 10px;
+    text-align: center;
+}
+
