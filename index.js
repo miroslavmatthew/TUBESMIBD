@@ -164,7 +164,7 @@ app.get("/table", async (req, res) => {
   });
 });
 app.post("/confirmation", (req, res) => {
-  let noMej = req.body;
+  let noMej = req.body.noMeja;
   console.log(req);
   res.render("confirmation", {
     datas: data,

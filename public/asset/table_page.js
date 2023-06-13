@@ -6,15 +6,14 @@ function orderMeja(event) {
 
 for (let i = 0; i < meja.length; i++) {
   meja[i].addEventListener("click", (event) => {
-    let input = {};
+    const input = {};
     input["noMeja"] = i + 1;
-    let init = {
+    fetch("confirmation", {
       method: "post",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(input),
-    };
-    fetch("confirmation", init);
+      body: JSON.stringify({ noMeja: 1 }),
+    });
   });
 }
