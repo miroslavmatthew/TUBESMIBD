@@ -1,6 +1,12 @@
 * {
   margin: 0;
+  font-family: 'Poppins';
 }
+
+body {
+  background-color: #202020;
+}
+
 body {
   background-image: url("image 3.png");
   background-position: center;
@@ -18,7 +24,7 @@ body {
 .form {
   background: rgba(32, 32, 32, 0.93);
   padding: 45px;
-  border-radius: 45px;
+  border-radius: 30px;
   width: 20%;
 }
 .form input {

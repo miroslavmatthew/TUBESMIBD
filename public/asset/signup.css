@@ -1,5 +1,11 @@
 * {
   margin: 0;
+  font-family: 'Poppins';
+  font-size: 14px;
+}
+
+html{
+  background-color: #151515;
 }
 body {
   background-image: url("image 2.jpg");
@@ -7,23 +13,26 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   overflow-x: hidden;
+  height: 100vh;
 }
 .login {
+  margin-top: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 75px;
+  height: 100vh;
 }
 .form {
+  display: flex;
   background: rgba(32, 32, 32, 0.93);
-  padding: 45px;
+  padding: 40px;
   border-radius: 45px;
   width: 30%;
-  display: flex;
   align-items: center;
   gap: 30px;
+  row-gap: 10px;
 }
 .form input,
 select {
@@ -63,6 +72,7 @@ p {
 }
 .form h2 {
   margin-bottom: 10px;
+  font-size: 25px;
 }
 
 #login_here {

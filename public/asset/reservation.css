@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  font-family: 'Poppins';
 }
 
 body {
@@ -108,4 +109,8 @@ select {
 .fa-regular {
   color: white;
   margin-right: 50px;
+}
+
+h2{
+  font-size: 35px;
 }

@@ -10,6 +10,9 @@
     <script src="asset/table_page.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/table_page.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
     <title>Document</title>
   </head>
   <body>
@@ -20,7 +23,7 @@
         onclick="window.location.href='/';"
         id="logoJudul"
       />
-      <div class="judul">ORDER CONFIRMATION</div>
+      <h1 class="judul"></h1>
       <%if(!isLogin){%>
       <button onclick="window.location.href='/signup';" id="join">
         Join now
@@ -37,8 +40,8 @@
       <div id="kiri">
         <div></div>
         <div>
-          <p>TO ORDER:</p>
-          <p>Click on the table you select!</p>
+          <h2>TO ORDER:</h2>
+          <p id="definition">Click on the table you select!</p>
         </div>
         <div>
           <div class="keterangan">
