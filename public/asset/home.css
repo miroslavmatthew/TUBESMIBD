@@ -49,6 +49,11 @@ body {
   font-size: 50px;
   background: rgba(255, 255, 255, 0.12);
 }
+
+#res:hover{
+  cursor: pointer;
+}
+
 #logo {
   width: 770px;
   height: 200px;
@@ -124,4 +129,8 @@ footer * {
 
 #alamat {
   font-size: 25px;
+}
+
+button{
+  cursor: pointer;
 }

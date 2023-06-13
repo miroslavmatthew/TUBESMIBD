@@ -102,14 +102,48 @@ let usernameAdmin = fetch("username")
       }
     }
   });
-usernames.addEventListener("input", (event) => {
-  if (
-    event.currentTarget.value.length < 1 ||
-    listusername.includes(event.currentTarget.value) ||
-    event.currentTarget.value.length < 8
-  ) {
-    event.currentTarget.style.backgroundColor = "red";
-  } else {
-    event.currentTarget.style.backgroundColor = "#d9d9d9";
+
+let errMsg;
+function validate(){
+  let fullnamaVal = document.querySelector("#firstName").value; 
+  let districtVal = document.querySelector("#district").value; 
+  let subDistrictVal = document.querySelector("#subDistrict").value; 
+  let urbanVal = document.querySelector("#urbanVillage").value; 
+  let usernameVal = document.querySelector("#username").value; 
+  let passVal = document.querySelector("#password").value; 
+  let repassVal = document.querySelector("#repassword").value;
+  let alamatVal = document.querySelector("#alamat").value;
+
+  let validated = false;
+  if(fullnamaVal == ""){
+    errMsg = "*Enter Full Name!*"
+  } else if(districtVal == ""){
+    errMsg = "*Choose District!*"
+  } else if(subDistrictVal == ""){
+    errMsg = "*Choose Sub-District!*"
+  } else if(urbanVal == ""){
+    errMsg = "*Choose Urban Village!*"
+  } else if(alamatVal == ""){
+    errMsg = "*Enter Alamat!*"
+  } else if(usernameVal == ""){
+    errMsg = "*Enter Username!*"
+  } else if(usernameVal.length < 8){
+    errMsg = "*Username must be 8 char or more!*"
+  } else if(passVal == ""){
+    errMsg = "*Enter Password!*"
+  } else if(repassVal == ""){
+    errMsg = "*Re-enter Password!*"
+  } else if(repassVal != passVal){
+    errMsg = "*Make sure you re-enter the same password!*"
+  } else if(listusername.includes(usernameVal)){
+    errMsg = "*Username has already taken! Please re-enter another*"
+  } else{
+    validated = true;
   }
-});
+
+  document.querySelector("#err").textContent = errMsg;
+  return validated;
+}
+
+let signupform = document.querySelector("#signupform");
+signupform.onsubmit = validate;

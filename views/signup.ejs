@@ -25,30 +25,32 @@
     </div>
     <div class="login">
       <div class="form">
-        <form action="authsignup" method="post">
+        <form id="signupform" action="authsignup" method="post">
           <h2>Membership Sign Up</h2>
           <br />
           <label for="firstName">Full Name</label>
-          <input type="text" id="firstName" name="firstName" required />
+          <input type="text" id="firstName" name="firstName"/>
           <label for="district">District</label>
-          <select name="district" required>
+          <select name="district" id="district">
             <option value="" selected disabled hidden>Pilih Kota</option>
           </select>
           <label for="subDistrict">Sub District</label>
-          <select name="subDistrict" disabled required>
+          <select name="subDistrict" id="subDistrict" disabled >
             <option value="" selected disabled hidden>Pilih Kecamatan</option>
           </select>
-          <label for="urbanVillage">Urban Village</label>
-          <select name="urbanVillage" disabled required>
+          <label for="urbanVillage" >Urban Village</label>
+          <select name="urbanVillage" id="urbanVillage" disabled >
             <option value="" selected disabled hidden>Pilih Kelurahan</option>
           </select>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required />
+          <label for="alamat">Alamat</label>
+          <input type="text" id="alamat" name="alamat"/>
+          <label for="username">Username (min. 8 character)</label>
+          <input type="text" id="username" name="username"/>
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
+          <input type="password" id="password" name="password"/>
           <label for="repassword">Re-enter Password</label>
-          <input type="password" id="repassword" name="repassword" required />
-
+          <input type="password" id="repassword" name="repassword"/>
+          <div id="err"></div>
           <input type="submit" value="Create Member" />
         </form>
         <div class="here">

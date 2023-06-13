@@ -3,6 +3,7 @@ import session from "express-session";
 import mysql from "mysql";
 import path from "path";
 import crypto from "crypto";
+import { name } from "ejs";
 const PORT = 8080;
 const app = express();
 app.set("view engine", "ejs");
@@ -126,6 +127,18 @@ const getMember = (conn, username, password) => {
     });
   });
 };
+const insertNewMember = (conn, username, password, nama, alamat, idKelurahan) =>{
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO user(Username, Password, namaMember, Alamat, idKelurahan) VALUES(?, ?, ?, ?, ?)`;
+    conn.query(sql,[username, password, nama, alamat, idKelurahan], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+}
 const getUsername = (conn) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT UsernameAdmin,Username FROM User `;
@@ -155,13 +168,27 @@ app.get("/kelurahan", async (req, res) => {
   const kelurahan = await getKelurahan(conn, req.query.idKecamatan);
   res.send({ kelurahan });
 });
-app.get("/", (req, res) => {
+
+const middlewareMember = (req, res, next) =>{
+  if(!req.session.isLogin || req.session.isLogin == "user"){
+    next();
+  } else{
+    res.redirect("/forbidden");      
+  }
+}
+app.get("/", middlewareMember, (req, res) => {
   res.render("home", {
     isLogin: req.session.isLogin,
   });
 });
 app.get("/login", (req, res) => {
-  res.render("login");
+  if(req.session.isLogin){
+    res.redirect('/forbidden');
+  }
+  res.render("login",{
+    err: false,
+    sgp: false
+  });
 });
 app.post("/authlogin", async (req, res) => {
   let username = req.body.username;
@@ -177,14 +204,28 @@ app.post("/authlogin", async (req, res) => {
       req.session.isLogin = "user";
       res.redirect("/");
     } else {
-      res.redirect("/");
+      res.render("login",{
+        sgp: false,
+        err: true
+      });
     }
   }
 });
 
-app.post("/authsignup", (req, res) => {
+app.post("/authsignup", async (req, res) => {
   console.log("prosesSignup");
-  res.redirect("/");
+  let nameMember = req.body.firstName;
+  let urbanVillage = req.body.urbanVillage;
+  let username = req.body.username;
+  let password = req.body.password;
+  let hashpass = crypto.createHash("sha256").update(password).digest("base64");
+  let alamat = req.body.alamat;
+
+  let inserted = await insertNewMember(conn, username, hashpass, nameMember, alamat, urbanVillage);
+  res.render("login", {
+    sgp: true,
+    err: false
+  });
 });
 
 app.get("/signup", (req, res) => {
@@ -213,7 +254,10 @@ app.get("/table", async (req, res) => {
 
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
-  data = { hari: formattedDate, jam: time, harga: 40000 };
+  const harga = 40000;
+  var formattedHarga = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" , maximumFractionDigits: 0}).format(harga);  
+
+  data = { hari: formattedDate, jam: time, harga: formattedHarga};
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);

@@ -82,3 +82,11 @@ p {
 #forgotPassForm h2{
   text-align: start;
 }
+
+#err{
+  color: #d62c56;
+}
+
+.hidden{
+  display: none;
+}

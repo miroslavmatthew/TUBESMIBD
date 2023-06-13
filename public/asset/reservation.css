@@ -114,3 +114,11 @@ select {
 h2{
   font-size: 35px;
 }
+
+button{
+  cursor: pointer;
+}
+
+input[type='submit']{
+  cursor: pointer;
+}

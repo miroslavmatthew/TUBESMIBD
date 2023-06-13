@@ -26,10 +26,17 @@
       <div class="form">
         <form method="post" action="authlogin">
           <h2>Log In</h2>
+          <br>
+          <%if(sgp){%>
+            <p>You Have Been Successfully Signed Up! Please Log In.</p>
+          <%}%>
           <label for="username">Username</label>
           <input type="text" id="username" name="username" />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" />
+          <%if(err){%>
+            <p id="err">*Wrong username or pass!*</p>
+          <%}%>
           <p id="forgot" onclick="window.location.href='/forgotpass';">
             Forgot Password?
           </p>

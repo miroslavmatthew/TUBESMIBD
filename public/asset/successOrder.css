@@ -67,3 +67,7 @@ body {
     flex-grow: 1; 
     justify-content: center;
   }
+
+  button{
+    cursor: pointer;
+  }

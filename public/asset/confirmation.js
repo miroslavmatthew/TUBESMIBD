@@ -34,7 +34,10 @@ confirm.addEventListener("click", (event) => {
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "harga";
-  input.value = document.getElementById("harga").textContent;
+  var unformattedNumber = document.getElementById("harga").textContent.replace(/\D/g, "");
+  var integerValue = parseInt(unformattedNumber);
+
+  input.value = integerValue;
 
   form.appendChild(input);
   var input = document.createElement("input");
