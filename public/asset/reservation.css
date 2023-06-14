@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 body {
@@ -111,14 +111,17 @@ select {
   margin-right: 50px;
 }
 
-h2{
+h2 {
   font-size: 35px;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-input[type='submit']{
+input[type="submit"] {
   cursor: pointer;
+}
+#err {
+  color: #cb0033;
 }

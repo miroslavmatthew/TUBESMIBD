@@ -127,18 +127,29 @@ const getMember = (conn, username, password) => {
     });
   });
 };
-const insertNewMember = (conn, username, password, nama, alamat, idKelurahan) =>{
+const insertNewMember = (
+  conn,
+  username,
+  password,
+  nama,
+  alamat,
+  idKelurahan
+) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT INTO user(Username, Password, namaMember, Alamat, idKelurahan) VALUES(?, ?, ?, ?, ?)`;
-    conn.query(sql,[username, password, nama, alamat, idKelurahan], (err, conn) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(conn);
+    conn.query(
+      sql,
+      [username, password, nama, alamat, idKelurahan],
+      (err, conn) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(conn);
+        }
       }
-    });
+    );
   });
-}
+};
 const getUsername = (conn) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT UsernameAdmin,Username FROM User `;
@@ -169,25 +180,32 @@ app.get("/kelurahan", async (req, res) => {
   res.send({ kelurahan });
 });
 
-const middlewareMember = (req, res, next) =>{
-  if(!req.session.isLogin || req.session.isLogin == "user"){
+const middlewareMember = (req, res, next) => {
+  if (!req.session.isLogin || req.session.isLogin == "user") {
     next();
-  } else{
-    res.redirect("/forbidden");      
+  } else {
+    res.redirect("/forbidden");
   }
-}
+};
+const middlewareAdmin = (req, res, next) => {
+  if (req.session.isLogin == "admin") {
+    next();
+  } else {
+    res.redirect("/forbidden");
+  }
+};
 app.get("/", middlewareMember, (req, res) => {
   res.render("home", {
     isLogin: req.session.isLogin,
   });
 });
 app.get("/login", (req, res) => {
-  if(req.session.isLogin){
-    res.redirect('/forbidden');
+  if (req.session.isLogin) {
+    res.redirect("/forbidden");
   }
-  res.render("login",{
+  res.render("login", {
     err: false,
-    sgp: false
+    sgp: false,
   });
 });
 app.post("/authlogin", async (req, res) => {
@@ -204,9 +222,9 @@ app.post("/authlogin", async (req, res) => {
       req.session.isLogin = "user";
       res.redirect("/");
     } else {
-      res.render("login",{
+      res.render("login", {
         sgp: false,
-        err: true
+        err: true,
       });
     }
   }
@@ -221,11 +239,16 @@ app.post("/authsignup", async (req, res) => {
   let hashpass = crypto.createHash("sha256").update(password).digest("base64");
   let alamat = req.body.alamat;
 
-  let inserted = await insertNewMember(conn, username, hashpass, nameMember, alamat, urbanVillage);
-  res.render("login", {
-    sgp: true,
-    err: false
-  });
+  let inserted = await insertNewMember(
+    conn,
+    username,
+    hashpass,
+    nameMember,
+    alamat,
+    urbanVillage
+  );
+  req.session.isLogin = "user";
+  res.redirect("/");
 });
 
 app.get("/signup", (req, res) => {
@@ -255,9 +278,13 @@ app.get("/table", async (req, res) => {
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
   const harga = 40000;
-  var formattedHarga = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" , maximumFractionDigits: 0}).format(harga);  
+  var formattedHarga = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(harga);
 
-  data = { hari: formattedDate, jam: time, harga: formattedHarga};
+  data = { hari: formattedDate, jam: time, harga: formattedHarga };
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);
@@ -275,7 +302,7 @@ app.post("/confirmation", (req, res) => {
   res.render("confirmation", {
     datas: data,
     noMeja: noMej,
-    isLogin: req.session.isLogin
+    isLogin: req.session.isLogin,
   });
 });
 app.post("/success", (req, res) => {
@@ -287,6 +314,9 @@ app.get("/ticket", (req, res) => {
 });
 app.get("/trans", (req, res) => {
   res.render("trans_history");
+});
+app.get("/homeAdmin", middlewareAdmin, (req, res) => {
+  res.render("home_admin");
 });
 app.get("/update", (req, res) => {
   res.render("update_membership");

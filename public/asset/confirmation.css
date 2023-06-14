@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 body {
@@ -133,4 +133,7 @@ hr {
 .inputEmail p {
   margin: 0;
   font-size: 20px;
+}
+#err {
+  color: #cb0033;
 }

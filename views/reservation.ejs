@@ -5,11 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/reservation.css" />
-    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/d53ca09937.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./asset/reservation.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -21,28 +27,29 @@
       />
       <div style="flex-grow: 1"></div>
       <%if(!isLogin){%>
-        <button onclick="window.location.href='/signup';" id="join">
-          Join now
-        </button>
-        <button onclick="window.location.href='/login';" id="login">
-          Log in
-        </button>
+      <button onclick="window.location.href='/signup';" id="join">
+        Join now
+      </button>
+      <button onclick="window.location.href='/login';" id="login">
+        Log in
+      </button>
       <% }else{ %>
-        <i class="fa-regular fa-user fa-xl"></i>
+      <i class="fa-regular fa-user fa-xl"></i>
       <% } %>
     </div>
 
     <div class="reservation">
       <div class="form">
-        <form method = "get" action="table">
+        <form id="forms" method="get" action="table">
           <h2>Pesan Tiket Billiar</h2>
-          <br>
+          <br />
           <label for="date">Tanggal Bermain</label>
-          <input type="date" id="username" name="date" required/>
+          <input type="date" id="date" name="date" />
           <label for="time">Jam Bermain</label>
-          <select name="time" required>
+          <select id="time" name="time">
             <option value="" selected disabled hidden>Pilih Waktu</option>
           </select>
+          <div id="err"></div>
           <input type="submit" value="Submit" />
         </form>
       </div>
