@@ -8,28 +8,27 @@ html{
   background-color: #151515;
 }
 body {
-  background-image: url("image 2.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   overflow-x: hidden;
   height: 100%;
 }
 .login {
-  margin-top: 75px;
+  background-image: url("image 2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  margin-top: 75px;
-  height: 100vh;
+  /* margin-top: 75px; */
+  height: 1200px;
 }
 .form {
   display: flex;
   background: rgba(32, 32, 32, 0.93);
   padding: 40px;
   border-radius: 30px;
-  width: 30%;
+  width: 40%;
   align-items: center;
   gap: 30px;
   row-gap: 10px;
