@@ -127,10 +127,10 @@ const getMember = (conn, username, password) => {
     });
   });
 };
-const getAlluser = (conn) => {
+const getNonMember = (conn, email) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM User `;
-    conn.query(sql, (err, conn) => {
+    const sql = `SELECT * FROM User where namaPemesan = ? `;
+    conn.query(sql, [email], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -162,6 +162,30 @@ const insertNewMember = (
     );
   });
 };
+const insertNonMember = (conn, email) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO user( namaPemesan) VALUES(?)`;
+    conn.query(sql, [email], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const insertTransaksi = (conn, idU, idTiket, tgl, jam) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO Transaksi(idU, idTiket, tglTransaksi, waktuTransaksi) VALUES(?, ?, ?, ?)`;
+    conn.query(sql, [idU, idTiket, tgl, jam], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const getUsername = (conn) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT UsernameAdmin,Username FROM User `;
@@ -178,6 +202,18 @@ const insertTiket = (conn, status, tgl, jam, harga, noMej) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT INTO Tiket(Status, Tanggal, Jam, hargaTiket, noMeja) VALUES(?, ?, ?, ?, ?) `;
     conn.query(sql, [status, tgl, jam, harga, noMej], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getListTiket = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Tiket `;
+    conn.query(sql, (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -244,7 +280,7 @@ app.post("/authlogin", async (req, res) => {
   } else {
     if (member.length != 0) {
       req.session.isLogin = "user";
-      req.session.id = member[0].idU;
+      req.session.ids = member[0].idU;
       res.redirect("/");
     } else {
       res.render("login", {
@@ -273,8 +309,9 @@ app.post("/authsignup", async (req, res) => {
     urbanVillage
   );
   req.session.isLogin = "user";
-  let user = await getAlluser(conn);
-  req.session.id = user.length + 1;
+  let user = await getMember(conn, username, hashpass);
+  console.log(user);
+  req.session.ids = user[0].idU;
   res.redirect("/");
 });
 
@@ -332,23 +369,66 @@ app.post("/confirmation", (req, res) => {
     isLogin: req.session.isLogin,
   });
 });
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Zero-padding the month
+  const day = String(date.getDate()).padStart(2, "0"); // Zero-padding the day
+
+  return `${year}-${month}-${day}`;
+}
+
+function formatTime(date) {
+  const hours = String(date.getHours()).padStart(2, "0"); // Zero-padding the hours
+  const minutes = String(date.getMinutes()).padStart(2, "0"); // Zero-padding the minutes
+  const seconds = String(date.getSeconds()).padStart(2, "0"); // Zero-padding the seconds
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 app.post("/success", async (req, res) => {
+  const currentDate = new Date();
+  const formattedDate = formatDate(currentDate);
+  const formattedTime = formatTime(currentDate);
+  let nome = req.body.noMeja.substring(req.body.noMeja.indexOf("#") + 1).trim();
+  let insert = await insertTiket(
+    conn,
+    "Booked",
+    req.body.hari,
+    req.body.jam,
+    req.body.harga,
+    nome
+  );
   if (req.session.isLogin) {
-    let nome = req.body.noMeja.substring(tableText.indexOf("#") + 1).trim();
-    let insert = await insertTiket(
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
       conn,
-      "Booked",
-      req.body.hari,
-      req.body.jam,
-      req.body.harga,
-      nome
+      req.session.ids,
+      listTiket.length,
+      formattedDate,
+      formattedTime
     );
-    res.render("successOrder");
+  } else {
+    let regis = await insertNonMember(conn, req.body.email);
+    let getids = await getNonMember(conn, req.body.email);
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
+      conn,
+      getids[0].idU,
+      listTiket.length,
+      formattedDate,
+      formattedTime
+    );
+    res.render("successOrder", {
+      isLogin: req.session.isLogin,
+    });
   }
   console.log(req.body);
 });
 app.get("/ticket", (req, res) => {
   res.render("ticket");
+});
+app.get("/history", (req, res) => {
+  res.render("trans_history");
 });
 app.get("/trans", (req, res) => {
   res.render("trans_history");

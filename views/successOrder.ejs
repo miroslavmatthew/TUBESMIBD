@@ -5,9 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="asset/successOrder.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -20,10 +23,12 @@
       <div style="flex-grow: 1"></div>
     </div>
     <h2>Thank You For Ordering!</h2>
+    <%if(!isLogin){%>
     <h2>The e-Ticket Will Be Emailed to You in Several Minutes</h2>
-    <br>
-    <button onclick="window.location.href='/';" id="home">
-      Main menu
-    </button>
+    <% }else{ %>
+    <h2>The e-Ticket Will Be Sent to Your Account in Several Minutes</h2>
+    <% } %>
+    <br />
+    <button onclick="window.location.href='/';" id="home">Main menu</button>
   </body>
 </html>
