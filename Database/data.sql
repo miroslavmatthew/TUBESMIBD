@@ -74,7 +74,12 @@ ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-UTrans` FOREIGN KEY (`idU`) REFERENCE
 
 ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-TikTrans` FOREIGN KEY (`idTiket`) REFERENCES `Tiket`(`idTiket`);
 
-alter table Tiket AUTO_INCREMENT=1;
+-- delet dl primary key nya sm fk nya
+ALTER TABLE user
+MODIFY COLUMN idU INT AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE Transaksi
+ADD FOREIGN KEY (idU) REFERENCES user(idU);
+
 
 ALTER TABLE MejaB ADD CONSTRAINT UnikNo UNIQUE (posisiM);
 
