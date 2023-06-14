@@ -34,7 +34,9 @@ confirm.addEventListener("click", (event) => {
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "harga";
-  var unformattedNumber = document.getElementById("harga").textContent.replace(/\D/g, "");
+  var unformattedNumber = document
+    .getElementById("harga")
+    .textContent.replace(/\D/g, "");
   var integerValue = parseInt(unformattedNumber);
 
   input.value = integerValue;
@@ -43,7 +45,11 @@ confirm.addEventListener("click", (event) => {
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "email";
-  input.value = document.getElementById("email").value;
+  if (document.getElementById("email") != null) {
+    input.value = document.getElementById("email").value;
+  } else {
+    input.value = "";
+  }
 
   form.appendChild(input);
   document.body.appendChild(form);

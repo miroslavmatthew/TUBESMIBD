@@ -127,6 +127,18 @@ const getMember = (conn, username, password) => {
     });
   });
 };
+const getAlluser = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User `;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const insertNewMember = (
   conn,
   username,
@@ -220,6 +232,7 @@ app.post("/authlogin", async (req, res) => {
   } else {
     if (member.length != 0) {
       req.session.isLogin = "user";
+      req.session.id = member[0].idU;
       res.redirect("/");
     } else {
       res.render("login", {
@@ -248,6 +261,8 @@ app.post("/authsignup", async (req, res) => {
     urbanVillage
   );
   req.session.isLogin = "user";
+  let user = await getAlluser(conn);
+  req.session.id = user.length + 1;
   res.redirect("/");
 });
 
@@ -306,6 +321,8 @@ app.post("/confirmation", (req, res) => {
   });
 });
 app.post("/success", (req, res) => {
+  if (req.session.isLogin) {
+  }
   console.log(req.body);
   res.render("successOrder");
 });
