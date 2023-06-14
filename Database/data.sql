@@ -50,7 +50,8 @@ CREATE TABLE `Transaksi` (
    `waktuTransaksi` time
 );
 
-ALTER TABLE `User`ADD CONSTRAINT `PK-U` PRIMARY KEY (idU);
+ALTER TABLE user
+MODIFY COLUMN idU INT AUTO_INCREMENT PRIMARY KEY;
 
 ALTER TABLE `Kelurahan`ADD CONSTRAINT `PK-Kel` PRIMARY KEY (idKelurahan);
 
@@ -75,8 +76,7 @@ ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-UTrans` FOREIGN KEY (`idU`) REFERENCE
 ALTER TABLE `Transaksi` ADD CONSTRAINT `FK-TikTrans` FOREIGN KEY (`idTiket`) REFERENCES `Tiket`(`idTiket`);
 
 -- delet dl primary key nya sm fk nya
-ALTER TABLE user
-MODIFY COLUMN idU INT AUTO_INCREMENT PRIMARY KEY;
+
 ALTER TABLE Transaksi
 ADD FOREIGN KEY (idU) REFERENCES user(idU);
 
