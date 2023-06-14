@@ -19,12 +19,6 @@
         onclick="window.location.href='/';"
       />
       <h2>Order Confirmation Form</h2>
-      <button onclick="window.location.href='/signup';" id="join">
-        Join now
-      </button>
-      <button onclick="window.location.href='/login';" id="login">
-        Log in
-      </button>
     </div>
     <div class="info">
       <div>
@@ -35,22 +29,30 @@
               <p>Hari, Tanggal</p>
               <p>Waktu</p>
               <p>Biaya per Jam</p>
+              <% if(!isLogin){ %>
               <label for="email">Email</label>
+              <%}  %>
             </div>
             <div class="colon">
               <p>:</p>
               <p>:</p>
               <p>:</p>
-              <p>:</p>
-            </div>
+              <% if(!isLogin){ %>
+                <p>:</p>
+              <%}  %>
+              </div>
             <div class="val">
               <p id="hari"><%= datas.hari %></p>
               <p id="jam"><%= datas.jam %></p>
               <p id="harga"><%= datas.harga %></p>
+
+              <% if(!isLogin){ %>
               <div class="inputEmail">
                 <input type="text" id="email" name="email" required />
                 <p>*required</p>
               </div>
+
+              <%}  %>
             </div>
           </div>
           <hr />

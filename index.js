@@ -275,6 +275,7 @@ app.post("/confirmation", (req, res) => {
   res.render("confirmation", {
     datas: data,
     noMeja: noMej,
+    isLogin: req.session.isLogin
   });
 });
 app.post("/success", (req, res) => {
