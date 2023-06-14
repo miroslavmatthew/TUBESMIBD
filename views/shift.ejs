@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="asset/shift.css" />
     <link href='https://fonts.googleapis.com/css?family=Poppins'rel='stylesheet'>
+    <script src="asset/shift.js" defer></script>
     <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
@@ -26,7 +27,7 @@
                 <i class="fa-solid fa-pen-to-square"></i>
             </div>
             
-            <button type="button">Add Shift</button>
+            <button onclick="openForm()">Add Shift</button>
         </div>
         <div class="a">
             <div class="info">
@@ -66,6 +67,22 @@
                         <div class="garis2"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupForm" class="popup-form">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeForm()">&times;</span>
+            <div class="form">
+                <h2>Tambah Shift</h2>
+                <form>
+                    <div class="b">
+                        <label for="jam">Jam Bermain</label>
+                        <select name="time" required></select>
+                    </div>
+                    <input type="submit" value="Submit">
+                </form>
             </div>
         </div>
     </div>
