@@ -174,6 +174,18 @@ const getUsername = (conn) => {
     });
   });
 };
+const insertTiket = (conn, status, tgl, jam, harga, noMej) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO Tiket(Status, Tanggal, Jam, hargaTiket, noMeja) VALUES(?, ?, ?, ?, ?) `;
+    conn.query(sql, [status, tgl, jam, harga, noMej], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 let data;
 app.get("/username", async (req, res) => {
   const lsusername = await getUsername(conn);
@@ -320,11 +332,20 @@ app.post("/confirmation", (req, res) => {
     isLogin: req.session.isLogin,
   });
 });
-app.post("/success", (req, res) => {
+app.post("/success", async (req, res) => {
   if (req.session.isLogin) {
+    let nome = req.body.noMeja.substring(tableText.indexOf("#") + 1).trim();
+    let insert = await insertTiket(
+      conn,
+      "Booked",
+      req.body.hari,
+      req.body.jam,
+      req.body.harga,
+      nome
+    );
+    res.render("successOrder");
   }
   console.log(req.body);
-  res.render("successOrder");
 });
 app.get("/ticket", (req, res) => {
   res.render("ticket");
