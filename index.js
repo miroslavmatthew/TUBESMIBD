@@ -442,10 +442,10 @@ app.post("/success", async (req, res) => {
       formattedDate,
       formattedTime
     );
-    res.render("successOrder", {
+    
+  }res.render("successOrder", {
       isLogin: req.session.isLogin,
     });
-  }
   console.log(req.body);
 });
 app.get("/ticket", (req, res) => {
