@@ -222,6 +222,30 @@ const getListTiket = (conn) => {
     });
   });
 };
+const addTable = (conn, nomor) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO mejab(noMeja, posisiM) VALUES(?, ?)`;
+    conn.query(sql,[nomor, nomor], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const delTable = (conn, nomor) => {
+  return new Promise((resolve, reject) => {
+    const sql = `DELETE FROM mejab WHERE noMeja = ?`;
+    conn.query(sql,[nomor], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 let data;
 app.get("/username", async (req, res) => {
   const lsusername = await getUsername(conn);
@@ -230,6 +254,12 @@ app.get("/username", async (req, res) => {
 app.get("/kota", async (req, res) => {
   const kota = await getKota(conn);
   res.send({ kota });
+});
+app.get("/addtable", async (req, res) => {
+  const added = await addTable(conn, req.query.no);
+});
+app.get("/deltable", async (req, res) => {
+  const deleted = await delTable(conn, req.query.no);
 });
 app.get("/kecamatan", async (req, res) => {
   const kecamatan = await getKecamatan(conn, req.query.idKota);
@@ -433,8 +463,12 @@ app.get("/history", (req, res) => {
 app.get("/trans", (req, res) => {
   res.render("trans_history");
 });
-app.get("/homeAdmin", middlewareAdmin, (req, res) => {
-  res.render("home_admin");
+app.get("/admin", async(req, res) => {
+
+  const tables = await getTables(conn);
+  res.render("home_admin", {
+    tables: tables
+  });
 });
 app.get("/update", (req, res) => {
   res.render("update_membership");

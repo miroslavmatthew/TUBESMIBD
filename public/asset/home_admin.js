@@ -2,12 +2,30 @@ function openForm() {
     document.getElementById("popupForm").style.display = "block";
 }
 
+const confirm1 = document.querySelector("#submit1");
+confirm1.addEventListener('click', submitForm);
+
+
+let delValue;
+
+
+function submitForm(){
+    fetch(`addtable?no=${confirm1.value}`)
+    window.location.href = "/admin";
+}
+
+function submitForm2(){
+    fetch(`deltable?no=${delValue}`)
+    window.location.href = "/admin";
+}
+
 function closeForm() {
     document.getElementById("popupForm").style.display = "none";
 }
 
-function openForm2() {
+function openForm2(value) {
     document.getElementById("popupForm2").style.display = "block";
+    delValue = value;
 }
 
 function closeForm2() {

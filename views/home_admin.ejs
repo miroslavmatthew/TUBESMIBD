@@ -29,50 +29,12 @@
             <button onclick="openForm3()">Update Price</button>
         </div>
         <div class="tables">
+            <%for(let i = 0; i < tables.length; i++){%>
             <div class="table">
-                Table #1
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
+                Table #<%=tables[i].noMeja%>
+                <i class="fa-solid fa-trash" onclick="openForm2('<%=tables[i].noMeja%>')"></i>
             </div>
-            <div class="table">
-                Table #2
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #3
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #4
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #5
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
-            <div class="table">
-                Table #6
-                <i class="fa-solid fa-trash" onclick="openForm2()"></i>
-            </div>
+            <% } %>
         </div>
     </main>
 
@@ -80,11 +42,11 @@
         <div class="popup-content">
             <span class="close-btn" onclick="closeForm()">&times;</span>
             <div class="del">
-                <h2>You are Going to Add
-                    Table#..</h2>
+                <h2>Add Table#<%=tables.length + 1%>?</h2>
+                <input type="text" name="newTable" style="display: none;" value="<%=tables.length + 1%>">
                 <div class="but">
                     <button class="button-pop" onclick="closeForm()">Cancel</button>
-                    <button class="button-pop">Confirm</button>
+                    <button class="button-pop" id="submit1" value="<%=tables.length + 1%>">Confirm</button>
                 </div>
             </div>
         </div>
@@ -95,10 +57,10 @@
             <span class="close-btn" onclick="closeForm2()">&times;</span>
             <div class="del">
                 <h2>Are You Sure Want to 
-                    Delete Table#..?</h2>
+                    Delete This Table?</h2>
                 <div class="but">
                     <button class="button-pop" onclick="closeForm2()">Cancel</button>
-                    <button class="button-pop">Confirm</button>
+                    <button class="button-pop" id="submit2" onclick="submitForm2()">Confirm</button>
                 </div>
             </div>
         </div>
