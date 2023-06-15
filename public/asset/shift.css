@@ -108,8 +108,8 @@ button,input[type=submit]{
     border: 2px solid #CB0033;
     border-radius: 10px;
     background-color: #CB0033;
-    height: 35px;
-    width: 150px;
+    height: 5vh;
+    width: 10vw;
     color: #FFFFFF;
     font-size: 18px;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
@@ -162,6 +162,7 @@ form {
     margin-top: 10px;
     grid-template-rows: 90% 20%;
     height: 50vh;
+    justify-items: center
 }
 
 .b {
@@ -173,7 +174,7 @@ form {
 
 select {
     background: #d9d9d9;
-    width: 100%; 
+    width: 150%; 
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
@@ -202,4 +203,8 @@ select {
     display: flex;
     gap: 20px;
     justify-content: center;
+}
+
+h2{
+    text-align: center;
 }

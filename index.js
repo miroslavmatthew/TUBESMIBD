@@ -442,3 +442,6 @@ app.get("/update", (req, res) => {
 app.listen(PORT, () => {
   console.log("server ready");
 });
+app.get("/shift",middlewareAdmin, (req, res) => {
+  res.render("shift");
+});
