@@ -300,7 +300,7 @@ app.post("/authlogin", async (req, res) => {
   let member = await getMember(conn, username, hashpass);
   if (admin.length != 0) {
     req.session.isLogin = "admin";
-    res.redirect("/homeAdmin");
+    res.redirect("/admin");
   } else {
     if (member.length != 0) {
       req.session.isLogin = "user";
@@ -421,59 +421,55 @@ app.post("/success", async (req, res) => {
     req.body.jam,
     req.body.harga,
     nome
+  );
+  if (req.session.isLogin) {
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
+      conn,
+      req.session.ids,
+      listTiket.length,
+      formattedDate,
+      formattedTime
     );
-    if (req.session.isLogin) {
-      let listTiket = await getListTiket(conn);
-      let trans = await insertTransaksi(
-        conn,
-        req.session.ids,
-        listTiket.length,
-        formattedDate,
-        formattedTime
-        );
-      } else {
-        let regis = await insertNonMember(conn, req.body.email);
-        let getids = await getNonMember(conn, req.body.email);
-        let listTiket = await getListTiket(conn);
-        let trans = await insertTransaksi(
-          conn,
-          getids[0].idU,
-          listTiket.length,
-          formattedDate,
-          formattedTime
-          );
-          res.render("successOrder", {
-            isLogin: req.session.isLogin,
-          });
-        }
-        console.log(req.body);
-      });
-      app.get("/ticket", (req, res) => {
-        res.render("ticket");
-      });
-      app.get("/trans", (req, res) => {
-        res.render("trans_history");
-      });
+  } else {
+    let regis = await insertNonMember(conn, req.body.email);
+    let getids = await getNonMember(conn, req.body.email);
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
+      conn,
+      getids[0].idU,
+      listTiket.length,
+      formattedDate,
+      formattedTime
+    );
+    res.render("successOrder", {
+      isLogin: req.session.isLogin,
+    });
+  }
+  console.log(req.body);
+});
+app.get("/ticket", (req, res) => {
+  res.render("ticket");
+});
+app.get("/history", (req, res) => {
+  res.render("trans_history");
+});
+app.get("/trans", (req, res) => {
+  res.render("trans_history");
+});
+app.get("/admin", async(req, res) => {
 
-      app.get("/addtable", async (req, res) => {
-        const added = await addTable(conn, req.query.no);
-      });
-      app.get("/deltable", async (req, res) => {
-        const deleted = await delTable(conn, req.query.no);
-      });
-      app.get("/admin", async(req, res) => {
-        
-        const tables = await getTables(conn);
-        res.render("home_admin", {
-          tables: tables
-        });
-      });
-      app.get("/update", (req, res) => {
-        res.render("update_membership");
-      });
-      app.listen(PORT, () => {
-        console.log("server ready");
-      });
-      app.get("/shift", (req, res) => {
-        res.render("shift");
-      });
+  const tables = await getTables(conn);
+  res.render("home_admin", {
+    tables: tables
+  });
+});
+app.get("/update", (req, res) => {
+  res.render("update_membership");
+});
+app.listen(PORT, () => {
+  console.log("server ready");
+});
+app.get("/shift",middlewareAdmin, (req, res) => {
+  res.render("shift");
+});
