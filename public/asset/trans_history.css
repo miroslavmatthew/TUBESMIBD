@@ -55,7 +55,7 @@ body {
 
 
 #ticketList{
-  display: grid;
+  /* display: grid; */
   width: 80%;
   height: 65%;
   margin-bottom: 5%;
