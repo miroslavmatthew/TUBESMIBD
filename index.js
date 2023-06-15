@@ -222,6 +222,18 @@ const getListTiket = (conn) => {
     });
   });
 };
+const gethistory = (conn, idu) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=?;`;
+    conn.query(sql,[idu], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const addTable = (conn, nomor) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT INTO mejab(noMeja, posisiM) VALUES(?, ?)`;
@@ -456,8 +468,12 @@ app.post("/success", async (req, res) => {
 app.get("/ticket", (req, res) => {
   res.render("ticket");
 });
-app.get("/history", (req, res) => {
-  res.render("trans_history");
+app.get("/history",async (req, res) => {
+  let history = await gethistory(conn,req.session.ids);
+  console.log(history);
+  res.render("trans_history",{
+    historys:history,
+  });
 });
 
 app.get("/admin", async(req, res) => {

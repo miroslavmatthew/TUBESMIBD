@@ -28,36 +28,15 @@
         <div>Hello, Here is your transaction history</div>
       </div>
       <table id="ticketList">
+        <%for(let i = 0; i < historys.length; i++){%>
         <tr>
-          <td>Tanggal</td>
-          <td>Nomor Meja</td>
-          <td>Jam</td>
-          <td><button class="statusBtn" value="Status">Status</button></td>
+          <td><%= historys[i].Tanggal.toLocaleDateString("en-US") %></td>
+          <td><%= historys[i].noMeja %></td>
+          <td><%= historys[i].Jam %></td>
+          <td><button class="statusBtn" value="Status"><%= historys[i].Status %></button></td>
         </tr>
-        <tr>
-          <td>Tanggal</td>
-          <td>Nomor Meja</td>
-          <td>Jam</td>
-          <td><button class="statusBtn" value="Status">Status</button></td>
-        </tr>
-        <tr>
-          <td>Tanggal</td>
-          <td>Nomor Meja</td>
-          <td>Jam</td>
-          <td><button class="statusBtn" value="Status">Status</button></td>
-        </tr>
-        <tr>
-          <td>Tanggal</td>
-          <td>Nomor Meja</td>
-          <td>Jam</td>
-          <td><button class="statusBtn" value="Status">Status</button></td>
-        </tr>
-        <tr>
-          <td>Tanggal</td>
-          <td>Nomor Meja</td>
-          <td>Jam</td>
-          <td><button class="statusBtn" value="Status">Status</button></td>
-        </tr>
+        <% }%>
+       
       </table>
       <footer>
         <img src="asset/image 5.png" alt="">
