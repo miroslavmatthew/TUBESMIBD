@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins'rel='stylesheet'>
+    <link rel="stylesheet" href="asset/transaction_report_admin.css" />
+    <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <img
+          src="asset/Group 3.png"
+          style="width: 200px"
+          onclick="window.location.href='/';"
+          id="logoJudul"
+        />
+        <div style="flex-grow: 1"></div>
+        <i class="fa-regular fa-user fa-xl"></i>
+    </div>
+    <main>
+        <div class="con">
+            <div class="search">
+                <h2>TRANSACTION REPORT</h2>
+                <div class="filter">
+                    <button>Table</button>
+                    <select name="status" id="status">
+                        <option value="all">All</option> 
+                        <option value="member">Member</option> 
+                    </select>
+                    <select name="by" id="by">
+                        <option value="district">District</option> 
+                        <option value="subDistrict">Sub District</option> 
+                        <option value="urbanVillage">Urban Village</option> 
+                    </select>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
