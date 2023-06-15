@@ -121,6 +121,13 @@ button{
     right: 15px;
     cursor: pointer;
 }
+
+
+#err{
+    color: #CB0033;
+    text-align: center;
+  }
+  
 .but{
     display: flex;
     gap: 20px;

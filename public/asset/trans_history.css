@@ -55,6 +55,7 @@ body {
 
 
 #ticketList{
+  display: grid;
   width: 80%;
   height: 65%;
   margin-bottom: 5%;
@@ -72,15 +73,29 @@ table{
   margin: 20px 0;
   font-family: Arial, sans-serif;
   font-size: 14px;
+  width: 100%;
+  height: 100%;
 }
 
 td{
   padding: 8px;
   width: 25%;
-  border-bottom: 1px solid #202020;
   text-align: center;
 }
-
+tbody{
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+}
+tr, th{
+  border-bottom: 1px solid #202020;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 tr:hover{
   background-color: #bfbfbf;
 }
@@ -88,7 +103,7 @@ tr:hover{
 .statusBtn{
   background-color: #CB0033;
   width: 40%;
-  height: 50%;
+  height: 50px;
   border-radius: 40px;
   border: 4px solid #7D001F;
   color: #EDEDED;

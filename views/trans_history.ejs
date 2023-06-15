@@ -27,7 +27,13 @@
       <div class="greet">
         <div>Hello, Here is your transaction history</div>
       </div>
-      <table id="ticketList">
+      <table id="ticketList"> 
+        <tr>
+          <th>Tanggal</th>
+          <th>Nomor Meja</th>
+          <th>Jam</th>
+          <th>Status</th>
+        </tr>
         <%for(let i = 0; i < historys.length; i++){%>
         <tr>
           <td><%= historys[i].Tanggal.toLocaleDateString("en-US") %></td>

@@ -15,8 +15,18 @@ function submitForm(){
 }
 
 function submitForm2(){
-    fetch(`deltable?no=${delValue}`)
-    window.location.href = "/admin";
+    fetch(`deltable?no=${delValue}`).then(function (response) {
+        return response.text();
+      })
+      .then(function (text) {
+        err = JSON.parse(text).msg
+        if(err == "refresh"){
+            window.location.href = "/admin";
+        } else{
+            document.querySelector("#err").textContent = err;
+        }
+
+    })
 }
 
 function closeForm() {
@@ -24,6 +34,7 @@ function closeForm() {
 }
 
 function openForm2(value) {
+    document.querySelector("#err").textContent = "";
     document.getElementById("popupForm2").style.display = "block";
     delValue = value;
 }

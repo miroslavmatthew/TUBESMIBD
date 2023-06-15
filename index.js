@@ -222,6 +222,18 @@ const getListTiket = (conn) => {
     });
   });
 };
+const checkMejaTiket = (conn, noMeja) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Tiket Where noMeja = ? AND Status = 'Booked'`;
+    conn.query(sql, [noMeja], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const gethistory = (conn, idu) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=?;`;
@@ -274,12 +286,6 @@ app.get("/kecamatan", async (req, res) => {
 app.get("/kelurahan", async (req, res) => {
   const kelurahan = await getKelurahan(conn, req.query.idKecamatan);
   res.send({ kelurahan });
-});
-app.get("/addtable", async (req, res) => {
-  const added = await addTable(conn, req.query.no);
-});
-app.get("/deltable", async (req, res) => {
-  const deleted = await delTable(conn, req.query.no);
 });
 const middlewareMember = (req, res, next) => {
   if (!req.session.isLogin || req.session.isLogin == "user") {
@@ -362,17 +368,17 @@ app.post("/authsignup", async (req, res) => {
   app.get("/reservation", (req, res) => {
     res.render("reservation", {
       isLogin: req.session.isLogin,
+    });
   });
-});
-app.get("/forgotpass", (req, res) => {
-  res.render("forgot_pass");
-});
-app.get("/table", async (req, res) => {
-  let tanggal = req.query.date;
-  let time = req.query.time;
-  
-  let date = new Date(tanggal);
-  
+  app.get("/forgotpass", (req, res) => {
+    res.render("forgot_pass");
+  });
+  app.get("/table", async (req, res) => {
+    let tanggal = req.query.date;
+    let time = req.query.time;
+    
+    let date = new Date(tanggal);
+    
   // Format the date as desired (e.g., "June 13, 2023")
   let formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -438,52 +444,65 @@ app.post("/success", async (req, res) => {
     req.body.jam,
     req.body.harga,
     nome
-  );
-  if (req.session.isLogin) {
-    let listTiket = await getListTiket(conn);
-    let trans = await insertTransaksi(
-      conn,
-      req.session.ids,
-      listTiket.length,
-      formattedDate,
-      formattedTime
     );
-  } else {
-    let regis = await insertNonMember(conn, req.body.email);
-    let getids = await getNonMember(conn, req.body.email);
-    let listTiket = await getListTiket(conn);
-    let trans = await insertTransaksi(
-      conn,
-      getids[0].idU,
-      listTiket.length,
-      formattedDate,
-      formattedTime
-    );
-    
-  }res.render("successOrder", {
-      isLogin: req.session.isLogin,
-    });
-  console.log(req.body);
-});
-app.get("/ticket", (req, res) => {
-  res.render("ticket");
-});
-app.get("/history",async (req, res) => {
-  let history = await gethistory(conn,req.session.ids);
-  console.log(history);
-  res.render("trans_history",{
-    historys:history,
-  });
-});
+    if (req.session.isLogin) {
+      let listTiket = await getListTiket(conn);
+      let trans = await insertTransaksi(
+        conn,
+        req.session.ids,
+        listTiket.length,
+        formattedDate,
+        formattedTime
+        );
+      } else {
+        let regis = await insertNonMember(conn, req.body.email);
+        let getids = await getNonMember(conn, req.body.email);
+        let listTiket = await getListTiket(conn);
+        let trans = await insertTransaksi(
+          conn,
+          getids[0].idU,
+          listTiket.length,
+          formattedDate,
+          formattedTime
+          );
+          
+        }res.render("successOrder", {
+          isLogin: req.session.isLogin,
+        });
+        console.log(req.body);
+      });
+      app.get("/ticket", (req, res) => {
+        res.render("ticket");
+      });
+      app.get("/history",async (req, res) => {
+        let history = await gethistory(conn,req.session.ids);
+        console.log(history);
+        res.render("trans_history",{
+          historys:history,
+        });
+      });
+      
+      app.get("/addtable", async (req, res) => {
+        const added = await addTable(conn, req.query.no);
+      });
+      app.get("/deltable", async (req, res) => {
+        const tikets = await checkMejaTiket(conn, req.query.no);
+        if(tikets.length == 0){
+          const deleted = await delTable(conn, req.query.no);
+          res.send({msg: "refresh"})
+        } else{
+          res.send({msg: "Cannot delete because there is an underway booking on this table!"})
+        }
+      });
 
-app.get("/admin", async(req, res) => {
-
-  const tables = await getTables(conn);
-  res.render("home_admin", {
-    tables: tables
-  });
-});
-app.get("/update", (req, res) => {
+      app.get("/admin", async(req, res) => {
+        
+        const tables = await getTables(conn);
+        res.render("home_admin", {
+          tables: tables
+        });
+      });
+      app.get("/update", (req, res) => {
   res.render("update_membership");
 });
 app.listen(PORT, () => {
