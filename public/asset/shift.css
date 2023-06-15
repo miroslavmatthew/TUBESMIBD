@@ -187,3 +187,19 @@ select {
     right: 15px;
     cursor: pointer;
 }
+
+#nama{
+    width: 200%;
+    color: black;
+}
+
+.del {
+    display: grid;
+    align-items: center;
+    height: 100%; 
+}
+.but{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}

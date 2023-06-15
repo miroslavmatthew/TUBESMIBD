@@ -92,7 +92,7 @@ main {
   padding: 45px;
   border-radius: 45px;
   width: 80vw;
-  height: 50vh;
+  height: 60vh;
   margin-top: 5%;
 }
 .biaya {
@@ -133,4 +133,7 @@ hr {
 .inputEmail p {
   margin: 0;
   font-size: 20px;
+}
+h2{
+  margin-right: 200px;
 }
