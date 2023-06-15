@@ -263,7 +263,12 @@ app.get("/kelurahan", async (req, res) => {
   const kelurahan = await getKelurahan(conn, req.query.idKecamatan);
   res.send({ kelurahan });
 });
-
+app.get("/addtable", async (req, res) => {
+  const added = await addTable(conn, req.query.no);
+});
+app.get("/deltable", async (req, res) => {
+  const deleted = await delTable(conn, req.query.no);
+});
 const middlewareMember = (req, res, next) => {
   if (!req.session.isLogin || req.session.isLogin == "user") {
     next();
@@ -454,9 +459,7 @@ app.get("/ticket", (req, res) => {
 app.get("/history", (req, res) => {
   res.render("trans_history");
 });
-app.get("/trans", (req, res) => {
-  res.render("trans_history");
-});
+
 app.get("/admin", async(req, res) => {
 
   const tables = await getTables(conn);
