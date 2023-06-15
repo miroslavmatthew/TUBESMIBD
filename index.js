@@ -255,12 +255,6 @@ app.get("/kota", async (req, res) => {
   const kota = await getKota(conn);
   res.send({ kota });
 });
-app.get("/addtable", async (req, res) => {
-  const added = await addTable(conn, req.query.no);
-});
-app.get("/deltable", async (req, res) => {
-  const deleted = await delTable(conn, req.query.no);
-});
 app.get("/kecamatan", async (req, res) => {
   const kecamatan = await getKecamatan(conn, req.query.idKota);
   res.send({ kecamatan });
@@ -329,7 +323,7 @@ app.post("/authsignup", async (req, res) => {
   let password = req.body.password;
   let hashpass = crypto.createHash("sha256").update(password).digest("base64");
   let alamat = req.body.alamat;
-
+  
   let inserted = await insertNewMember(
     conn,
     username,
@@ -337,20 +331,20 @@ app.post("/authsignup", async (req, res) => {
     nameMember,
     alamat,
     urbanVillage
-  );
-  req.session.isLogin = "user";
-  let user = await getMember(conn, username, hashpass);
-  console.log(user);
-  req.session.ids = user[0].idU;
-  res.redirect("/");
-});
-
-app.get("/signup", (req, res) => {
-  res.render("signup");
-});
-app.get("/reservation", (req, res) => {
-  res.render("reservation", {
-    isLogin: req.session.isLogin,
+    );
+    req.session.isLogin = "user";
+    let user = await getMember(conn, username, hashpass);
+    console.log(user);
+    req.session.ids = user[0].idU;
+    res.redirect("/");
+  });
+  
+  app.get("/signup", (req, res) => {
+    res.render("signup");
+  });
+  app.get("/reservation", (req, res) => {
+    res.render("reservation", {
+      isLogin: req.session.isLogin,
   });
 });
 app.get("/forgotpass", (req, res) => {
@@ -359,16 +353,16 @@ app.get("/forgotpass", (req, res) => {
 app.get("/table", async (req, res) => {
   let tanggal = req.query.date;
   let time = req.query.time;
-
+  
   let date = new Date(tanggal);
-
+  
   // Format the date as desired (e.g., "June 13, 2023")
   let formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-
+  
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
   const harga = 40000;
@@ -377,7 +371,7 @@ app.get("/table", async (req, res) => {
     currency: "IDR",
     maximumFractionDigits: 0,
   }).format(harga);
-
+  
   data = { hari: formattedDate, jam: time, harga: formattedHarga };
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
@@ -403,7 +397,7 @@ function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0"); // Zero-padding the month
   const day = String(date.getDate()).padStart(2, "0"); // Zero-padding the day
-
+  
   return `${year}-${month}-${day}`;
 }
 
@@ -411,7 +405,7 @@ function formatTime(date) {
   const hours = String(date.getHours()).padStart(2, "0"); // Zero-padding the hours
   const minutes = String(date.getMinutes()).padStart(2, "0"); // Zero-padding the minutes
   const seconds = String(date.getSeconds()).padStart(2, "0"); // Zero-padding the seconds
-
+  
   return `${hours}:${minutes}:${seconds}`;
 }
 
@@ -427,55 +421,59 @@ app.post("/success", async (req, res) => {
     req.body.jam,
     req.body.harga,
     nome
-  );
-  if (req.session.isLogin) {
-    let listTiket = await getListTiket(conn);
-    let trans = await insertTransaksi(
-      conn,
-      req.session.ids,
-      listTiket.length,
-      formattedDate,
-      formattedTime
     );
-  } else {
-    let regis = await insertNonMember(conn, req.body.email);
-    let getids = await getNonMember(conn, req.body.email);
-    let listTiket = await getListTiket(conn);
-    let trans = await insertTransaksi(
-      conn,
-      getids[0].idU,
-      listTiket.length,
-      formattedDate,
-      formattedTime
-    );
-    res.render("successOrder", {
-      isLogin: req.session.isLogin,
-    });
-  }
-  console.log(req.body);
-});
-app.get("/ticket", (req, res) => {
-  res.render("ticket");
-});
-app.get("/history", (req, res) => {
-  res.render("trans_history");
-});
-app.get("/trans", (req, res) => {
-  res.render("trans_history");
-});
-app.get("/admin", async(req, res) => {
+    if (req.session.isLogin) {
+      let listTiket = await getListTiket(conn);
+      let trans = await insertTransaksi(
+        conn,
+        req.session.ids,
+        listTiket.length,
+        formattedDate,
+        formattedTime
+        );
+      } else {
+        let regis = await insertNonMember(conn, req.body.email);
+        let getids = await getNonMember(conn, req.body.email);
+        let listTiket = await getListTiket(conn);
+        let trans = await insertTransaksi(
+          conn,
+          getids[0].idU,
+          listTiket.length,
+          formattedDate,
+          formattedTime
+          );
+          res.render("successOrder", {
+            isLogin: req.session.isLogin,
+          });
+        }
+        console.log(req.body);
+      });
+      app.get("/ticket", (req, res) => {
+        res.render("ticket");
+      });
+      app.get("/trans", (req, res) => {
+        res.render("trans_history");
+      });
 
-  const tables = await getTables(conn);
-  res.render("home_admin", {
-    tables: tables
-  });
-});
-app.get("/update", (req, res) => {
-  res.render("update_membership");
-});
-app.listen(PORT, () => {
-  console.log("server ready");
-});
-app.get("/shift",middlewareAdmin, (req, res) => {
-  res.render("shift");
-});
+      app.get("/addtable", async (req, res) => {
+        const added = await addTable(conn, req.query.no);
+      });
+      app.get("/deltable", async (req, res) => {
+        const deleted = await delTable(conn, req.query.no);
+      });
+      app.get("/admin", async(req, res) => {
+        
+        const tables = await getTables(conn);
+        res.render("home_admin", {
+          tables: tables
+        });
+      });
+      app.get("/update", (req, res) => {
+        res.render("update_membership");
+      });
+      app.listen(PORT, () => {
+        console.log("server ready");
+      });
+      app.get("/shift", (req, res) => {
+        res.render("shift");
+      });

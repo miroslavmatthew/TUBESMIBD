@@ -42,11 +42,20 @@
         <div class="popup-content">
             <span class="close-btn" onclick="closeForm()">&times;</span>
             <div class="del">
-                <h2>Add Table#<%=tables.length + 1%>?</h2>
-                <input type="text" name="newTable" style="display: none;" value="<%=tables.length + 1%>">
+                <%let pos = tables.length + 1;
+                let lastMeja = 0
+                for(let i = 0; i < tables.length; i++){
+                    if(tables[i].noMeja - lastMeja != 1){
+                        pos = lastMeja + 1; 
+                        break;
+                    }
+                    lastMeja = tables[i].noMeja;
+                }%>
+                <h2>Add Table#<%=pos%>?</h2>
+                <input type="text" name="newTable" style="display: none;" value="<%=pos%>">
                 <div class="but">
                     <button class="button-pop" onclick="closeForm()">Cancel</button>
-                    <button class="button-pop" id="submit1" value="<%=tables.length + 1%>">Confirm</button>
+                    <button class="button-pop" id="submit1" value="<%=pos%>">Confirm</button>
                 </div>
             </div>
         </div>
