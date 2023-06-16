@@ -234,9 +234,9 @@ const checkMejaTiket = (conn, noMeja) => {
     });
   });
 };
-const getReps = (conn) => {
+const getReps = (conn,query) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket, pd.total FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket cross join (SELECT sum(Tiket.hargaTiket)as total from Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket )as pd;`;
+    const sql = query;
     conn.query(sql, (err, conn) => {
       if (err) {
         reject(err);
@@ -246,9 +246,9 @@ const getReps = (conn) => {
     });
   });
 };
-const getRepsMember = (conn) => {
+const getRepsMember = (conn,query) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket, pd.total FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket cross JOIN( SELECT sum(ti.hargaTiket) as 'total' FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null ) as pd where u.username is not null;`;
+    const sql = query;
     conn.query(sql, (err, conn) => {
       if (err) {
         reject(err);
@@ -596,29 +596,66 @@ app.post("/success", async (req, res) => {
 app.get("/report",async(req,res)=>{
   let start = req.query.start;
   let end = req.query.end;
-  let report = await getReps(conn);
+  let report;
+  let mejab = await getTables(conn);
+  let query = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket, pd.total FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket cross join (SELECT sum(Tiket.hargaTiket)as total from Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket )as pd`;
   if(start===undefined){
     if(end===undefined){
       //start end no
-      
+      report=await getReps(conn,query);
     }
     else{
       //end yes
+      report=await getReps(conn,query+` where Transaksi.tglTransaksi <= '${end}'`);
     }
   }
   else if(end===undefined){
     //end no
+    report=await getReps(conn,query+` where Transaksi.tglTransaksi >= '${start}'`);
   }
   else{
     //yes yes
+    report=await getReps(conn,query+` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start}'`);
   }
   res.render("transaction_report_admin",{
     repo:report,
+    mejaB:JSON.stringify(mejab),
+    dt:JSON.stringify(report),
+    member : false
   });
 })
 
 app.get("/filterByMember",async (req,res)=>{
-  const member = await getRepsMember(conn);
+ 
+  let start = req.query.start;
+  let end = req.query.end;
+  let mejab = await getTables(conn);
+  let report ;
+  let query = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket, pd.total FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket cross JOIN( SELECT sum(ti.hargaTiket) as 'total' FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null ) as pd where u.username is not null `;
+  if(start===undefined){
+    if(end===undefined){
+      //start end no
+      report=await getRepsMember(conn,query);
+    }
+    else{
+      //end yes
+      report=await getRepsMember(conn,query+` and t.tglTransaksi <= '${end}'`);
+    }
+  }
+  else if(end===undefined){
+    //end no
+    report=await getRepsMember(conn,query+` and t.tglTransaksi >= '${start}'`);
+  }
+  else{
+    //yes yes
+    report=await getRepsMember(conn,query+` and t.tglTransaksi <= '${end}' and t.tglTransaksi >= '${start}'`);
+  }
+  res.render("transaction_report_admin",{
+    repo:report,
+    mejaB:JSON.stringify(mejab),
+    dt:JSON.stringify(report),
+    member:true
+  });
 })
 
 
