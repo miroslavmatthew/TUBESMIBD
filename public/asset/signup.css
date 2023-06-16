@@ -11,6 +11,9 @@ body {
   overflow-x: hidden;
   height: 100%;
 }
+img{
+  cursor: pointer;
+}
 .login {
   background-image: url("image 2.jpg");
   background-position: center;

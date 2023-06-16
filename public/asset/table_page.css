@@ -7,7 +7,9 @@ body {
   background-color: #202020;
   height: 100vh;
 }
-
+img{
+  cursor: pointer;
+}
 .header {
   background: #151515;
   display: flex;

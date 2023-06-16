@@ -19,7 +19,9 @@ body {
     color: white;
     align-items: center;
 }
-  
+img{
+    cursor: pointer;
+  } 
 #logoJudul{
     margin-left: 20px;
 }

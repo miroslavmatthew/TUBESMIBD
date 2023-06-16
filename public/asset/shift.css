@@ -118,6 +118,7 @@ button,input[type=submit]{
 .fa-trash{
     font-size: 30px;
     color: #CB0033;
+    cursor: pointer;
 }
 .shift,.status,.trash{
     display: grid;
@@ -187,6 +188,7 @@ select {
     top: 10px;
     right: 15px;
     cursor: pointer;
+    font-size: 25px;
 }
 
 #nama{

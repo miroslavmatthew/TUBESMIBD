@@ -13,7 +13,9 @@ body {
   background-color: #202020;
   color: #ffffff;
 }
-
+img{
+  cursor: pointer;
+}
 .header {
   background: #151515;
   position: fixed;
@@ -55,6 +57,7 @@ input[type="submit"],
   font-size: 18px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   margin-right: 10px;
+  cursor: pointer;
 }
 #login {
   border: 2px solid #444444;
@@ -72,6 +75,7 @@ input[type="submit"],
 #cancel:hover {
   background-color: #cb0033;
   color: white;
+  cursor: pointer;
 }
 main {
   display: flex;

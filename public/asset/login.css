@@ -7,6 +7,10 @@ body {
   background-color: #202020;
 }
 
+img{
+  cursor: pointer;
+}
+
 body {
   background-image: url("image 3.png");
   background-position: center;
@@ -45,6 +49,7 @@ body {
   margin-bottom: 10px;
   color: #ededed;
   font-size: 14px;
+  cursor: pointer;
 }
 p {
   color: #9a9a9a;
@@ -70,6 +75,7 @@ p {
 #forgot:hover{
   color: #CB0033;
   text-decoration-line: underline;
+  cursor: pointer;
   /* transition: 0.2s; */
 }
 

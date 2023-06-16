@@ -78,6 +78,7 @@ button{
     justify-content: center;
     align-items: center;   
     color: white;
+    cursor: pointer;
 }
 
 .fa-trash{
@@ -87,6 +88,7 @@ button{
     transform: translate(30%, -50%);
     font-size: 25px;
     color: #CB0033;
+    cursor: pointer;
 }
 
 .popup-form {
@@ -120,6 +122,7 @@ button{
     top: 10px;
     right: 15px;
     cursor: pointer;
+    font-size: 25px;
 }
 
 
@@ -147,6 +150,7 @@ button{
     color: #FFFFFF;
     font-size: 18px;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
 }   
 
 h2{
