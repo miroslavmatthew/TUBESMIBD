@@ -130,7 +130,7 @@ body {
   height: 60%;
   border: 5px solid #7d001f;
   border-radius: 20px;
-  font-size: 15px;
+  font-size: 20px;
   color: white;
 }
 
@@ -141,6 +141,7 @@ body {
 .mejaBook {
   display: flex;
   align-items: center;
+  font-size: 20px;
   justify-content: center;
   background-color: #8d8d8d;
   width: 80%;

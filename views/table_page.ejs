@@ -63,9 +63,9 @@
         <div id="peta">
           <%for(let i = 0; i < tables.length; i++){%> <%
           if(booked_tables.includes(i+1)){ %>
-          <div class="mejaBook"><%=(i+1)%></div>
+          <div class="mejaBook"><%=(tables[i].noMeja)%></div>
           <% } else {%>
-          <div class="meja"><%=(i+1)%></div>
+          <div class="meja"><%=(tables[i].noMeja)%></div>
           <%}%> <% } %>
         </div>
       </div>
