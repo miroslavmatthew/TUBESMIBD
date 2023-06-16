@@ -530,6 +530,9 @@ app.post("/success", async (req, res) => {
       app.get("/update", (req, res) => {
   res.render("update_membership");
 });
+app.get("/report",(req,res)=>{
+  res.render("transaction_report_admin");
+})
 app.listen(PORT, () => {
   console.log("server ready");
 });
