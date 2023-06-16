@@ -578,8 +578,8 @@ app.get("/report",async(req,res)=>{
   });
 })
 
-app.get("/filterByMember",(req,res)=>{
-  const member = await
+app.get("/filterByMember",async (req,res)=>{
+  const member = await getRepsMember(conn);
 })
 
 
