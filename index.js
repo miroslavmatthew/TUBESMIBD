@@ -258,6 +258,45 @@ const getRepsMember = (conn) => {
     });
   });
 };
+
+const getRepsDistrict = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT Kota.namaKota,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan JOIN Kota ON Kota.idKota = Kecamatan.idKota GROUP BY Kota.namaKota;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+
+const getRepsSubDistrict = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT Kecamatan.namaKecamatan,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan GROUP BY Kecamatan.namaKecamatan;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+
+const getRepsUrbanVillage = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT Kelurahan.namaKelurahan,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan GROUP BY Kelurahan.namaKelurahan;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const gethistory = (conn, idu) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=?;`;
