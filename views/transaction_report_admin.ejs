@@ -29,17 +29,48 @@
             <div class="search">
                 <h2>TRANSACTION REPORT</h2>
                 <div class="filter">
-                    <button>Table</button>
                     <select name="status" id="status">
                         <option value="all">All</option> 
                         <option value="member">Member</option> 
                     </select>
                     <select name="by" id="by">
+                        <option value="all">All</option> 
                         <option value="district">District</option> 
                         <option value="subDistrict">Sub District</option> 
                         <option value="urbanVillage">Urban Village</option> 
                     </select>
                 </div>
+            </div>
+            <div class="table">
+                <div class="table-header">
+                    <div class="header__item">Transaction Date</div>
+                    <div class="header__item">No Table</div>
+                    <div class="header__item">Sub-total</div>
+                </div>
+                <div class="table-content">	
+                    <div class="table-row">		
+                        <div class="table-data">Table #2</div>
+                        <div class="table-data">120.000</div>
+                        <div class="table-data">Table #2</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-data">Table #3</div>
+                        <div class="table-data">100.000</div>
+                        <div class="table-data">Table #2</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-data">Table #4</div>
+                        <div class="table-data">90.000</div>
+                        <div class="table-data">Table #2</div>
+                    </div>
+                </div>	
+            </div>
+            <div class="total">
+                <div class="a">
+                    <p>Total</p>
+                    <p id="totalTable" name="totalTable">100.000</p>
+                </div>
+                
             </div>
         </div>
     </main>
