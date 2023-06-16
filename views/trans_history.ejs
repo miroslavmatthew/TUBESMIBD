@@ -27,6 +27,12 @@
       <div class="greet">
         <div>Hello, Here is your transaction history</div>
       </div>
+      <div id="pagi">
+        <% for(let i =0 ;i<results.length/4;i++) { %> 
+          <a href="/history?page=<%= i %>"><%= i+1 %></a>
+          <% } %>
+      </div>
+     
       <table id="ticketList"> 
         <tr>
           <th>Tanggal</th>

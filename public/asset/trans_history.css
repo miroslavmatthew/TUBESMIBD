@@ -108,3 +108,24 @@ tr:hover{
   border: 4px solid #7D001F;
   color: #EDEDED;
 }
+a {
+	text-decoration: none;
+	border: 2px solid #7D001F;
+	background: #202020;
+	color: #CB0033;
+	padding: 6px;
+}
+a:hover {
+	color: white;
+	background: #CB0033;
+}
+a:active {
+	color: white;
+	background: #CB0033;
+}
+#pagi{
+  display: flex;
+  width: 100%;
+  padding-left: 20%;
+  gap: 10px;
+}

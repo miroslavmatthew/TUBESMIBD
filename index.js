@@ -246,6 +246,18 @@ const gethistory = (conn, idu) => {
     });
   });
 };
+const limitHis = (conn, idu,lim) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=? limit ?,4;`;
+    conn.query(sql,[idu,lim], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const addTable = (conn, nomor) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT INTO mejab(noMeja, posisiM) VALUES(?, ?)`;
@@ -476,10 +488,23 @@ app.post("/success", async (req, res) => {
       });
       app.get("/history",async (req, res) => {
         let history = await gethistory(conn,req.session.ids);
+        let limit = req.query.page;
+        if (limit === undefined) {
+          const lims = await limitHis(conn, req.session.ids, 0 * 4);
+          res.render("trans_history",{
+            results:history,
+            historys:lims
+          });
+        }
+        else{
+          const lims = await limitHis(conn, req.session.ids, limit * 4);
+          res.render("trans_history",{
+            results:history,
+            historys:lims
+          });
+        }
         console.log(history);
-        res.render("trans_history",{
-          historys:history,
-        });
+        
       });
       
       app.get("/addtable", async (req, res) => {
