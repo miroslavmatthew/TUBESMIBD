@@ -48,27 +48,19 @@
                     <div class="header__item">Sub-total</div>
                 </div>
                 <div class="table-content">	
+                    <%for(let i = 0; i < repo.length; i++){%>
                     <div class="table-row">		
-                        <div class="table-data">Table #2</div>
-                        <div class="table-data">120.000</div>
-                        <div class="table-data">Table #2</div>
+                        <div class="table-data"><%= repo[i].tglTransaksi.toLocaleDateString("en-US") %></div>
+                        <div class="table-data"><%= repo[i].noMeja %></div>
+                        <div class="table-data"><%= repo[i].hargaTiket %></div>
                     </div>
-                    <div class="table-row">
-                        <div class="table-data">Table #3</div>
-                        <div class="table-data">100.000</div>
-                        <div class="table-data">Table #2</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-data">Table #4</div>
-                        <div class="table-data">90.000</div>
-                        <div class="table-data">Table #2</div>
-                    </div>
+                    <% }%>
                 </div>	
             </div>
             <div class="total">
                 <div class="a">
                     <p>Total</p>
-                    <p id="totalTable" name="totalTable">100.000</p>
+                    <p id="totalTable" name="totalTable"><%= repo[0].total %></p>
                 </div>
                 
             </div>

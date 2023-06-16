@@ -18,3 +18,21 @@ const ctx = document.getElementById('myChart');
       }
     }
   });
+
+
+const memberFilter = document.querySelector("#status");
+
+
+let url = window.location.href;
+let queryString = url.split("?")[1];
+function filterBy(){
+  if(memberFilter.value == "member"){
+    fetch(`filterByMember?${queryString}`).then(function (response) {
+      return response.text();
+    })
+    .then(function (text) {
+      username = JSON.parse(text);
+    });
+  }
+}
+memberFilter.addEventListener('input', filterBy);

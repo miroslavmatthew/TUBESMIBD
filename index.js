@@ -234,6 +234,30 @@ const checkMejaTiket = (conn, noMeja) => {
     });
   });
 };
+const getReps = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket, pd.total FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket cross join (SELECT sum(Tiket.hargaTiket)as total from Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket )as pd;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getRepsMember = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket, pd.total FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket cross JOIN( SELECT sum(ti.hargaTiket) as 'total' FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null ) as pd where u.username is not null;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
 const gethistory = (conn, idu) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=?;`;
@@ -530,8 +554,37 @@ app.post("/success", async (req, res) => {
       app.get("/update", (req, res) => {
   res.render("update_membership");
 });
-app.get("/report",(req,res)=>{
-  res.render("transaction_report_admin");
+app.get("/report",async(req,res)=>{
+  let start = req.query.start;
+  let end = req.query.end;
+  let report = await getReps(conn);
+  if(start===undefined){
+    if(end===undefined){
+      //start end no
+      
+    }
+    else{
+      //end yes
+    }
+  }
+  else if(end===undefined){
+    //end no
+  }
+  else{
+    //yes yes
+  }
+  res.render("transaction_report_admin",{
+    repo:report,
+  });
+})
+
+app.get("/filterByMember",(req,res)=>{
+  const member = await
+})
+
+
+  app.get("/reportRange",(req,res)=>{
+  res.render("transaction_report");
 })
 app.listen(PORT, () => {
   console.log("server ready");
