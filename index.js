@@ -234,19 +234,8 @@ const checkMejaTiket = (conn, noMeja) => {
     });
   });
 };
-const getReps = (conn,query) => {
-  return new Promise((resolve, reject) => {
-    const sql = query;
-    conn.query(sql, (err, conn) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(conn);
-      }
-    });
-  });
-};
-const getRepsMember = (conn,query) => {
+
+const getRepsMember = (conn, query) => {
   return new Promise((resolve, reject) => {
     const sql = query;
     conn.query(sql, (err, conn) => {
@@ -259,9 +248,33 @@ const getRepsMember = (conn,query) => {
   });
 };
 
-const getRepsDistrict = (conn) => {
+const getDis = (conn) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT Kota.namaKota,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan JOIN Kota ON Kota.idKota = Kecamatan.idKota GROUP BY Kota.namaKota;`;
+    const sql = `SELECT idKota as id,namaKota as class FROM Kota`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getSubDis = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT idKecamatan as id,namaKecamatan as class FROM Kecamatan`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getUrban = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT idKelurahan as id,namaKelurahan as class FROM Kelurahan`;
     conn.query(sql, (err, conn) => {
       if (err) {
         reject(err);
@@ -272,35 +285,10 @@ const getRepsDistrict = (conn) => {
   });
 };
 
-const getRepsSubDistrict = (conn) => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT Kecamatan.namaKecamatan,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan GROUP BY Kecamatan.namaKecamatan;`;
-    conn.query(sql, (err, conn) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(conn);
-      }
-    });
-  });
-};
-
-const getRepsUrbanVillage = (conn) => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT Kelurahan.namaKelurahan,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan GROUP BY Kelurahan.namaKelurahan;`;
-    conn.query(sql, (err, conn) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(conn);
-      }
-    });
-  });
-};
 const gethistory = (conn, idu) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=?;`;
-    conn.query(sql,[idu], (err, conn) => {
+    conn.query(sql, [idu], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -309,10 +297,10 @@ const gethistory = (conn, idu) => {
     });
   });
 };
-const limitHis = (conn, idu,lim) => {
+const limitHis = (conn, idu, lim) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket where Transaksi.idU=? limit ?,4;`;
-    conn.query(sql,[idu,lim], (err, conn) => {
+    conn.query(sql, [idu, lim], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -324,7 +312,7 @@ const limitHis = (conn, idu,lim) => {
 const addTable = (conn, nomor) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT INTO mejab(noMeja, posisiM) VALUES(?, ?)`;
-    conn.query(sql,[nomor, nomor], (err, conn) => {
+    conn.query(sql, [nomor, nomor], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -336,7 +324,7 @@ const addTable = (conn, nomor) => {
 const delTable = (conn, nomor) => {
   return new Promise((resolve, reject) => {
     const sql = `DELETE FROM mejab WHERE noMeja = ?`;
-    conn.query(sql,[nomor], (err, conn) => {
+    conn.query(sql, [nomor], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -428,7 +416,7 @@ app.post("/authsignup", async (req, res) => {
   let password = req.body.password;
   let hashpass = crypto.createHash("sha256").update(password).digest("base64");
   let alamat = req.body.alamat;
-  
+
   let inserted = await insertNewMember(
     conn,
     username,
@@ -436,57 +424,56 @@ app.post("/authsignup", async (req, res) => {
     nameMember,
     alamat,
     urbanVillage
-    );
-    req.session.isLogin = "user";
-    let user = await getMember(conn, username, hashpass);
-    console.log(user);
-    req.session.ids = user[0].idU;
-    res.redirect("/");
-  });
-  
-  app.get("/signup", middlewareNonMember, (req, res) => {
-    res.render("signup");
-  });
-  app.get("/resetPass", (req, res) => {
-    res.render("resetPass");
-  });
+  );
+  req.session.isLogin = "user";
+  let user = await getMember(conn, username, hashpass);
+  console.log(user);
+  req.session.ids = user[0].idU;
+  res.redirect("/");
+});
 
-  app.get("/reservation", middlewarePublic, (req, res) => {
-    res.render("reservation", {
-      isLogin: req.session.isLogin,
+app.get("/signup", middlewareNonMember, (req, res) => {
+  res.render("signup");
+});
+app.get("/resetPass", (req, res) => {
+  res.render("resetPass");
+});
+
+app.get("/reservation", middlewarePublic, (req, res) => {
+  res.render("reservation", {
+    isLogin: req.session.isLogin,
+  });
+});
+
+app.get("/forgotpass", middlewareNonMember, (req, res) => {
+  res.render("forgot_pass", {
+    valid: true,
+  });
+});
+app.post("/forgotPass", (req, res) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(req.body.email)) {
+    res.render("forgot_pass", {
+      valid: false,
     });
-  });
+  } else {
+    res.redirect("/resetPass");
+  }
+});
 
+app.get("/table", async (req, res) => {
+  let tanggal = req.query.date;
+  let time = req.query.time;
 
-  app.get("/forgotpass", middlewareNonMember, (req, res) => {
-    res.render("forgot_pass",{
-      valid : true
-    });
-  });
-  app.post("/forgotPass", (req, res) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailRegex.test(req.body.email)){
-      res.render("forgot_pass",{
-        valid : false
-      });
-    } else{
-      res.redirect("/resetPass");
-    }
-  });
+  let date = new Date(tanggal);
 
-  app.get("/table", async (req, res) => {
-    let tanggal = req.query.date;
-    let time = req.query.time;
-    
-    let date = new Date(tanggal);
-    
-    // Format the date as desired (e.g., "June 13, 2023")
-    let formattedDate = date.toLocaleDateString("en-US", {
+  // Format the date as desired (e.g., "June 13, 2023")
+  let formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  
+
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
   const harga = 40000;
@@ -495,7 +482,7 @@ app.post("/authsignup", async (req, res) => {
     currency: "IDR",
     maximumFractionDigits: 0,
   }).format(harga);
-  
+
   data = { hari: formattedDate, jam: time, harga: formattedHarga };
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
@@ -521,7 +508,7 @@ function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0"); // Zero-padding the month
   const day = String(date.getDate()).padStart(2, "0"); // Zero-padding the day
-  
+
   return `${year}-${month}-${day}`;
 }
 
@@ -529,7 +516,7 @@ function formatTime(date) {
   const hours = String(date.getHours()).padStart(2, "0"); // Zero-padding the hours
   const minutes = String(date.getMinutes()).padStart(2, "0"); // Zero-padding the minutes
   const seconds = String(date.getSeconds()).padStart(2, "0"); // Zero-padding the seconds
-  
+
   return `${hours}:${minutes}:${seconds}`;
 }
 
@@ -545,179 +532,358 @@ app.post("/success", async (req, res) => {
     req.body.jam,
     req.body.harga,
     nome
+  );
+  if (req.session.isLogin) {
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
+      conn,
+      req.session.ids,
+      listTiket.length,
+      formattedDate,
+      formattedTime
     );
-    if (req.session.isLogin) {
-      let listTiket = await getListTiket(conn);
-      let trans = await insertTransaksi(
-        conn,
-        req.session.ids,
-        listTiket.length,
-        formattedDate,
-        formattedTime
-        );
-      } else {
-        let regis = await insertNonMember(conn, req.body.email);
-        let getids = await getNonMember(conn, req.body.email);
-        let listTiket = await getListTiket(conn);
-        let trans = await insertTransaksi(
-          conn,
-          getids[0].idU,
-          listTiket.length,
-          formattedDate,
-          formattedTime
-          );
-          
-        }res.render("successOrder", {
-          isLogin: req.session.isLogin,
-        });
-        console.log(req.body);
-      });
-      app.get("/ticket", (req, res) => {
-        res.render("ticket");
-      });
-      app.get("/history",async (req, res) => {
-        redeemTable();
-        let history = await gethistory(conn,req.session.ids);
-        let limit = req.query.page;
-        if (limit === undefined) {
-          const lims = await limitHis(conn, req.session.ids, 0 * 4);
-          res.render("trans_history",{
-            results:history,
-            historys:lims
-          });
-        }
-        else{
-          const lims = await limitHis(conn, req.session.ids, limit * 4);
-          res.render("trans_history",{
-            results:history,
-            historys:lims
-          });
-        }
-        console.log(history);
-        
-      });
-      
-      app.get("/addtable", async (req, res) => {
-        const added = await addTable(conn, req.query.no);
-      });
-      app.get("/deltable", async (req, res) => {
-        const tikets = await checkMejaTiket(conn, req.query.no);
-        if(tikets.length == 0){
-          const deleted = await delTable(conn, req.query.no);
-          res.send({msg: "refresh"})
-        } else{
-          res.send({msg: "Cannot delete because there is an underway booking on this table!"})
-        }
-      });
-      
-      app.get("/admin", async(req, res) => {
-        redeemTable();
-        const tables = await getTables(conn);
-        res.render("home_admin", {
-          tables: tables
-        });
-      });
-      app.get("/update", (req, res) => {
-        res.render("update_membership");
-      });
-      app.get("/report",async(req,res)=>{
-        let msg = "Transaction Chart ";
-        let repMsg = "Transaction Report ";
-        let start = req.query.start;
-        let end = req.query.end;
-        let report;
-        let mejab = await getTables(conn);
-        let query = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket`;
-        if(start==undefined || start == ""){
-          if(end==undefined || end == ""){
-            //start end no
-            msg += "From All Time"
-      repMsg += "From All Time"
-      report=await getReps(conn,query);
-    }
-    else{
-      //end yes
-      msg += `Before ${end}`
-      repMsg += `Before ${end}`
-      
-      report=await getReps(conn,query+` where Transaksi.tglTransaksi <= '${end}'`);
-    } 
+  } else {
+    let regis = await insertNonMember(conn, req.body.email);
+    let getids = await getNonMember(conn, req.body.email);
+    let listTiket = await getListTiket(conn);
+    let trans = await insertTransaksi(
+      conn,
+      getids[0].idU,
+      listTiket.length,
+      formattedDate,
+      formattedTime
+    );
   }
-  else if(end==undefined || end == ""){
-    //end no
-    msg += `From ${start}`
-    repMsg += `From ${start}`
-    report=await getReps(conn,query+` where Transaksi.tglTransaksi >= '${start}'`);
-  }
-  else{
-    //yes yes
-    msg += `From ${start} to ${end}`
-    repMsg += `From ${start} to ${end}`
-    
-    report=await getReps(conn,query+` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start}'`);
-  }
-  res.render("transaction_report_admin",{
-    repo:report,
-    mejaB:JSON.stringify(mejab),
-    dt:JSON.stringify(report),
-    member : false,
-    message: msg,
-    repMsg: repMsg
+  res.render("successOrder", {
+    isLogin: req.session.isLogin,
   });
-})
+  console.log(req.body);
+});
+app.get("/ticket", (req, res) => {
+  res.render("ticket");
+});
+app.get("/history", async (req, res) => {
+  redeemTable();
+  let history = await gethistory(conn, req.session.ids);
+  let limit = req.query.page;
+  if (limit === undefined) {
+    const lims = await limitHis(conn, req.session.ids, 0 * 4);
+    res.render("trans_history", {
+      results: history,
+      historys: lims,
+    });
+  } else {
+    const lims = await limitHis(conn, req.session.ids, limit * 4);
+    res.render("trans_history", {
+      results: history,
+      historys: lims,
+    });
+  }
+  console.log(history);
+});
 
-app.get("/filterByMember",async (req,res)=>{
+app.get("/addtable", async (req, res) => {
+  const added = await addTable(conn, req.query.no);
+});
+app.get("/deltable", async (req, res) => {
+  const tikets = await checkMejaTiket(conn, req.query.no);
+  if (tikets.length == 0) {
+    const deleted = await delTable(conn, req.query.no);
+    res.send({ msg: "refresh" });
+  } else {
+    res.send({
+      msg: "Cannot delete because there is an underway booking on this table!",
+    });
+  }
+});
+
+app.get("/admin", async (req, res) => {
+  redeemTable();
+  const tables = await getTables(conn);
+  res.render("home_admin", {
+    tables: tables,
+  });
+});
+app.get("/update", (req, res) => {
+  res.render("update_membership");
+});
+app.get("/report", async (req, res) => {
+  let msg = "Transaction Chart ";
+  let repMsg = "Transaction Report ";
+  let start = req.query.start;
+  let end = req.query.end;
+  let report;
+  let mejab = await getTables(conn);
+  let query = `SELECT Transaksi.tglTransaksi,Transaksi.waktuTransaksi,Tiket.noMeja,Tiket.hargaTiket FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket `;
+  if (start == undefined || start == "") {
+    if (end == undefined || end == "") {
+      //start end no
+      msg += "From All Time";
+      repMsg += "From All Time";
+      report = await getRepsMember(conn, query);
+    } else {
+      //end yes
+      msg += `Before ${end}`;
+      repMsg += `Before ${end}`;
+
+      report = await getRepsMember(
+        conn,
+        query + ` where Transaksi.tglTransaksi <= '${end}'`
+      );
+    }
+  } else if (end == undefined || end == "") {
+    //end no
+    msg += `From ${start}`;
+    repMsg += `From ${start}`;
+    report = await getRepsMember(
+      conn,
+      query + ` where Transaksi.tglTransaksi >= '${start}'`
+    );
+  } else {
+    //yes yes
+    msg += `From ${start} to ${end}`;
+    repMsg += `From ${start} to ${end}`;
+
+    report = await getRepsMember(
+      conn,
+      query +
+        ` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start}'`
+    );
+  }
+  res.render("transaction_report_admin", {
+    repo: report,
+    mejaB: JSON.stringify(mejab),
+    dt: JSON.stringify(report),
+    member: false,
+    message: msg,
+    repMsg: repMsg,
+    subclass: false,
+    district: "District",
+  });
+});
+
+app.get("/filterByMember", async (req, res) => {
   let msg = "Member Transaction Chart ";
   let repMsg = "Member Transaction ";
   let start = req.query.start;
   let end = req.query.end;
   let mejab = await getTables(conn);
-  let report ;
-  let query = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null `;
-  if(start==undefined || start == ""){
-    if(end==undefined || end == ""){
+  let report;
+  let query = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket  where u.username is not null `;
+  if (start == undefined || start == "") {
+    if (end == undefined || end == "") {
       //start end no
-      msg += "From All Time"
-      repMsg += "From All Time"
-      report=await getRepsMember(conn,query);
-    }
-    else{
+      msg += "From All Time";
+      repMsg += "From All Time";
+      report = await getRepsMember(conn, query);
+    } else {
       //end yes
-      msg += `Until ${end}`
-      repMsg += `Until ${end}`
-      report=await getRepsMember(conn,query+` and t.tglTransaksi <= '${end}'`);
+      msg += `Until ${end}`;
+      repMsg += `Until ${end}`;
+      report = await getRepsMember(
+        conn,
+        query + ` and t.tglTransaksi <= '${end}'`
+      );
     }
-  }
-  else if(end==undefined || end == ""){
+  } else if (end == undefined || end == "") {
     //end no
-    msg += `From ${start}`
-    repMsg += `From ${start}`
-    report=await getRepsMember(conn,query+` and t.tglTransaksi >= '${start}'`);
-  }
-  else{
+    msg += `From ${start}`;
+    repMsg += `From ${start}`;
+    report = await getRepsMember(
+      conn,
+      query + ` and t.tglTransaksi >= '${start}'`
+    );
+  } else {
     //yes yes
-    msg += `From ${start} to ${end}`
-    repMsg += `From ${start} to ${end}`
-    report=await getRepsMember(conn,query+` and t.tglTransaksi <= '${end}' and t.tglTransaksi >= '${start}'`);
+    msg += `From ${start} to ${end}`;
+    repMsg += `From ${start} to ${end}`;
+    report = await getRepsMember(
+      conn,
+      query + ` and t.tglTransaksi <= '${end}' and t.tglTransaksi >= '${start}'`
+    );
   }
-  res.render("transaction_report_admin",{
-    repo:report,
-    mejaB:JSON.stringify(mejab),
-    dt:JSON.stringify(report),
-    member:true,
+  res.render("transaction_report_admin", {
+    repo: report,
+    mejaB: JSON.stringify(mejab),
+    dt: JSON.stringify(report),
+    member: true,
     message: msg,
-    repMsg: repMsg
+    repMsg: repMsg,
+    subclass: false,
+    district: "District",
   });
-})
+});
 
+app.get("/filterByDistric", async (req, res) => {
+  let msg = "Distric Transaction Chart ";
+  let repMsg = "Distric Transaction ";
+  let start = req.query.start;
+  let end = req.query.end;
+  let mejab = await getDis(conn);
+  let report;
+  let by = "GROUP BY Kota.namaKota";
+  let query = `SELECT Kota.idKota as id,Kota.namaKota as class,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan JOIN Kota ON Kota.idKota = Kecamatan.idKota `;
+  if (start == undefined || start == "") {
+    if (end == undefined || end == "") {
+      //start end no
+      msg += "From All Time";
+      repMsg += "From All Time";
+      report = await getRepsMember(conn, query + by);
+    } else {
+      //end yes
+      msg += `Until ${end}`;
+      repMsg += `Until ${end}`;
+      report = await getRepsMember(
+        conn,
+        query + `  where Transaksi.tglTransaksi <= '${end}' ` + by
+      );
+    }
+  } else if (end == undefined || end == "") {
+    //end no
+    msg += `From ${start}`;
+    repMsg += `From ${start}`;
+    report = await getRepsMember(
+      conn,
+      query + `  where Transaksi.tglTransaksi >= '${start}' ` + by
+    );
+  } else {
+    //yes yes
+    msg += `From ${start} to ${end}`;
+    repMsg += `From ${start} to ${end}`;
+    report = await getRepsMember(
+      conn,
+      query +
+        ` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start} '` +
+        by
+    );
+  }
+  res.render("transaction_report_admin", {
+    repo: report,
+    mejaB: JSON.stringify(mejab),
+    dt: JSON.stringify(report),
+    member: true,
+    message: msg,
+    repMsg: repMsg,
+    subclass: true,
+    district: "District",
+  });
+});
+app.get("/filterBySubDistric", async (req, res) => {
+  let msg = "Sub-Distric Transaction Chart ";
+  let repMsg = "Sub-Distric Transaction ";
+  let start = req.query.start;
+  let end = req.query.end;
+  let mejab = await getSubDis(conn);
+  let report;
+  let by = "GROUP BY Kecamatan.namaKecamatan";
+  let query = `SELECT Kecamatan.idKecamatan as id,Kecamatan.namaKecamatan as class,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan JOIN Kecamatan ON Kelurahan.idKecamatan = Kecamatan.idKecamatan  `;
+  if (start == undefined || start == "") {
+    if (end == undefined || end == "") {
+      //start end no
+      msg += "From All Time";
+      repMsg += "From All Time";
+      report = await getRepsMember(conn, query + by);
+    } else {
+      //end yes
+      msg += `Until ${end}`;
+      repMsg += `Until ${end}`;
+      report = await getRepsMember(
+        conn,
+        query + `  where Transaksi.tglTransaksi <= '${end}' ` + by
+      );
+    }
+  } else if (end == undefined || end == "") {
+    //end no
+    msg += `From ${start}`;
+    repMsg += `From ${start}`;
+    report = await getRepsMember(
+      conn,
+      query + `  where Transaksi.tglTransaksi >= '${start}' ` + by
+    );
+  } else {
+    //yes yes
+    msg += `From ${start} to ${end}`;
+    repMsg += `From ${start} to ${end}`;
+    report = await getRepsMember(
+      conn,
+      query +
+        ` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start} '` +
+        by
+    );
+  }
+  res.render("transaction_report_admin", {
+    repo: report,
+    mejaB: JSON.stringify(mejab),
+    dt: JSON.stringify(report),
+    member: true,
+    message: msg,
+    repMsg: repMsg,
+    subclass: true,
+    district: "Sub-District",
+  });
+});
+app.get("/filterByUrban", async (req, res) => {
+  let msg = "Urban Village Transaction Chart ";
+  let repMsg = "Urban Village Transaction ";
+  let start = req.query.start;
+  let end = req.query.end;
+  let mejab = await getUrban(conn);
+  let report;
+  let by = "GROUP BY Kelurahan.namaKelurahan ";
+  let query = `SELECT Kelurahan.idKelurahan as id, Kelurahan.namaKelurahan as class,SUM(Tiket.hargaTiket) as total FROM Tiket JOIN Transaksi ON Tiket.idTiket = Transaksi.idTiket JOIN User ON User.idU = Transaksi.idU JOIN Kelurahan ON User.idKelurahan = Kelurahan.idKelurahan  `;
+  if (start == undefined || start == "") {
+    if (end == undefined || end == "") {
+      //start end no
+      msg += "From All Time";
+      repMsg += "From All Time";
+      report = await getRepsMember(conn, query + by);
+    } else {
+      //end yes
+      msg += `Until ${end}`;
+      repMsg += `Until ${end}`;
+      report = await getRepsMember(
+        conn,
+        query + `  where Transaksi.tglTransaksi <= '${end}' ` + by
+      );
+    }
+  } else if (end == undefined || end == "") {
+    //end no
+    msg += `From ${start}`;
+    repMsg += `From ${start}`;
+    report = await getRepsMember(
+      conn,
+      query + `  where Transaksi.tglTransaksi >= '${start}' ` + by
+    );
+  } else {
+    //yes yes
+    msg += `From ${start} to ${end}`;
+    repMsg += `From ${start} to ${end}`;
+    report = await getRepsMember(
+      conn,
+      query +
+        ` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start} '` +
+        by
+    );
+  }
+  res.render("transaction_report_admin", {
+    repo: report,
+    mejaB: JSON.stringify(mejab),
+    dt: JSON.stringify(report),
+    member: true,
+    message: msg,
+    repMsg: repMsg,
+    subclass: true,
+    district: "Urban Village",
+  });
+});
 
-app.get("/reportRange",(req,res)=>{
+app.get("/reportRange", (req, res) => {
   res.render("transaction_report");
-})
+});
 app.listen(PORT, () => {
   console.log("server ready");
 });
-app.get("/shift",middlewareAdmin, (req, res) => {
+app.get("/shift", middlewareAdmin, (req, res) => {
   res.render("shift");
 });
 
@@ -747,17 +913,16 @@ const updateStatusToday = (conn, tanggal, jam) => {
   });
 };
 
-
-function redeemTable(){
+function redeemTable() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const day = String(currentDate.getDate()).padStart(2, "0");
 
-  const hours = String(currentDate.getHours()).padStart(2, '0');
-  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-  
+  const hours = String(currentDate.getHours()).padStart(2, "0");
+  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+  const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
   const formattedDate = `${year}-${month}-${day}`;
   const formattedTime = `${hours}:${minutes}:${seconds}`;
   updateStatusPastDay(conn, formattedDate);
