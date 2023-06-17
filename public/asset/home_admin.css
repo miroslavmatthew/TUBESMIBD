@@ -172,7 +172,7 @@ h2{
 }
 
 #harga{
-    width: 200%;
+    /* width: 200%; */
     color: black;
 }
 
@@ -196,4 +196,13 @@ form {
     grid-template-rows: 80% 20%;
     height: 50vh;
     justify-items: center;
+}
+
+input{
+    width: 100%;
+}
+
+#newPrice{
+    margin-top: 30px;
+    margin-bottom: 10px;
 }

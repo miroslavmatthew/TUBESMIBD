@@ -86,10 +86,11 @@
             <span class="close-btn" onclick="closeForm3()">&times;</span>
             <div class="form">
                 <h2>Update Price</h2>
-                <form>
+                <form method="post" action="updatePrice">
                     <div class="b">
-                        <label for="harga">New Price</label>
-                        <input type="text" name="harga" id="harga">
+                        <p>Last Price: <%=currHarga%></p>
+                        <label for="harga" id="newPrice">New Price</label>
+                        <input type="text" name="harga"  id="harga">
                     </div>
                     <input type="submit" value="Submit">
                 </form>

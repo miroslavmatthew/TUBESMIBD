@@ -9,6 +9,8 @@ const app = express();
 app.set("view engine", "ejs");
 const staticPath = path.resolve("public");
 
+let harga = 40000;
+
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
@@ -461,6 +463,7 @@ app.post("/forgotPass", (req, res) => {
   }
 });
 
+
 app.get("/table", async (req, res) => {
   let tanggal = req.query.date;
   let time = req.query.time;
@@ -476,7 +479,6 @@ app.get("/table", async (req, res) => {
 
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
-  const harga = 40000;
   var formattedHarga = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -602,6 +604,7 @@ app.get("/admin", async (req, res) => {
   const tables = await getTables(conn);
   res.render("home_admin", {
     tables: tables,
+    currHarga: harga
   });
 });
 app.get("/update", (req, res) => {
@@ -886,6 +889,11 @@ app.listen(PORT, () => {
 app.get("/shift", middlewareAdmin, (req, res) => {
   res.render("shift");
 });
+
+app.post("/updatePrice", (req, res) => {
+  harga = req.body.harga;
+  res.redirect("/admin")
+})
 
 const updateStatusPastDay = (conn, tanggal) => {
   return new Promise((resolve, reject) => {
