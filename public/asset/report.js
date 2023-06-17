@@ -13,6 +13,8 @@ for (let index = 0; index < dt.length; index++) {
 for (let index = 0; index < noMej.length; index++) {
   datas.push(dumy[noMej[index].noMeja]);
 }
+
+
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -20,13 +22,66 @@ for (let index = 0; index < noMej.length; index++) {
       datasets: [{
         label: '# of Revenue',
         data: datas,
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: '#CB0033'
       }]
     },
     options: {
+      animation: {
+        duration: 1000, // Set the animation duration in milliseconds
+        easing: 'easeInOutQuart' // Set the animation easing function
+      },
+      layout: {
+        padding: {
+          top: 20, // Add margin to the top
+          bottom: 20, // Add margin to the bottom
+          left: 20, // Add margin to the left
+          right: 20 // Add margin to the right
+        }
+      },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Total Pendapatan', 
+            color: 'white', 
+            font: {
+              size: 14 
+            }
+          },
+          ticks: {
+            color: 'white',
+            font: {
+              size: 14
+            }
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Nomor Meja', 
+            color: 'white', 
+            font: {
+              size: 14 
+            }
+          },
+          ticks: {
+            color: 'white',
+            font: {
+              size: 14
+            }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'white',
+            font: {
+              size: 14
+            }
+          }
         }
       }
     }

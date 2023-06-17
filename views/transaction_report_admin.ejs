@@ -22,12 +22,9 @@
         <i class="fa-regular fa-user fa-xl"></i>
     </div>
     <main>
-        <div>
-            <canvas id="myChart" dataMeja="<%= mejaB %>" dataTable="<%= dt %>"></canvas>
-          </div>
         <div class="con">
             <div class="search">
-                <h2>TRANSACTION REPORT</h2>
+                <h2><%=repMsg%></h2>
                 <div class="filter">
                     <select name="status" id="status">
                         <option value="all">All</option> 
@@ -52,28 +49,32 @@
                     <div class="header__item">Sub-total</div>
                 </div>
                 <div class="table-content">	
-                    <%for(let i = 0; i < repo.length; i++){%>
+                    <% let total = 0;
+                    for(let i = 0; i < repo.length; i++){%>
                     <div class="table-row">		
                         <div class="table-data"><%= repo[i].tglTransaksi.toLocaleDateString("en-US") %></div>
                         <div class="table-data"><%= repo[i].noMeja %></div>
                         <div class="table-data"><%= repo[i].hargaTiket %></div>
                     </div>
-                    <% }%>
+                    <% total += repo[i].hargaTiket}%>
                 </div>	
             </div>
             <div class="total">
                 <div class="a">
                     <p>Total</p>
-                    <% if(repo.length>0){ %>
-                        <p id="totalTable" name="totalTable"><%= repo[0].total %></p>
-                        <% }else{ %>
-                            <p id="totalTable" name="totalTable">0</p>
-                        <% } %>
+                    <% if(repo.length > 0){%>
+                        <p id="totalTable" name="totalTable"><%=total%></p>
+                    <%} else {%>
+                        <p id="totalTable" name="totalTable">0</p>
+                    <%}%>
                    
                 </div>
-                
             </div>
         </div>
+        <h2 id="judulChart"><%=message%></h2>
+        <div id="canvasDiv">
+            <canvas id="myChart" dataMeja="<%= mejaB %>" dataTable="<%= dt %>"></canvas>
+          </div>
     </main>
 </body>
 </html>
