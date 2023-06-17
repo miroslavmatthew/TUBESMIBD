@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="asset/trans_history.js" defer></script>
     <script src="https://kit.fontawesome.com/d53ca09937.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="asset/trans_history.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +49,7 @@
           <%if(historys[i].Status == 'Redeemed'){%>
           <td><button class="statusBtn" value="Status"><%= historys[i].Status %></button></td>
           <%} else{%>
-          <td><button class="statusBtnBooked" value="Status"><%= historys[i].Status %></button></td>
+          <td><button onclick="openForm()" class="statusBtnBooked" value="Status"><%= historys[i].Status %></button></td>
           <%}%>
         </tr>
         <% }%>
@@ -59,5 +60,45 @@
       </footer>
     </div>
 
+    <div id="popupForm" class="popup-form">
+      <div class="popup-content">
+        <div class="ticket">
+          <span class="close-btn" onclick="closeForm()">&times;</span>
+          <div class="atas">
+              <h2>Ticket</h2>
+              <img src="asset/Group 3.png" style="width: 150px"/>
+          </div>
+          <div class="garis"></div>
+          <div class="bawah">
+              <div class="a">
+                  <div class="table">
+                      <p>Table</p>
+                      <p class="bold">Table #2</p>
+                  </div>
+                  <div class="info">
+                      <div class="date">
+                          <p>Date</p>
+                          <p class="bold">01/09/2023</p>
+                      </div>
+                      <div class="start">
+                          <p>Start</p>
+                          <p class="bold">19.00</p>
+                      </div>
+                      <div class="end">
+                          <p>End</p>
+                          <p class="bold">20.00</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="garis2">
+                <div class="b">
+                    <p>Name</p>
+                    <p class="bold">X</p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
