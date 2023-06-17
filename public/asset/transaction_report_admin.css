@@ -150,3 +150,31 @@ p{
     color: #CB0033;
     font-weight: 200;
 }
+
+@media print {
+    body {
+      visibility: hidden;
+    }
+    #transTable {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+      top: 0;
+      gap: 0;
+      border: 1px solid #000;
+    }
+    
+    .table-header *{
+        background-color: rgb(74, 74, 74);
+        color: #000;
+    }
+    .table-row{
+        border-top: 1px solid #000;
+    }
+    
+    .table-content{
+        gap: 0;
+        max-height: none;
+        overflow: none;
+    }
+}

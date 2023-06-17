@@ -135,6 +135,13 @@ function filterOf() {
 memberFilter.addEventListener("input", filterBy);
 subCat.addEventListener("input", filterOf);
 
+function downloadPDFWithBrowserPrint() {
+  window.print();
+}
+document.querySelector('.table').addEventListener('click', downloadPDFWithBrowserPrint);
+const btnDownloadCsv = document.getElementById("btnDownloadCsv");
+
+
 // const btnDownloadCsv = document.getElementById("btnDownloadCsv");
 
 // btnDownloadCsv.addEventListener("click", () => {
