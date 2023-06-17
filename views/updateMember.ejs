@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="asset/updateMember.css" />
+    <script src="asset/updateMember.js" defer></script>
+    <title>Update Member</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <img
+        onclick="window.location.href='/';"
+        src="asset/Group 3.png"
+        style="width: 200px"
+      />
+      <div style="flex-grow: 1"></div>
+    </div>
+    <div class="login">
+      <div class="form">
+        <form id="signupform" action="authUpdate" method="post">
+          <h2 idM="<%= user[0].idU %>">Update Membership</h2>
+          <br />
+          <label for="firstName">Full Name</label>
+          <input type="text" id="firstName" name="firstName" value="<%= user[0].namaMember %>"/>
+          <label for="district">District</label>
+          <select name="district" id="district">
+            <option value="<%= user[0].idKota %>" selected ><%= user[0].namaKota %></option>
+          </select>
+          <label for="subDistrict">Sub District</label>
+          <select name="subDistrict" id="subDistrict"  >
+            <option value="<%= user[0].idKecamatan %>" selected n><%= user[0].namaKecamatan %></option>
+          </select>
+          <label for="urbanVillage" >Urban Village</label>
+          <select name="urbanVillage" id="urbanVillage"  >
+            <option value="<%= user[0].idKelurahan %>"selected><%= user[0].namaKelurahan %></option>
+          </select>
+          <label for="alamat">Alamat</label>
+          <input type="text" id="alamat" name="alamat" value="<%= user[0].Alamat %>"/>
+          <label for="username">Username (min. 8 character)</label>
+          <input type="text" id="username" name="username"value="<%= user[0].Username %>"/>
+          <div id="err"></div>
+          <input type="submit" value="Update Member" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

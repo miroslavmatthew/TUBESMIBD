@@ -335,6 +335,64 @@ const delTable = (conn, nomor) => {
     });
   });
 };
+const getUser = (conn) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User where Username is not null ;`;
+    conn.query(sql, (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const limitUser = (conn, lim) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User where Username is not null limit ?,4;`;
+    conn.query(sql, [lim], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const getUserById = (conn,id) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM User join Kelurahan on User.idKelurahan=Kelurahan.idKelurahan join Kecamatan on Kelurahan.idKecamatan=Kecamatan.idKecamatan join Kota on Kecamatan.idKota=Kota.idKota where idU = ?`;
+    conn.query(sql,[id], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+const updateMember = (
+  conn,
+  username,
+  nama,
+  alamat,
+  idKelurahan,idU
+) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE `user` SET `Username` = ?, `namaMember` = ?, `Alamat` = ?, `idKelurahan` = ? WHERE `user`.`idU` = ?;";
+    conn.query(
+      sql,
+      [username, nama, alamat, idKelurahan,idU],
+      (err, conn) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(conn);
+        }
+      }
+    );
+  });
+};
 let data;
 app.get("/username", async (req, res) => {
   const lsusername = await getUsername(conn);
@@ -607,8 +665,46 @@ app.get("/admin", async (req, res) => {
     currHarga: harga
   });
 });
-app.get("/update", (req, res) => {
-  res.render("update_membership");
+app.get("/listMem", async (req, res) => {
+  let history = await getUser(conn);
+  let limit = req.query.page;
+  if (limit === undefined) {
+    const lims = await limitUser(conn, 0 * 4);
+    res.render("list_member", {
+      results: history,
+      historys: lims,
+    });
+  } else {
+    const lims = await limitUser(conn, limit * 4);
+    res.render("list_member", {
+      results: history,
+      historys: lims,
+    });
+  }
+});
+app.get("/update", async(req, res) => {
+  let userId = await getUserById(conn,req.query.ids);
+  console.log(userId);
+  res.render("updateMember",{
+    user:userId
+  });
+});
+app.post("/authUpdate", async(req, res) => {
+  let nameMember = req.body.firstName;
+  let urbanVillage = req.body.urbanVillage;
+  let username = req.body.username;
+  let alamat = req.body.alamat;
+  let idM = req.body.idM;
+  console.log(req.body);
+  let inserted = await updateMember(
+    conn,
+    username,
+    nameMember,
+    alamat,
+    urbanVillage,idM
+  );
+
+  res.redirect("/listMem");
 });
 app.get("/report", async (req, res) => {
   let msg = "Transaction Chart ";

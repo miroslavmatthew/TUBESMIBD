@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="asset/listmember.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/d53ca09937.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="asset/listmember.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="header">
+      <img
+        src="asset/Group 3.png"
+        style="width: 200px"
+        onclick="window.location.href='/';"
+        id="logoJudul"
+      />
+      <div class="judul">TRANSACTION HISTORY PAGE</div>
+      <i class="fa-regular fa-user fa-xl"></i>
+    </div>
+
+    <div id="home">
+      <div class="greet">
+        <div>List of Member</div>
+      </div>
+      <div id="pagi">
+        <% for(let i =0 ;i<results.length/4;i++) { %>
+        <a href="/listMem?page=<%= i %>"><%= i+1 %></a>
+        <% } %>
+      </div>
+
+      <table id="ticketList">
+        <tr>
+          <th>Full Name</th>
+          <th>Username</th>
+          <th>Edit</th>
+        </tr>
+        <%for(let i = 0; i < historys.length; i++){%>
+        <tr class="datas">
+          <td><%= historys[i].namaMember %></td>
+          <td><%= historys[i].Username %></td>
+          <td>
+            <button
+              onclick="window.location.href='/update?ids=<%= historys[i].idU%>';"
+              class="statusBtnBooked"
+              value="Status"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+        <% }%>
+      </table>
+      <footer>
+        <img src="asset/image 5.png" alt="" />
+      </footer>
+    </div>
+
+    <div id="popupForm" class="popup-form">
+      <div class="popup-content">
+        <div class="ticket">
+          <span class="close-btn" onclick="closeForm()">&times;</span>
+          <div class="atas">
+            <h2>Ticket</h2>
+            <img src="asset/Group 3.png" style="width: 150px" />
+          </div>
+          <div class="garis"></div>
+          <div class="bawah">
+            <div class="a">
+              <div class="table">
+                <p>Table</p>
+                <p class="bold">Table #2</p>
+              </div>
+              <div class="info">
+                <div class="date">
+                  <p>Date</p>
+                  <p class="bold">01/09/2023</p>
+                </div>
+                <div class="start">
+                  <p>Start</p>
+                  <p class="bold">19.00</p>
+                </div>
+                <div class="end">
+                  <p>End</p>
+                  <p class="bold">20.00</p>
+                </div>
+              </div>
+            </div>
+            <div class="garis2">
+              <div class="b">
+                <p>Name</p>
+                <p class="bold">X</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

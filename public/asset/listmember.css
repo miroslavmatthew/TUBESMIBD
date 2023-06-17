@@ -1,0 +1,232 @@
+* {
+  margin: 0;
+}
+
+body {
+  background-color: #202020;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.header {
+  background: #151515;
+  display: flex;
+  width: 100vw;
+  height: 75px;
+  left: 0px;
+  top: 0px;
+  color: white;
+  align-items: center;
+}
+
+#logoJudul{
+  margin-left: 20px;
+}
+
+.judul{
+  display:flex;
+  flex-grow: 1; 
+  justify-content: center;
+  font-size: x-large;
+}
+
+.greet{
+  width: 100%;
+}
+
+.greet *{
+  font-size: 30px;
+  margin: 50px 50px 40px 130px;
+}
+
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+/* justify-content: center; */
+  color: white;
+  height: calc(100% - 75px);
+  width: 100vw;
+}
+
+.fa-regular{
+  color: white;
+  margin-right: 30px;
+}
+
+
+#ticketList{
+  /* display: grid; */
+  width: 80%;
+  height: 65%;
+  margin-bottom: 5%;
+  background-color: #EDEDED;
+  color: #151515;
+  font-size: 20px;
+}
+
+footer img{
+  width: 100vw;
+}
+
+table{
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+}
+
+td{
+  padding: 8px;
+  width: 25%;
+  text-align: center;
+}
+tbody{
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+}
+tr, th{
+  border-bottom: 1px solid #202020;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.datas:hover{
+  background-color: #bfbfbf;
+}
+
+.statusBtn{
+  background-color: #8d8d8d;
+  width: 40%;
+  height: 50px;
+  border-radius: 40px;
+  border: 4px solid #606060;
+  color: #EDEDED;
+}
+.statusBtnBooked{
+  background-color: #CB0033;
+  width: 40%;
+  height: 50px;
+  border-radius: 40px;
+  border: 4px solid #7D001F;
+  color: #EDEDED;
+}
+a {
+	text-decoration: none;
+	border: 2px solid #7D001F;
+	background: #202020;
+	color: #CB0033;
+	padding: 6px;
+}
+a:hover {
+	color: white;
+	background: #CB0033;
+}
+a:active {
+	color: white;
+	background: #CB0033;
+}
+#pagi{
+  display: flex;
+  width: 100%;
+  padding-left: 20%;
+  gap: 10px;
+}
+
+.popup-form {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); 
+  z-index: 9999;
+}
+.ticket {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: #202020ED; */
+  padding: 20px;
+  max-width: 100%; 
+  max-height: 100%; 
+  overflow: auto; 
+  border-radius: 5px;
+  border-radius: 30px;
+}
+.ticket{
+	height: 90vh;
+	width: 30vw;
+	border-radius: 40px;
+    .atas{
+        display: flex;
+        flex-direction: column;
+        height: 15vh;
+        background-color: #151515;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
+        justify-content: center;
+        align-items: center;
+    }
+    .bawah{
+        display: grid;
+        grid-template-rows: 40% auto;
+        height: 55vh;
+        background-color: #D9D9D9;
+        border-bottom-right-radius: 40px;
+        border-bottom-left-radius: 40px;
+        color: black;
+        padding: 10% 5% 10% 5%;
+        gap: 10px;
+    }
+}
+.garis{
+    width: 100%;
+    height: 5px;
+    background-color: #CB0033;
+}
+.garis2{
+    width: 100%;
+    height: 2px;
+    background-color: #151515;
+}
+
+.a{
+    display: grid;
+    grid-template-rows: repeat(2,40%);
+}
+.info{
+    display: grid;
+    grid-template-columns: 45% 40% 20%;
+}
+p{
+    font-size: 20px;
+}
+.b{
+    display: grid;
+    justify-items: center;
+    padding-top: 30px;
+    gap: 20px;
+}
+.bold{
+    font-weight: 700;
+}
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  cursor: pointer;
+  font-size: 25px;
+  color: white;
+}
+.atas h2{
+  color: white;
+}
