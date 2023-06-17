@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="asset/confirmation.css" defer/>
+    <link rel="stylesheet" href="asset/confirmation.css" defer />
     <script src="asset/confirmation.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karantina&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <title>Confirmation Page</title>
   </head>
   <body>
@@ -31,28 +34,27 @@
               <p>Biaya per Jam</p>
               <% if(!isLogin){ %>
               <label for="email">Email</label>
-              <%}  %>
+              <%} %>
             </div>
             <div class="colon">
               <p>:</p>
               <p>:</p>
               <p>:</p>
               <% if(!isLogin){ %>
-                <p>:</p>
-              <%}  %>
-              </div>
+              <p>:</p>
+              <%} %>
+            </div>
             <div class="val">
               <p id="hari"><%= datas.hari %></p>
               <p id="jam"><%= datas.jam %></p>
               <p id="harga"><%= datas.harga %></p>
-
-              <% if(!isLogin){ %>
+              <% let log = false %> <% if(!isLogin){ %> <% log = true %>
               <div class="inputEmail">
-                <input type="text" id="email" name="email"/>
+                <input type="text" id="email" name="email" />
                 <p id="required">*required</p>
               </div>
 
-              <%}  %>
+              <%} %>
             </div>
           </div>
           <hr />
@@ -63,7 +65,7 @@
         </div>
         <div class="button">
           <button id="cancel">Cancel</button>
-          <button id="confirm">Confirm</button>
+          <button id="confirm" login="<%= log %>">Confirm</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-let confirm = document.querySelector("#confirm");
+const confirm = document.getElementById("confirm");
 let cancel = document.querySelector("#cancel");
 confirm.addEventListener("click", (event) => {
   var form = document.createElement("form");
@@ -43,20 +43,22 @@ confirm.addEventListener("click", (event) => {
 
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     return emailRegex.test(email);
   }
-  
+
   form.appendChild(input);
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "email";
-
-  if (isValidEmail(document.getElementById("email").value)) {
-    input.value = document.getElementById("email").value;
-  } else {
-    document.getElementById("required").style.color = '#cb0033';
-    return false;
+  let s = confirm.getAttribute("login");
+  if (s == "true") {
+    if (isValidEmail(document.getElementById("email").value)) {
+      input.value = document.getElementById("email").value;
+    } else {
+      document.getElementById("required").style.color = "#cb0033";
+      return false;
+    }
   }
 
   form.appendChild(input);
