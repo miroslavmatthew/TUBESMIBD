@@ -134,3 +134,22 @@ function filterOf() {
 }
 memberFilter.addEventListener("input", filterBy);
 subCat.addEventListener("input", filterOf);
+
+// const btnDownloadCsv = document.getElementById("btnDownloadCsv");
+
+// btnDownloadCsv.addEventListener("click", () => {
+//   downloadCsv("dcode-test.csv", "header1,header2\na");
+// });
+
+// function downloadCsv(filename, csvData) {
+//   console.log(csvData);
+//   const element = document.createElement("a");
+
+//   element.setAttribute("href", `data:text/csv;charset=utf-8,${csvData}`);
+//   element.setAttribute("download", filename);
+//   element.style.display = "none";
+
+//   document.body.appendChild(element);
+//   element.click();
+//   document.body.removeChild(element);
+// }

@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://fonts.googleapis.com/css?family=Poppins"
-      rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Poppins"
+    rel="stylesheet"
     />
     <link rel="stylesheet" href="asset/transaction_report_admin.css" />
     <script
-      src="https://kit.fontawesome.com/d53ca09937.js"
-      crossorigin="anonymous"
+    src="https://kit.fontawesome.com/d53ca09937.js"
+    crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/json2csv"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/asset/report.js" defer></script>
     <title>Document</title>
@@ -31,22 +32,32 @@
     <main>
       <div class="con">
         <div class="search">
-          <h2><%=repMsg%></h2>
+          <h2 id="judulTabel"><%=repMsg%></h2>
           <div class="filter">
             <select name="status" id="status">
-              <option value="all">All</option>
               <% if(member){ %>
-              <option value="member" selected>Member</option>
-              <% }else{ %>
-              <option value="member">Member</option>
-              <% } %>
+                <option value="all">All</option>
+                <option value="member" selected>Member</option>
+                <% }else{ %>
+                  <option value="all" selected>All</option>
+                  <option value="member">Member</option>
+                <% } %>
             </select>
-            <select name="by" id="by">
-              <option value="all">All</option>
-              <option value="district">District</option>
-              <option value="subDistrict">Sub District</option>
-              <option value="urbanVillage">Urban Village</option>
-            </select>
+            <% if(!member){%>
+              <select name="by" id="by" disabled>
+                <option value="all">All</option>
+                <option value="district">District</option>
+                <option value="subDistrict">Sub District</option>
+                <option value="urbanVillage">Urban Village</option>
+              </select>
+              <%} else{%>
+              <select name="by" id="by">
+                <option value="all">All</option>
+                <option value="district">District</option>
+                <option value="subDistrict">Sub District</option>
+                <option value="urbanVillage">Urban Village</option>
+              </select>
+              <%}%>
           </div>
         </div>
         <div class="table">
@@ -88,6 +99,7 @@
         <div class="total">
           <div class="a">
             <p>Total</p>
+            <% %>
             <% if(repo.length > 0){%>
             <p id="totalTable" name="totalTable"><%=total%></p>
             <%} else {%>

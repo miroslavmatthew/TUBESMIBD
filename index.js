@@ -769,8 +769,8 @@ app.get("/filterByDistric", async (req, res) => {
   });
 });
 app.get("/filterBySubDistric", async (req, res) => {
-  let msg = "Sub-Distric Transaction Chart ";
-  let repMsg = "Sub-Distric Transaction ";
+  let msg = "Sub-District Transaction Chart ";
+  let repMsg = "Sub-District Transaction ";
   let start = req.query.start;
   let end = req.query.end;
   let mejab = await getSubDis(conn);
