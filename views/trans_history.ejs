@@ -26,11 +26,11 @@
 
     <div id="home">
       <div class="greet">
-        <div>Hello, Here is your transaction history</div>
+        <div>Hello, here is your transaction history</div>
       </div>
       <div id="pagi">
         <% for(let i =0 ;i<results.length/4;i++) { %> 
-          <a href="/history?page=<%= i %>"><%= i+1 %></a>
+          <a class="pagination" href="/history?page=<%= i %>"><%= i+1 %></a>
           <% } %>
       </div>
      
@@ -49,7 +49,7 @@
           <%if(historys[i].Status == 'Redeemed'){%>
           <td><button class="statusBtn" value="Status"><%= historys[i].Status %></button></td>
           <%} else{%>
-          <td><button onclick="openForm()" class="statusBtnBooked" value="Status"><%= historys[i].Status %></button></td>
+          <td><button onclick="openForm()" class="statusBtnBooked" value="<%=JSON.stringify(historys[i])%>"><%= historys[i].Status %></button></td>
           <%}%>
         </tr>
         <% }%>
@@ -73,27 +73,27 @@
               <div class="a">
                   <div class="table">
                       <p>Table</p>
-                      <p class="bold">Table #2</p>
+                      <p class="bold" id="formTable"></p>
                   </div>
                   <div class="info">
                       <div class="date">
                           <p>Date</p>
-                          <p class="bold">01/09/2023</p>
+                          <p class="bold" id="formDate"></p>
                       </div>
                       <div class="start">
                           <p>Start</p>
-                          <p class="bold">19.00</p>
+                          <p class="bold" id="formStart"></p>
                       </div>
                       <div class="end">
                           <p>End</p>
-                          <p class="bold">20.00</p>
+                          <p class="bold" id="formEnd"></p>
                       </div>
                   </div>
               </div>
               <div class="garis2">
                 <div class="b">
-                    <p>Name</p>
-                    <p class="bold">X</p>
+                    <p>Status</p>
+                    <p class="bold" id="formStat"></p>
                 </div>
               </div>
           </div>

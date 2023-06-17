@@ -1,11 +1,18 @@
 * {
   margin: 0;
+  font-family: 'Poppins';
 }
 
 body {
   background-color: #202020;
   height: 100vh;
   overflow-x: hidden;
+  font-size: larger;
+}
+
+.pagination{
+  text-align: center;
+  width: 20px;
 }
 
 .header {
