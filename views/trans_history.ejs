@@ -45,7 +45,11 @@
           <td><%= historys[i].Tanggal.toLocaleDateString("en-US") %></td>
           <td><%= historys[i].noMeja %></td>
           <td><%= historys[i].Jam %></td>
+          <%if(historys[i].Status == 'Redeemed'){%>
           <td><button class="statusBtn" value="Status"><%= historys[i].Status %></button></td>
+          <%} else{%>
+          <td><button class="statusBtnBooked" value="Status"><%= historys[i].Status %></button></td>
+          <%}%>
         </tr>
         <% }%>
        

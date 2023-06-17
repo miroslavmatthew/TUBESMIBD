@@ -41,14 +41,22 @@ confirm.addEventListener("click", (event) => {
 
   input.value = integerValue;
 
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    return emailRegex.test(email);
+  }
+  
   form.appendChild(input);
   var input = document.createElement("input");
   input.type = "hidden";
   input.name = "email";
-  if (document.getElementById("email") != null) {
+
+  if (isValidEmail(document.getElementById("email").value)) {
     input.value = document.getElementById("email").value;
   } else {
-    input.value = "";
+    document.getElementById("required").style.color = '#cb0033';
+    return false;
   }
 
   form.appendChild(input);

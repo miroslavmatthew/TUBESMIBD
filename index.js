@@ -362,7 +362,7 @@ app.get("/kelurahan", async (req, res) => {
   const kelurahan = await getKelurahan(conn, req.query.idKecamatan);
   res.send({ kelurahan });
 });
-const middlewareMember = (req, res, next) => {
+const middlewarePublic = (req, res, next) => {
   if (!req.session.isLogin || req.session.isLogin == "user") {
     next();
   } else {
@@ -376,7 +376,14 @@ const middlewareAdmin = (req, res, next) => {
     res.redirect("/forbidden");
   }
 };
-app.get("/", middlewareMember, (req, res) => {
+const middlewareNonMember = (req, res, next) => {
+  if (!req.session.isLogin) {
+    next();
+  } else {
+    res.redirect("/forbidden");
+  }
+};
+app.get("/", middlewarePublic, (req, res) => {
   res.render("home", {
     isLogin: req.session.isLogin,
   });
@@ -437,25 +444,44 @@ app.post("/authsignup", async (req, res) => {
     res.redirect("/");
   });
   
-  app.get("/signup", (req, res) => {
+  app.get("/signup", middlewareNonMember, (req, res) => {
     res.render("signup");
   });
-  app.get("/reservation", (req, res) => {
+  app.get("/resetPass", (req, res) => {
+    res.render("resetPass");
+  });
+
+  app.get("/reservation", middlewarePublic, (req, res) => {
     res.render("reservation", {
       isLogin: req.session.isLogin,
     });
   });
-  app.get("/forgotpass", (req, res) => {
-    res.render("forgot_pass");
+
+
+  app.get("/forgotpass", middlewareNonMember, (req, res) => {
+    res.render("forgot_pass",{
+      valid : true
+    });
   });
+  app.post("/forgotPass", (req, res) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(req.body.email)){
+      res.render("forgot_pass",{
+        valid : false
+      });
+    } else{
+      res.redirect("/resetPass");
+    }
+  });
+
   app.get("/table", async (req, res) => {
     let tanggal = req.query.date;
     let time = req.query.time;
     
     let date = new Date(tanggal);
     
-  // Format the date as desired (e.g., "June 13, 2023")
-  let formattedDate = date.toLocaleDateString("en-US", {
+    // Format the date as desired (e.g., "June 13, 2023")
+    let formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -550,6 +576,7 @@ app.post("/success", async (req, res) => {
         res.render("ticket");
       });
       app.get("/history",async (req, res) => {
+        redeemTable();
         let history = await gethistory(conn,req.session.ids);
         let limit = req.query.page;
         if (limit === undefined) {
@@ -582,29 +609,29 @@ app.post("/success", async (req, res) => {
           res.send({msg: "Cannot delete because there is an underway booking on this table!"})
         }
       });
-
+      
       app.get("/admin", async(req, res) => {
-        
+        redeemTable();
         const tables = await getTables(conn);
         res.render("home_admin", {
           tables: tables
         });
       });
       app.get("/update", (req, res) => {
-  res.render("update_membership");
-});
-app.get("/report",async(req,res)=>{
-  let msg = "Transaction Chart ";
-  let repMsg = "Transaction Report ";
-  let start = req.query.start;
-  let end = req.query.end;
-  let report;
-  let mejab = await getTables(conn);
-  let query = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket, pd.total FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket cross join (SELECT sum(Tiket.hargaTiket)as total from Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket )as pd`;
-  if(start==undefined || start == ""){
-    if(end==undefined || end == ""){
-      //start end no
-      msg += "From All Time"
+        res.render("update_membership");
+      });
+      app.get("/report",async(req,res)=>{
+        let msg = "Transaction Chart ";
+        let repMsg = "Transaction Report ";
+        let start = req.query.start;
+        let end = req.query.end;
+        let report;
+        let mejab = await getTables(conn);
+        let query = `SELECT Transaksi.tglTransaksi,Tiket.noMeja,Tiket.hargaTiket FROM Transaksi join Tiket on Transaksi.idTiket=Tiket.idTiket`;
+        if(start==undefined || start == ""){
+          if(end==undefined || end == ""){
+            //start end no
+            msg += "From All Time"
       repMsg += "From All Time"
       report=await getReps(conn,query);
     }
@@ -626,7 +653,7 @@ app.get("/report",async(req,res)=>{
     //yes yes
     msg += `From ${start} to ${end}`
     repMsg += `From ${start} to ${end}`
-
+    
     report=await getReps(conn,query+` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start}'`);
   }
   res.render("transaction_report_admin",{
@@ -646,7 +673,7 @@ app.get("/filterByMember",async (req,res)=>{
   let end = req.query.end;
   let mejab = await getTables(conn);
   let report ;
-  let query = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket, pd.total FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket cross JOIN( SELECT sum(ti.hargaTiket) as 'total' FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null ) as pd where u.username is not null `;
+  let query = `SELECT t.tglTransaksi, t.waktuTransaksi, ti.noMeja, ti.hargaTiket FROM Transaksi as t join user as u on t.idU = u.idU join Tiket as ti ON t.idTiket = ti.idTiket where u.username is not null `;
   if(start==undefined || start == ""){
     if(end==undefined || end == ""){
       //start end no
@@ -684,7 +711,7 @@ app.get("/filterByMember",async (req,res)=>{
 })
 
 
-  app.get("/reportRange",(req,res)=>{
+app.get("/reportRange",(req,res)=>{
   res.render("transaction_report");
 })
 app.listen(PORT, () => {
@@ -693,3 +720,46 @@ app.listen(PORT, () => {
 app.get("/shift",middlewareAdmin, (req, res) => {
   res.render("shift");
 });
+
+const updateStatusPastDay = (conn, tanggal) => {
+  return new Promise((resolve, reject) => {
+    const sql = `UPDATE Tiket SET Status = 'Redeemed' Where Status = 'Booked' AND tanggal < ?`;
+    conn.query(sql, [tanggal], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+
+const updateStatusToday = (conn, tanggal, jam) => {
+  return new Promise((resolve, reject) => {
+    const sql = `UPDATE Tiket SET Status = 'Redeemed' Where Status = 'Booked' AND tanggal = ? AND jam <= ?`;
+    conn.query(sql, [tanggal, jam], (err, conn) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(conn);
+      }
+    });
+  });
+};
+
+
+function redeemTable(){
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+  
+  const formattedDate = `${year}-${month}-${day}`;
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+  updateStatusPastDay(conn, formattedDate);
+  updateStatusToday(conn, formattedDate, formattedTime);
+}

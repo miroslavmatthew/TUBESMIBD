@@ -21,11 +21,14 @@
     </div>
     <div class="login">
       <div class="form">
-        <form id="forgotPassForm">
+        <form id="forgotPassForm", method="post", action="forgotPass">
           <h2>Enter your registered email address:</h2>
           <br>
           <label for="email">Email</label>
           <input type="email" name="email" />
+          <%if(!valid){%>
+          <p class="err">Enter valid email address!</p>
+          <% } %>
           <input type="submit" value="Submit" />
         </form>
       </div>

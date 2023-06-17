@@ -81,6 +81,20 @@ button{
     cursor: pointer;
 }
 
+#fullTable{
+    border: 2px solid #606060;
+    border-radius: 10px;
+    background-color: #8d8d8d;
+    height: 8vh;
+    width: 20vw;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    color: white;
+    cursor:default;
+}
+
 .fa-trash{
     position: absolute;
     top: 0;

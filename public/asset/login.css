@@ -89,7 +89,7 @@ p {
   text-align: start;
 }
 
-#err{
+.err{
   color: #d62c56;
 }
 
