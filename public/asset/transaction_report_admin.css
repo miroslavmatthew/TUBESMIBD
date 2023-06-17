@@ -71,7 +71,7 @@ main,.noTable{
 }
 .table-data{
     color: black;
-}
+}   
 .table-content{
     width:100%;
     max-height: 565px;
@@ -142,4 +142,11 @@ p{
 #judulChart{
     margin-top: 50px;
     margin-left: 100px;
+}
+
+#notFound{
+    margin-top:50px;
+    text-align: center;
+    color: #CB0033;
+    font-weight: 200;
 }

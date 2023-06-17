@@ -21,6 +21,7 @@
         <div style="flex-grow: 1"></div>
         <i class="fa-regular fa-user fa-xl"></i>
     </div>
+    <%if(repo.length > 0){%>
     <main>
         <div class="con">
             <div class="search">
@@ -76,5 +77,8 @@
             <canvas id="myChart" dataMeja="<%= mejaB %>" dataTable="<%= dt %>"></canvas>
           </div>
     </main>
+    <%} else{%>
+        <h2 id="notFound">No transcation found between these date!</h2>
+    <%}%>
 </body>
 </html>
