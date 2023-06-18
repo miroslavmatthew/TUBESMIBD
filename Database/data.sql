@@ -96,5 +96,5 @@ INSERT INTO `Kelurahan` (`idKelurahan`, `namaKelurahan`, `idKecamatan`) VALUES (
 INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('1', 'admin', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('2', NULL, NULL, 'andi', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', 'andi', 'Jl. Andir No. 20', NULL, '1');
 
-INSERT INTO `MejaB` (`noMeja`, `posisiM`) VALUES ('1', '1'), ('2', '1'), ('3', '1'), ('4', '1'), ('5', '1');
+INSERT INTO `MejaB` (`noMeja`, `statusMB`) VALUES ('1', '1'), ('2', '1'), ('3', '1'), ('4', '1'), ('5', '1');
 
