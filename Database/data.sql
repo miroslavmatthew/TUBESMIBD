@@ -40,7 +40,7 @@ CREATE TABLE `Tiket` (
 
 CREATE TABLE `MejaB` (
   `noMeja` int(11) not null,
-  `posisiM` int(11)
+  `statusMB` boolean DEFAULT true
 );
 
 CREATE TABLE `Transaksi` (
@@ -50,8 +50,7 @@ CREATE TABLE `Transaksi` (
    `waktuTransaksi` time
 );
 
-ALTER TABLE user
-MODIFY COLUMN idU INT AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE user MODIFY COLUMN idU INT AUTO_INCREMENT PRIMARY KEY;
 
 ALTER TABLE `Kelurahan`ADD CONSTRAINT `PK-Kel` PRIMARY KEY (idKelurahan);
 
@@ -65,26 +64,17 @@ ALTER TABLE `Kelurahan` ADD CONSTRAINT `FK-Kec` FOREIGN KEY (`idKecamatan`) REFE
 
 ALTER TABLE `Kecamatan` ADD CONSTRAINT `FK-Kot` FOREIGN KEY (`idKota`) REFERENCES `Kota`(`idKota`);
 
-ALTER TABLE Tiket
-MODIFY COLUMN idTiket INT AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE Tiket MODIFY COLUMN idTiket INT AUTO_INCREMENT PRIMARY KEY;
 
 ALTER TABLE `MejaB`ADD CONSTRAINT `PK-MB` PRIMARY KEY (noMeja);
 
 ALTER TABLE `Tiket` ADD CONSTRAINT `FK-NoM` FOREIGN KEY (`noMeja`) REFERENCES `MejaB`(`noMeja`);
 
 
-ALTER TABLE Transaksi
-ADD FOREIGN KEY (idU) REFERENCES user(idU);
+ALTER TABLE Transaksi ADD FOREIGN KEY (idU) REFERENCES user(idU);
 
 ALTER TABLE Transaksi ADD FOREIGN KEY (idTiket) REFERENCES Tiket(idTiket);
 
-ALTER TABLE MejaB ADD CONSTRAINT UnikNo UNIQUE (posisiM);
-
-ALTER TABLE MejaB
-DROP COLUMN posisiM;
-
-ALTER TABLE MejaB
-ADD COLUMN status BOOLEAN DEFAULT true;
 
 INSERT INTO `Kota` (`idKota`, `namaKota`) VALUES ('1', 'Bandung'),('2', 'Cimahi'), ('3', 'Sukabumi'), ('4', 'Cirebon'), ('5', 'Bogor');
 INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('1', 'Andir', '1'), ('2', 'Antapani', '1');
@@ -106,5 +96,5 @@ INSERT INTO `Kelurahan` (`idKelurahan`, `namaKelurahan`, `idKecamatan`) VALUES (
 INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('1', 'admin', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `User` (`idU`, `UsernameAdmin`, `PasswordAdmin`, `Username`, `Password`, `namaMember`, `Alamat`, `namaPemesan`, `idKelurahan`) VALUES ('2', NULL, NULL, 'andi', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', 'andi', 'Jl. Andir No. 20', NULL, '1');
 
-INSERT INTO `MejaB` (`noMeja`, `posisiM`) VALUES ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5');
+INSERT INTO `MejaB` (`noMeja`, `posisiM`) VALUES ('1', '1'), ('2', '1'), ('3', '1'), ('4', '1'), ('5', '1');
 
