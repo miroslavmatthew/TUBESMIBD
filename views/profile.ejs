@@ -9,7 +9,7 @@
       src="https://kit.fontawesome.com/d53ca09937.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="asset/listmember.css" />
+    <link rel="stylesheet" href="asset/profile.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,17 +23,23 @@
       <img
         src="asset/Group 3.png"
         style="width: 200px"
-        onclick="window.location.href='/';"
+        onclick="window.location.href='/admin';"
         id="logoJudul"
       />
-      <div class="judul">TRANSACTION HISTORY PAGE</div>
+      <div class="judul">UPDATE PROFILE PICTURE</div>
       <i class="fa-regular fa-user fa-xl"></i>
     </div>
-        <h2>Profile pic</h2>
-        <img src="img.jpg" alt="">
+    <main>
+      <section>
+        <h2>Profile Picture</h2>
+        <img class="photo" src="img.jpg" alt="">
         <form method="post" action="/profilePic" enctype="multipart/form-data">
-            <input type="file" name="image">
-            <input type="submit">
+          <label for="file-upload" class="file-label">Choose a File</label>
+          <input id="file-upload" type="file" name="image">
+          <input type="submit" class="custom-button">
         </form>
+      </section>
+    </main>
+        
     </body>
 </html>

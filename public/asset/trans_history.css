@@ -35,6 +35,7 @@ body {
   flex-grow: 1; 
   justify-content: center;
   font-size: x-large;
+  margin-right: 200px;
 }
 
 .greet{
@@ -171,7 +172,7 @@ a:active {
 }
 .ticket{
 	height: 90vh;
-	width: 30vw;
+	width: 35vw;
 	border-radius: 40px;
     .atas{
         display: flex;

@@ -17,6 +17,7 @@ body {
     top: 0px;
     color: white;
     align-items: center;
+    cursor: pointer;
 }
   
 #logoJudul{
@@ -97,6 +98,7 @@ select{
     background-color: #EDEDED;
     border-radius: 10px;
     text-align: center;
+    cursor: pointer;
 }
 
 button{

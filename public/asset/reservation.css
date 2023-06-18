@@ -112,6 +112,7 @@ select {
 .fa-regular {
   color: white;
   margin-right: 50px;
+  cursor: pointer;
 }
 
 h2 {
