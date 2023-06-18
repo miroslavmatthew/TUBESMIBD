@@ -17,16 +17,16 @@ body {
     top: 0px;
     color: white;
     align-items: center;
-    cursor: pointer;
 }
   
 #logoJudul{
     margin-left: 20px;
+    cursor: pointer;
 }
 
 .fa-regular{
     color: white;
-    margin-right: 50px;
+    margin-right: 30px;
 }
 
 main,.noTable{
@@ -180,4 +180,8 @@ p{
         max-height: none;
         overflow: none;
     }
+}
+
+#dldBtn{
+    cursor: pointer;
 }
