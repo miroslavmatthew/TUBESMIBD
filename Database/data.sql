@@ -80,6 +80,12 @@ ALTER TABLE Transaksi ADD FOREIGN KEY (idTiket) REFERENCES Tiket(idTiket);
 
 ALTER TABLE MejaB ADD CONSTRAINT UnikNo UNIQUE (posisiM);
 
+ALTER TABLE MejaB
+DROP COLUMN posisiM;
+
+ALTER TABLE MejaB
+ADD COLUMN status BOOLEAN DEFAULT true;
+
 INSERT INTO `Kota` (`idKota`, `namaKota`) VALUES ('1', 'Bandung'),('2', 'Cimahi'), ('3', 'Sukabumi'), ('4', 'Cirebon'), ('5', 'Bogor');
 INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('1', 'Andir', '1'), ('2', 'Antapani', '1');
 INSERT INTO `Kecamatan` (`idKecamatan`, `namaKecamatan`, `idKota`) VALUES ('3', 'Cimahi Utara', '2'), ('4', 'Cimahi Selatan', '2');

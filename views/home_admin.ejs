@@ -34,10 +34,17 @@
         </div>
         <div class="tables">
             <%for(let i = 0; i < tables.length; i++){%>
+                <% if(tables[i].statusMB==1){ %>
             <div class="table">
-                <p id="click" onclick="openForm4()">Table #<%=tables[i].noMeja%></p>
+                <p id="click" onclick="openForm4('<%=tables[i].noMeja%>')">Table #<%=tables[i].noMeja%></p>
                 <i  class="fa-solid fa-trash" onclick="openForm2('<%=tables[i].noMeja%>')"></i>
             </div>
+            <% } else {%>
+                <div class="tableR">
+                    <p id="click" onclick="openForm5('<%=tables[i].noMeja%>')">Table #<%=tables[i].noMeja%></p>
+                    <i  class="fa-solid fa-trash" onclick="openForm2('<%=tables[i].noMeja%>')"></i>
+                </div>
+                <% } %>
             <% } %>
         </div>
     </main>

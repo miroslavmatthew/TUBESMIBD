@@ -2,7 +2,7 @@ import { jsPDF } from "jspdf";
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
 // Default export is a4 paper, portrait, using millimeters for units
-import express from "express";
+import express, { query } from "express";
 import session from "express-session";
 import mysql from "mysql";
 import path from "path";
@@ -329,8 +329,8 @@ const limitHis = (conn, idu, lim) => {
 };
 const addTable = (conn, nomor) => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO mejab(noMeja, posisiM) VALUES(?, ?)`;
-    conn.query(sql, [nomor, nomor], (err, conn) => {
+    const sql = `INSERT INTO mejab(noMeja) VALUES(?)`;
+    conn.query(sql, [nomor], (err, conn) => {
       if (err) {
         reject(err);
       } else {
@@ -696,7 +696,7 @@ app.get("/table", async (req, res) => {
     month: "long",
     day: "numeric",
   });
-
+  const repair = await getRepsMember(conn,"select * from MejaB where statusMB = false");
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
   var formattedHarga = new Intl.NumberFormat("id-ID", {
@@ -709,6 +709,9 @@ app.get("/table", async (req, res) => {
   const booked_tables = [];
   for (let i = 0; i < tickets.length; i++) {
     booked_tables.push(tickets[i].noMeja);
+  }
+  for (let i = 0; i < repair.length; i++) {
+    booked_tables.push(repair[i].noMeja);
   }
   // console.log(booked_tables);
   res.render("table_page", {
@@ -1166,6 +1169,14 @@ app.get("/profilePic", (req, res) => {
 app.post("/profilePic",upload.single("image"), (req, res) => {
   res.redirect("/profilePic");
 });
+app.get("/repair",async(req,res)=>{
+  let query = "UPDATE MejaB SET statusMB = false WHERE noMeja = "+req.query.no;
+  let repair  = await getRepsMember(conn,query);
+})
+app.get("/repairNormal",async(req,res)=>{
+  let query = "UPDATE MejaB SET statusMB = true WHERE noMeja = "+req.query.no;
+  let repair  = await getRepsMember(conn,query);
+})
 const updateStatusPastDay = (conn, tanggal) => {
   return new Promise((resolve, reject) => {
     const sql = `UPDATE Tiket SET Status = 'Redeemed' Where Status = 'Booked' AND tanggal < ?`;

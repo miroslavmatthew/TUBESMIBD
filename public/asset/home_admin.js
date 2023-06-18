@@ -51,18 +51,28 @@ function closeForm3() {
     document.getElementById("popupForm3").style.display = "none";
 }
 
-function openForm4() {
+function openForm4(value) {
     document.getElementById("popupForm4").style.display = "block";
+    delValue= value;
 }
 
 function closeForm4() {
     document.getElementById("popupForm4").style.display = "none";
 }
 
-function openForm5() {
+function openForm5(value) {
     document.getElementById("popupForm5").style.display = "block";
+    delValue=value;
 }
 
 function closeForm5() {
     document.getElementById("popupForm5").style.display = "none";
+}
+function submitForm4(){
+    fetch(`repair?no=${delValue}`)
+    window.location.href = "/admin";
+}
+function submitForm5(){
+    fetch(`repairNormal?no=${delValue}`)
+    window.location.href = "/admin";
 }
