@@ -117,6 +117,7 @@ button{
     align-items: center;
     justify-content: flex-end;
     width: 90%;
+    gap: 10px;
 }
 .a{
     display: flex;
