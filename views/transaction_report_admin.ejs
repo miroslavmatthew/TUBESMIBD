@@ -55,13 +55,36 @@
                 <option value="urbanVillage">Urban Village</option>
               </select>
               <%} else{%>
-              <select name="by" id="by">
+                <% if(district=="All"){%>
+                <select name="by" id="by">
                 <option value="all">All</option>
                 <option value="district">District</option>
                 <option value="subDistrict">Sub District</option>
                 <option value="urbanVillage">Urban Village</option>
               </select>
-              <%}%>
+              <%} else if(district=="District"){%>
+                <select name="by" id="by">
+                  <option value="all">All</option>
+                  <option value="district" selected>District</option>
+                  <option value="subDistrict">Sub District</option>
+                  <option value="urbanVillage">Urban Village</option>
+                </select>
+                <%} else if(district=="Sub-District"){%>
+                  <select name="by" id="by">
+                    <option value="all">All</option>
+                    <option value="district" >District</option>
+                    <option value="subDistrict" selected>Sub District</option>
+                    <option value="urbanVillage">Urban Village</option>
+                  </select>
+                  <%} else if(district=="Urban Village"){%>
+                    <select name="by" id="by">
+                      <option value="all">All</option>
+                      <option value="district" >District</option>
+                      <option value="subDistrict">Sub District</option>
+                      <option value="urbanVillage" selected>Urban Village</option>
+                    </select>
+                  <%}%>
+              <% } %>
           </div>
         </div>
         <div class="table" id="transTable">

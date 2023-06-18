@@ -820,7 +820,7 @@ app.get("/filterByMember", async (req, res) => {
     message: msg,
     repMsg: repMsg,
     subclass: false,
-    district: "District",
+    district: "All",
   });
 });
 
