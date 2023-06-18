@@ -110,12 +110,6 @@ let url = window.location.href;
 let queryString = url.split("?")[1];
 function filterBy() {
   if (memberFilter.value == "member") {
-    // fetch(`filterByMember?${queryString}`).then(function (response) {
-    //   return response.text();
-    // })
-    // .then(function (text) {
-    //   username = JSON.parse(text);
-    // });
     window.location.href = `/filterByMember?${queryString}`;
   } else {
     window.location.href = `/report?${queryString}`;
@@ -138,7 +132,7 @@ subCat.addEventListener("input", filterOf);
 function downloadPDFWithBrowserPrint() {
   window.print();
 }
-document.querySelector('.table').addEventListener('click', downloadPDFWithBrowserPrint);
+// document.querySelector('.table').addEventListener('click', downloadPDFWithBrowserPrint);
 const btnDownloadCsv = document.getElementById("btnDownloadCsv");
 
 
