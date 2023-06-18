@@ -50,3 +50,19 @@ function openForm3() {
 function closeForm3() {
     document.getElementById("popupForm3").style.display = "none";
 }
+
+function openForm4() {
+    document.getElementById("popupForm4").style.display = "block";
+}
+
+function closeForm4() {
+    document.getElementById("popupForm4").style.display = "none";
+}
+
+function openForm5() {
+    document.getElementById("popupForm5").style.display = "block";
+}
+
+function closeForm5() {
+    document.getElementById("popupForm5").style.display = "none";
+}
