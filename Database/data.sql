@@ -1,5 +1,6 @@
+-- buat db terlebih dahulu
 CREATE DATABASE Broklyn
-
+-- baru jalankan query pada db tersebut
 CREATE TABLE `User` (
   `idU` int(11) NOT NULL,
   `UsernameAdmin` varchar(50),
