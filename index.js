@@ -4,6 +4,7 @@ import mysql from "mysql";
 import path from "path";
 import crypto from "crypto";
 import { name } from "ejs";
+import multer from "multer";
 const PORT = 8080;
 const app = express();
 app.set("view engine", "ejs");
@@ -26,6 +27,16 @@ app.use(
     extended: true,
   })
 );
+const storage = multer.diskStorage({
+  destination: (req,file,cb)=>{
+    cb(null,"public");
+  },
+  filename: (req,file,cb)=>{
+    console.log(file);
+    cb(null,"img.jpg");
+  }
+})
+const upload = multer({storage:storage});
 const pool = mysql.createPool({
   user: "root",
   password: "",
@@ -990,7 +1001,12 @@ app.post("/updatePrice", (req, res) => {
   harga = req.body.harga;
   res.redirect("/admin")
 })
-
+app.get("/profilePic", (req, res) => {
+  res.render("profile");
+});
+app.post("/profilePic",upload.single("image"), (req, res) => {
+  res.redirect("/profilePic");
+});
 const updateStatusPastDay = (conn, tanggal) => {
   return new Promise((resolve, reject) => {
     const sql = `UPDATE Tiket SET Status = 'Redeemed' Where Status = 'Booked' AND tanggal < ?`;
