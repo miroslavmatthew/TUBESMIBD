@@ -598,7 +598,7 @@ app.get("/", middlewarePublic, (req, res) => {
     isLogin: req.session.isLogin,
   });
 });
-app.get("/login", (req, res) => {
+app.get("/login",middlewareNonMember, (req, res) => {
   if (req.session.isLogin) {
     res.redirect("/forbidden");
   }
@@ -657,7 +657,7 @@ app.post("/authsignup", async (req, res) => {
 app.get("/signup", middlewareNonMember, (req, res) => {
   res.render("signup");
 });
-app.get("/resetPass", (req, res) => {
+app.get("/resetPass",middlewareNonMember, (req, res) => {
   res.render("resetPass");
 });
 
@@ -684,7 +684,7 @@ app.post("/forgotPass", (req, res) => {
 });
 
 
-app.get("/table", async (req, res) => {
+app.get("/table",middlewarePublic, async (req, res) => {
   let tanggal = req.query.date;
   let time = req.query.time;
 
@@ -720,7 +720,7 @@ app.get("/table", async (req, res) => {
     tables: tables,
   });
 });
-app.post("/confirmation", (req, res) => {
+app.post("/confirmation",middlewarePublic, (req, res) => {
   let noMej = req.body.noMeja;
   // console.log(req);
   res.render("confirmation", {
@@ -784,9 +784,7 @@ app.post("/success", async (req, res) => {
   });
   console.log(req.body);
 });
-app.get("/ticket", (req, res) => {
-  res.render("ticket");
-});
+
 app.get("/history", middlewareMember, async (req, res) => {
   redeemTable();
   let history = await gethistory(conn, req.session.ids);
@@ -807,7 +805,7 @@ app.get("/history", middlewareMember, async (req, res) => {
   console.log(history);
 });
 
-app.get("/addtable", async (req, res) => {
+app.get("/addtable",middlewareAdmin, async (req, res) => {
   const added = await addTable(conn, req.query.no);
 });
 app.get("/deltable", async (req, res) => {
@@ -822,7 +820,7 @@ app.get("/deltable", async (req, res) => {
   }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin",middlewareAdmin, async (req, res) => {
   redeemTable();
   const tables = await getTables(conn);
   res.render("home_admin", {
@@ -830,7 +828,7 @@ app.get("/admin", async (req, res) => {
     currHarga: harga
   });
 });
-app.get("/listMem", async (req, res) => {
+app.get("/listMem",middlewareAdmin, async (req, res) => {
   let history = await getUser(conn);
   let limit = req.query.page;
   if (limit === undefined) {
@@ -847,7 +845,7 @@ app.get("/listMem", async (req, res) => {
     });
   }
 });
-app.get("/update", async(req, res) => {
+app.get("/update",middlewareAdmin, async(req, res) => {
   let userId = await getUserById(conn,req.query.ids);
   console.log(userId);
   res.render("updateMember",{
@@ -871,7 +869,7 @@ app.post("/authUpdate", async(req, res) => {
 
   res.redirect("/listMem");
 });
-app.get("/report", async (req, res) => {
+app.get("/report", middlewareAdmin,async (req, res) => {
   let msg = "Transaction Chart ";
   let repMsg = "Transaction Report ";
   let start = req.query.start;
@@ -928,7 +926,7 @@ app.get("/report", async (req, res) => {
   });
 });
 
-app.get("/filterByMember", async (req, res) => {
+app.get("/filterByMember", middlewareAdmin,async (req, res) => {
   let msg = "Member Transaction Chart ";
   let repMsg = "Member Transaction ";
   let start = req.query.start;
@@ -981,7 +979,7 @@ app.get("/filterByMember", async (req, res) => {
   });
 });
 
-app.get("/filterByDistric", async (req, res) => {
+app.get("/filterByDistric", middlewareAdmin,async (req, res) => {
   let msg = "Distric Transaction Chart ";
   let repMsg = "Distric Transaction ";
   let start = req.query.start;
@@ -1037,7 +1035,7 @@ app.get("/filterByDistric", async (req, res) => {
     district: "District",
   });
 });
-app.get("/filterBySubDistric", async (req, res) => {
+app.get("/filterBySubDistric", middlewareAdmin,async (req, res) => {
   let msg = "Sub-District Transaction Chart ";
   let repMsg = "Sub-District Transaction ";
   let start = req.query.start;
@@ -1092,7 +1090,7 @@ app.get("/filterBySubDistric", async (req, res) => {
     district: "Sub-District",
   });
 });
-app.get("/filterByUrban", async (req, res) => {
+app.get("/filterByUrban", middlewareAdmin,async (req, res) => {
   let msg = "Urban Village Transaction Chart ";
   let repMsg = "Urban Village Transaction ";
   let start = req.query.start;
@@ -1149,31 +1147,28 @@ app.get("/filterByUrban", async (req, res) => {
   });
 });
 
-app.get("/reportRange", (req, res) => {
+app.get("/reportRange", middlewareAdmin,(req, res) => {
   res.render("transaction_report");
 });
 app.listen(PORT, () => {
   console.log("server ready");
 });
-app.get("/shift", middlewareAdmin, (req, res) => {
-  res.render("shift");
-});
 
-app.post("/updatePrice", (req, res) => {
+app.post("/updatePrice",middlewareAdmin, (req, res) => {
   harga = req.body.harga;
   res.redirect("/admin")
 })
-app.get("/profilePic", (req, res) => {
+app.get("/profilePic",middlewareAdmin, (req, res) => {
   res.render("profile");
 });
 app.post("/profilePic",upload.single("image"), (req, res) => {
   res.redirect("/profilePic");
 });
-app.get("/repair",async(req,res)=>{
+app.get("/repair",middlewareAdmin,async(req,res)=>{
   let query = "UPDATE MejaB SET statusMB = false WHERE noMeja = "+req.query.no;
   let repair  = await getRepsMember(conn,query);
 })
-app.get("/repairNormal",async(req,res)=>{
+app.get("/repairNormal",middlewareAdmin,async(req,res)=>{
   let query = "UPDATE MejaB SET statusMB = true WHERE noMeja = "+req.query.no;
   let repair  = await getRepsMember(conn,query);
 })
