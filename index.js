@@ -1,3 +1,7 @@
+import { jsPDF } from "jspdf";
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
+// Default export is a4 paper, portrait, using millimeters for units
 import express from "express";
 import session from "express-session";
 import mysql from "mysql";
@@ -5,6 +9,7 @@ import path from "path";
 import crypto from "crypto";
 import { name } from "ejs";
 import multer from "multer";
+import { trace } from "console";
 const PORT = 8080;
 const app = express();
 app.set("view engine", "ejs");
@@ -442,7 +447,153 @@ const middlewareNonMember = (req, res, next) => {
     res.redirect("/forbidden");
   }
 };
+const middlewareMember = (req, res, next) => {
+  if (req.session.isLogin) {
+    next();
+  } else {
+    res.redirect("/forbidden");
+  }
+};
+
+function generatePDF(jsonData) {
+  const data = JSON.parse(jsonData);
+  
+  const doc = new PDFDocument();
+
+  const headers = ["tglTransaksi", "waktuTransaksi", "noMeja", "hargaTiket"];
+  const availableWidth = 500;
+  const columnWidth = availableWidth / headers.length;
+  const rowHeight = 20;
+  let tracer = 0;
+  const x = 50;
+  let y = 50;
+  let currentPage = 1;
+  
+  // console.log(doc.page.height)
+
+  const createNewPage = () => {
+    doc.addPage();
+    y = 50; 
+    drawTableHeaders();
+    currentPage++;
+  };
+  
+  // Function to draw table headers with center-aligned text
+  const drawTableHeaders = () => {
+    doc.font('Helvetica-Bold');
+    headers.forEach((header, index) => {
+      doc.text(header, x + index * columnWidth, y, { width: columnWidth, align: 'center', valign: 'center' });
+    });
+    y += rowHeight;
+  };
+
+  // Function to draw table rows with center-aligned text
+  const drawTableRows = () => {
+    data.forEach((row, rowIndex) => {
+      tracer++;
+      if (tracer > 32) {
+        tracer = 0;
+        createNewPage();
+      }
+      
+      rowIndex %= 32;
+      
+      let rowY = y + rowIndex * rowHeight;
+      doc.font('Helvetica');
+      Object.entries(row).forEach(([key, value], columnIndex) => {
+        if (key === 'tglTransaksi') {
+          value = value.split('T')[0];
+        }
+
+        doc.text(value.toString(), x + columnIndex * columnWidth, rowY, {
+          width: columnWidth,
+          align: 'center',
+          valign: 'center'
+        });
+      });
+    });
+    y += rowHeight;
+  };
+
+  // Generate the PDF
+  drawTableHeaders();
+  drawTableRows();
+
+  doc.pipe(fs.createWriteStream('public/output.pdf'));
+  doc.end();
+
+  console.log(`PDF generated with ${currentPage} page(s).`);
+}
+function generatePDFDistrict(jsonData, districtName) {
+  const data = JSON.parse(jsonData);
+  
+  const doc = new PDFDocument();
+
+  const headers = ["Kode "+ districtName, districtName, "Sub-total"];
+  const availableWidth = 500;
+  const columnWidth = availableWidth / headers.length;
+  const rowHeight = 20;
+  let tracer = 0;
+  const x = 50;
+  let y = 50;
+  let currentPage = 1;
+  
+  // console.log(doc.page.height)
+
+  const createNewPage = () => {
+    doc.addPage();
+    y = 50; 
+    drawTableHeaders();
+    currentPage++;
+  };
+  
+  // Function to draw table headers with center-aligned text
+  const drawTableHeaders = () => {
+    doc.font('Helvetica-Bold');
+    headers.forEach((header, index) => {
+      doc.text(header, x + index * columnWidth, y, { width: columnWidth, align: 'center', valign: 'center' });
+    });
+    y += rowHeight;
+  };
+
+  // Function to draw table rows with center-aligned text
+  const drawTableRows = () => {
+    data.forEach((row, rowIndex) => {
+      tracer++;
+      if (tracer > 32) {
+        tracer = 0;
+        createNewPage();
+      }
+      
+      rowIndex %= 32;
+      
+      let rowY = y + rowIndex * rowHeight;
+      doc.font('Helvetica');
+      Object.entries(row).forEach(([key, value], columnIndex) => {
+
+        doc.text(value.toString(), x + columnIndex * columnWidth, rowY, {
+          width: columnWidth,
+          align: 'center',
+          valign: 'center'
+        });
+      });
+    });
+    y += rowHeight;
+  };
+
+  // Generate the PDF
+  drawTableHeaders();
+  drawTableRows();
+
+  doc.pipe(fs.createWriteStream('public/output.pdf'));
+  doc.end();
+
+  console.log(`PDF generated with ${currentPage} page(s).`);
+}
+
+
 app.get("/", middlewarePublic, (req, res) => {
+  // console.log(doc)
   res.render("home", {
     isLogin: req.session.isLogin,
   });
@@ -633,7 +784,7 @@ app.post("/success", async (req, res) => {
 app.get("/ticket", (req, res) => {
   res.render("ticket");
 });
-app.get("/history", async (req, res) => {
+app.get("/history", middlewareMember, async (req, res) => {
   redeemTable();
   let history = await gethistory(conn, req.session.ids);
   let limit = req.query.page;
@@ -760,6 +911,8 @@ app.get("/report", async (req, res) => {
         ` where Transaksi.tglTransaksi <= '${end}' and Transaksi.tglTransaksi >= '${start}'`
     );
   }
+
+  generatePDF(JSON.stringify(report))
   res.render("transaction_report_admin", {
     repo: report,
     mejaB: JSON.stringify(mejab),
@@ -812,6 +965,7 @@ app.get("/filterByMember", async (req, res) => {
       query + ` and t.tglTransaksi <= '${end}' and t.tglTransaksi >= '${start}'`
     );
   }
+  generatePDF(JSON.stringify(report))
   res.render("transaction_report_admin", {
     repo: report,
     mejaB: JSON.stringify(mejab),
@@ -867,6 +1021,8 @@ app.get("/filterByDistric", async (req, res) => {
         by
     );
   }
+
+  generatePDFDistrict(JSON.stringify(report), "District")
   res.render("transaction_report_admin", {
     repo: report,
     mejaB: JSON.stringify(mejab),
@@ -921,6 +1077,7 @@ app.get("/filterBySubDistric", async (req, res) => {
         by
     );
   }
+  generatePDFDistrict(JSON.stringify(report), "Sub-District")
   res.render("transaction_report_admin", {
     repo: report,
     mejaB: JSON.stringify(mejab),
@@ -975,6 +1132,8 @@ app.get("/filterByUrban", async (req, res) => {
         by
     );
   }
+
+  generatePDFDistrict(JSON.stringify(report), "Urban-Village");
   res.render("transaction_report_admin", {
     repo: report,
     mejaB: JSON.stringify(mejab),
