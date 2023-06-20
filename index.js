@@ -1185,6 +1185,8 @@ const updateStatusPastDay = (conn, tanggal) => {
   });
 };
 
+
+
 const updateStatusToday = (conn, tanggal, jam) => {
   return new Promise((resolve, reject) => {
     const sql = `UPDATE Tiket SET Status = 'Redeemed' Where Status = 'Booked' AND tanggal = ? AND jam <= ?`;
@@ -1213,3 +1215,9 @@ function redeemTable() {
   updateStatusPastDay(conn, formattedDate);
   updateStatusToday(conn, formattedDate, formattedTime);
 }
+
+app.get("/logout", middlewareMember, (req, res) =>{
+  req.session.isLogin = false;
+  req.session.ids = 0;
+  res.redirect("/")
+})

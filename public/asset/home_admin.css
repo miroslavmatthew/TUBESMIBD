@@ -219,3 +219,21 @@ input{
 #click{
     cursor: pointer;
 }
+
+#join {
+    border: 2px solid #cb0033;
+    border-radius: 10px;
+    background-color: transparent;
+    height: 35px;
+    width: 100px;
+    color: #cb0033;
+    font-size: 18px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    margin-right: 10px;
+    transition: 0.2s;
+  }
+
+  #join:hover {
+    background-color: #cb0033;
+    color: white;
+  }
