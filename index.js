@@ -687,7 +687,6 @@ app.post("/forgotPass", (req, res) => {
 app.get("/table",middlewarePublic, async (req, res) => {
   let tanggal = req.query.date;
   let time = req.query.time;
-
   let date = new Date(tanggal);
 
   // Format the date as desired (e.g., "June 13, 2023")
@@ -699,11 +698,22 @@ app.get("/table",middlewarePublic, async (req, res) => {
   const repair = await getRepsMember(conn,"select * from MejaB where statusMB = false");
   const tickets = await getTikets(conn, tanggal, time);
   const tables = await getTables(conn);
+
+  let waktu = Number(time.split(":")[0])
+  let finalHarga;
+  if(waktu >= 11 && waktu <= 17){
+    finalHarga = harga * 95 / 100
+  } else{
+    finalHarga = harga;
+  }
+  if(req.session.isLogin){
+    finalHarga *= 80 / 100;
+  } 
   var formattedHarga = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0,
-  }).format(harga);
+  }).format(finalHarga);
 
   data = { hari: formattedDate, jam: time, harga: formattedHarga };
   const booked_tables = [];
