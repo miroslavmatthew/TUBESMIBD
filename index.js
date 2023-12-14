@@ -121,7 +121,8 @@ const getTables = (conn) => {
     });
   });
 };
-const getAdmin = (conn, username, password) => {
+const 
+getAdmin = (conn, username, password) => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM User where UsernameAdmin = ? and PasswordAdmin = ?`;
     conn.query(sql, [username, password], (err, conn) => {
