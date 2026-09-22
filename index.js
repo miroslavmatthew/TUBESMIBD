@@ -43,10 +43,13 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage:storage});
 const pool = mysql.createPool({
-  user: "root",
-  password: "",
-  database: "Broklyn",
-  host: "localhost",
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'my_db',
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
 });
 const dbConnect = () => {
   return new Promise((resolve, reject) => {
