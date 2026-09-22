@@ -2,11 +2,15 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
+# Copy dependency definitions
 COPY package*.json ./
-RUN npm ci --only=production
 
+# Install production dependencies
+RUN npm install --only=production
+
+# Copy app files
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
