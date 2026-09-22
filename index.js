@@ -4,7 +4,7 @@ import fs from 'fs';
 // Default export is a4 paper, portrait, using millimeters for units
 import express, { query } from "express";
 import session from "express-session";
-import mysql from "mysql";
+import mysql from 'mysql2/promise';
 import path from "path";
 import crypto from "crypto";
 import { name } from "ejs";
